@@ -1,2 +1,2 @@
 # Proyecto C++
-![c++](https://github.com/Coffee4Dogs/cpp-project/assets/59121551/083184da-9098-4865-ac5a-d215c07e97f9)
+![asd](https://github.com/Coffee4Dogs/cpp-project/assets/59121551/0bd355e3-4367-4734-8732-6af8b0b40149)
