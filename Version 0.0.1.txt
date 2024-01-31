@@ -1,0 +1,5 @@
+#Listar ramas/branch
+    git branch -a 
+
+#Cambiar de rama/branch
+    git checkout 0.0.1
