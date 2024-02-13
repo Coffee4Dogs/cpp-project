@@ -1,0 +1,38 @@
+En C++, puedes crear una jerarquía de clases con una clase abuelo, una clase padre y una clase hijo. Aquí tienes un ejemplo de cómo hacerlo:
+
+Clase Abuelo (Clase Base):
+Define la clase abuelo con los miembros y métodos comunes que deseas compartir con las clases descendientes. Puedes hacer que esta clase sea abstracta si no deseas instanciar objetos directamente de ella.
+Por ejemplo:
+class Animal {
+public:
+    virtual void emitSound() = 0; // Método virtual puro (hace que la clase sea abstracta)
+};
+
+Clase Padre:
+Crea la clase padre que herede de la clase abuelo. Esta clase contendrá sus propios miembros y métodos, además de los heredados.
+Por ejemplo:
+class Mamifero : public Animal {
+public:
+    void giveBirth() {
+        // Implementación específica para mamíferos
+    }
+};
+
+Clase Hijo:
+Ahora crea la clase hijo que herede de la clase padre. Puedes agregar miembros y métodos adicionales específicos para esta clase.
+Por ejemplo:
+class Perro : public Mamifero {
+public:
+    void emitSound() override {
+        std::cout << "¡Guau guau!" << std::endl;
+    }
+};
+
+Uso:
+Puedes crear objetos de las clases descendientes:
+int main() {
+    Perro miPerro;
+    miPerro.emitSound(); // Imprime "¡Guau guau!"
+    miPerro.giveBirth(); // Llama al método de la clase padre
+    return 0;
+}
