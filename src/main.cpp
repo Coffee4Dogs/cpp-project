@@ -3,10 +3,13 @@
 //Librerias:
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <algorithm>
 
 // Using & Typedef
 using std::string;
 using std::fstream;
+using std::vector;
 
 //Clase Base
 class PERSONA{
@@ -62,7 +65,8 @@ class DOCTOR : public PERSONA {
         this-> MinutosSalida = MinutosSalida;    
     }
 
-    void setUserAndPassword(string User, string Password){
+    void setUserData(string Identidad, string User, string Password){
+        this->Identidad = Identidad;
         this->User = User;
         this->Password = Password;
     }
@@ -71,46 +75,59 @@ class DOCTOR : public PERSONA {
     DOCTOR(){}
 
     //Destructor
-    ~DOCTOR(){}
-   
+    ~DOCTOR(){} 
 };
 
 
 
 int main() {
 
-    fstream File;
     DOCTOR doctorcito;
-    
-    
-
-    //Probando setUserAndPassword()
-        doctorcito.setUserAndPassword("doctorcito", "1234");
-        std::cout << "Usuario asignado: " << doctorcito.User << '\n';
-        std::cout << "Password asignado: " << doctorcito.Password << '\n';
-
-
+    fstream File; //Archivo
+    string Line; //Linea del documento.
+    std::vector<string> ListaDoctores;
     
 
-    File.open("user.txt", fstream::in);
-    string Line;
+    //Asignar un usuario con setUserData()
+    doctorcito.setUserData("080119981234" ,"doctorcito", "1234");
+    
+
+    //Crear archivo con usuario y contraseña
+        // File.open("user.dat", fstream::out);
+        // if(File.is_open()){
+        //     File << "User" << '\n';
+        //     File << doctorcito.User << '\n';
+        //     File << "Password" << '\n';
+        //     File << doctorcito.Password << '\n';
+        //     File.close();
+        // }
+
+    string UserInput, PasswordInput;
+    std::cout << "Ingresar Usuario: " << '\n';
+    
+    //Leer archivo user.txt
+    File.open("user.dat", fstream::in);
     if(File.is_open()){
+        std::cout << "~ Leer base de datos" << '\n';
         while(getline(File, Line)){
+            
 
-            // Verificar User & Password
-            if(doctorcito.User == Line){
-                std::cout << "Encontramos Usuario: " << doctorcito.User << ". El usuario es correcto" << '\n';
-            }
-            if(doctorcito.Password == Line){
-                std::cout << "Encontramos Password de "<< doctorcito.User << ". El password es correcto" << '\n';
+            //Si encontramos un Usuario
+            if("User" == Line){
+                std::cout << "User found" << '\n';
+                getline(File, Line); //Pasar a la siguiente linea
+                ListaDoctores.push_back(Line);
+                
+
+            
             }
             
-            // Leer el documento:
-                // std::cout << "Linea del texto: "<< Line << '\n';
         }
+
+        File.close(); //Cerrar el archivo user.txt
     }
-
-
+    
+    
 
 
     std::cout << "Fin del programa" << '\n';
