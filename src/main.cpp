@@ -134,6 +134,8 @@ int main() {
         std::cout << ListaDoctores[1] << '\n';
         std::cout << ListaDoctores[2] << '\n';
 
+        std::cout << doctorcito.Identidad << '\n';
+
         File.close(); //Cerrar el archivo user.txt
     }
     
