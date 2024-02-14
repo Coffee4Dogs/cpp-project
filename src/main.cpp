@@ -117,12 +117,22 @@ int main() {
                 std::cout << "User found" << '\n';
                 getline(File, Line); //Pasar a la siguiente linea
                 ListaDoctores.push_back(Line);
+
+                getline(File, Line); //Pasar a la siguiente linea
+                ListaDoctores.push_back(Line);
+
+                getline(File, Line); //Pasar a la siguiente linea
+                ListaDoctores.push_back(Line);
                 
 
             
             }
             
         }
+
+        std::cout << ListaDoctores[0] << '\n';
+        std::cout << ListaDoctores[1] << '\n';
+        std::cout << ListaDoctores[2] << '\n';
 
         File.close(); //Cerrar el archivo user.txt
     }
