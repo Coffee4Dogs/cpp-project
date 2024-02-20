@@ -111,7 +111,7 @@ class PACIENTE : public PERSONA{
     protected:
         string Nacimiento;
             int DiaNacimiento;
-            string MesNacimiento; //Diciembre or diciembre or 12
+            int MesNacimiento; //Diciembre or diciembre or 12
             int AñoNacimiento;
 
         int Edad;
@@ -136,10 +136,11 @@ class PACIENTE : public PERSONA{
 
     public:
         // Constructor
-        PACIENTE(string Nacimiento, int DiaNacimiento, string MesNacimiento, int AñoNacimiento, int Edad,
+        PACIENTE(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad,
                 double IMS, double Altura, double Peso, string TipoSangre, 
                 string Cita, int DiaCita, int HoraCita, int MinutoCita,
                 string Antecedentes, string EnfermedadActual, string Direccion){
+            // Logica del Constructor
             this-> Nacimiento = Nacimiento;
             this-> DiaNacimiento = DiaNacimiento;
             this-> MesNacimiento = MesNacimiento;
@@ -157,6 +158,16 @@ class PACIENTE : public PERSONA{
             this-> EnfermedadActual = EnfermedadActual;
             this-> Direccion = Direccion;
         }
+
+        void setDiaNacimiento(int DiaNacimiento){
+            this-> DiaNacimiento = DiaNacimiento;
+        }
+        void setMesNacimiento(string MesNacimiento){
+            
+        }
+
+
+
 
         // Metodo Vacio
         PACIENTE(){}
