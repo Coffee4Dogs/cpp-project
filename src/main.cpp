@@ -180,8 +180,11 @@ class PACIENTE : public PERSONA{
 
         // Metodos Get:
             // Atributos
-
-            // int getDiaNacimiento 
+            string getNacimiento(){return this->Nacimiento;}
+            int getDiaNacimiento(){return this->DiaNacimiento;}
+            int getMesNacimiento(){return this->MesNacimiento;}
+            int getAñoNacimiento(){return this->AñoNacimiento;}
+             
 
 
 
