@@ -16,6 +16,11 @@ TotalCita
 ### PRECIO_CITA (opcional):
 será agregada opcionalmente según la complejidad del programa
 
+
+# Estructura
+![diagrama de clases](https://github.com/Coffee4Dogs/cpp-project/assets/59121551/5e9e72d5-f280-49ed-ba26-12b3d2c119ad)
+
+
 # Diagrama CRC
 ![Diagrama CRC](https://github.com/Coffee4Dogs/cpp-project/assets/59121551/3d18620a-88a7-4620-b898-e6c31adce207)
 
