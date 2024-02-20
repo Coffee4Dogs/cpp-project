@@ -66,6 +66,8 @@ Esta clase agrega expedientes con un nuevo número de Registro de Expediente que
     • Registro de pacientes que no llegaron a la cita programada: Al no llegar un paciente tendríamos que reasignar una cita para dicho paciente, para ello no eliminaremos la cita si no que reasignaremos al paciente para un dia diferente o una hora que tengamos disponible, para ello, implementaremos una librería que sea consciente de la hora o día así podríamos saber por medio de la hora que paciente esta siendo atendido por el médico, luego haremos un espacio entre citas o reasignaremos a una hora totalmente distinta o día totalmente distinto.
 
 
+# Referencia de Historia Clinica
 
+![historia clinica](https://github.com/Coffee4Dogs/cpp-project/assets/59121551/5b259828-603b-4c0c-92eb-d55d865a9edf)
 
 
