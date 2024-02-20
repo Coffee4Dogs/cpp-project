@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ctime>
+#include <string>
 
 using std::string;
 using std::cout;
@@ -108,30 +110,30 @@ class PERSONA{
 // DiaCita, HoraCita, Antecedentes, Enfermedad Actual (Motivo Consulta), Direccion
 
 class PACIENTE : public PERSONA{
-    protected:
+    public:
         string Nacimiento;
-            int DiaNacimiento;
-            int MesNacimiento; //Diciembre or diciembre or 12
-            int AñoNacimiento;
+            int DiaNacimiento = -1;
+            int MesNacimiento = -1; //Diciembre or diciembre or 12
+            int AñoNacimiento = -1;
 
-        int Edad;
+        int Edad = -1;
 
-        double IMS;         //(Índice de Masa Corporal)
-            double Altura;  //Edad Altura(m)
-            double Peso;    //(KG)
+        double IMS = -1.0;         //(Índice de Masa Corporal)
+            double Altura = -1.0;  //Edad Altura(m)
+            double Peso = -1.0;    //(KG)
         
         
-        string TipoSangre; // A+, A-, B, AB, O, etc...
+        string TipoSangre = "-1"; // A+, A-, B, AB, O, etc...
         
-        string Cita;        //Una cita contiene dia, hora y minuto:
-            int DiaCita;
-            int HoraCita;
-            int MinutoCita;
+        string Cita = "-1";        //Una cita contiene dia, hora y minuto:
+            int DiaCita = -1;
+            int HoraCita = -1;
+            int MinutoCita = -1;
 
-        string Antecedentes;            //Total de enfermedades.
-            string EnfermedadActual;    //La ultima enfermedad.
+        string Antecedentes = "-1";            //Total de enfermedades.
+            string EnfermedadActual = "-1";    //La ultima enfermedad.
         
-        string Direccion;   //Direccion del paciente.
+        string Direccion = "-1";   //Direccion del paciente.
 
 
     public:
@@ -146,7 +148,8 @@ class PACIENTE : public PERSONA{
             this-> MesNacimiento = MesNacimiento;
             this-> AñoNacimiento = AñoNacimiento;
             this-> Edad = Edad;
-            this-> IMS = IMS;
+            // this-> IMS = IMS;
+            CalcularIndiceMasaCorporal(Altura, Peso);
             this-> Altura = Altura;
             this-> Peso = Peso;
             this-> TipoSangre = TipoSangre;
@@ -159,16 +162,12 @@ class PACIENTE : public PERSONA{
             this-> Direccion = Direccion;
         }
 
-        void setDiaNacimiento(int DiaNacimiento){
-            this-> DiaNacimiento = DiaNacimiento;
-        }
-        void setMesNacimiento(string MesNacimiento){
-            
+        void CalcularIndiceMasaCorporal(double Altura, double Peso){
+            Altura = Altura * Altura;
+            this->IMS = Peso / Altura;
         }
 
-
-
-
+      
         // Metodo Vacio
         PACIENTE(){}
 
@@ -177,15 +176,10 @@ class PACIENTE : public PERSONA{
 };
 
 int main() {
-    PERSONA BobEsponja;
-    
-    BobEsponja.setPersona(  "0801-1997-12345",  //Identidad
-                            123456789,          //Telefono
-                            "Bob",              //Nombre
-                            "Esponja",          //ApellidoA
-                            "Gaaar");           //ApellidoB
-    //Imprimir en pantalla los datos de Bob:
-    BobEsponja.PrintPersona();
+    PACIENTE Arenita;
+    Arenita.Peso(70.0);//kg
+    Arenita.Altura(180.0); //peso cm
+    std::cout << Arenita.IMS() << '\n';
 
 
 
