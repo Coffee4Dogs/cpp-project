@@ -1,6 +1,4 @@
 #include <iostream>
-#include <ctime>
-#include <string>
 
 using std::string;
 using std::cout;
@@ -110,30 +108,30 @@ class PERSONA{
 // DiaCita, HoraCita, Antecedentes, Enfermedad Actual (Motivo Consulta), Direccion
 
 class PACIENTE : public PERSONA{
-    public:
+    protected:
         string Nacimiento;
-            int DiaNacimiento = -1;
-            int MesNacimiento = -1; //Diciembre or diciembre or 12
-            int AñoNacimiento = -1;
+            int DiaNacimiento;
+            int MesNacimiento; //Diciembre or diciembre or 12
+            int AñoNacimiento;
 
-        int Edad = -1;
+        int Edad;
 
-        double IMS = -1.0;         //(Índice de Masa Corporal)
-            double Altura = -1.0;  //Edad Altura(m)
-            double Peso = -1.0;    //(KG)
+        double IMS;         //(Índice de Masa Corporal)
+            double Altura;  //Edad Altura(m)
+            double Peso;    //(KG)
         
         
-        string TipoSangre = "-1"; // A+, A-, B, AB, O, etc...
+        string TipoSangre; // A+, A-, B, AB, O, etc...
         
-        string Cita = "-1";        //Una cita contiene dia, hora y minuto:
-            int DiaCita = -1;
-            int HoraCita = -1;
-            int MinutoCita = -1;
+        string Cita;        //Una cita contiene dia, hora y minuto:
+            int DiaCita;
+            int HoraCita;
+            int MinutoCita;
 
-        string Antecedentes = "-1";            //Total de enfermedades.
-            string EnfermedadActual = "-1";    //La ultima enfermedad.
+        string Antecedentes;            //Total de enfermedades.
+            string EnfermedadActual;    //La ultima enfermedad.
         
-        string Direccion = "-1";   //Direccion del paciente.
+        string Direccion;   //Direccion del paciente.
 
 
     public:
@@ -148,8 +146,7 @@ class PACIENTE : public PERSONA{
             this-> MesNacimiento = MesNacimiento;
             this-> AñoNacimiento = AñoNacimiento;
             this-> Edad = Edad;
-            // this-> IMS = IMS;
-            CalcularIndiceMasaCorporal(Altura, Peso);
+            this-> IMS = IMS;
             this-> Altura = Altura;
             this-> Peso = Peso;
             this-> TipoSangre = TipoSangre;
@@ -162,12 +159,37 @@ class PACIENTE : public PERSONA{
             this-> Direccion = Direccion;
         }
 
-        void CalcularIndiceMasaCorporal(double Altura, double Peso){
-            Altura = Altura * Altura;
-            this->IMS = Peso / Altura;
-        }
+        // Metodos Set:
+            // Atributos
+            void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento;}
+            void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;}
+            void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;}
+            void setAñoNacimiento(int AñoNacimiento){this->AñoNacimiento = AñoNacimiento;}
+            void setEdad(int Edad){this-> Edad = Edad;}
+            void setIMS(double IMS){this->IMS = IMS;}
+            void setAltura(double Altura){this->Altura = Altura;}
+            void setPeso(double Peso){this->Peso = Peso;}
+            void setTipoSangre(string TipoSangre){this->TipoSangre = TipoSangre;}
+            void setCita(string Cita){this-> Cita = Cita;}
+            void setDiaCita(int DiaCita){this-> DiaCita = DiaCita;}
+            void setHoraCita(int HoraCita){this-> HoraCita = HoraCita;}
+            void setMinutoCita(int MinutoCita){this-> MinutoCita = MinutoCita;}
+            void setAntecedentes(string Antecedentes){this->Antecedentes = Antecedentes;}
+            void setEnfermedadActual(string EnfermedadActual){this-> EnfermedadActual = EnfermedadActual;}
+            void setDireccion(string Direccion){this-> Direccion = Direccion;}
 
-      
+        // Metodos Get:
+            // Atributos
+
+            // int getDiaNacimiento 
+
+
+
+
+
+
+
+
         // Metodo Vacio
         PACIENTE(){}
 
@@ -176,12 +198,17 @@ class PACIENTE : public PERSONA{
 };
 
 int main() {
-    PACIENTE Arenita;
-    Arenita.Peso(70.0);//kg
-    Arenita.Altura(180.0); //peso cm
-    std::cout << Arenita.IMS() << '\n';
+    PERSONA BobEsponja;
+    
+    BobEsponja.setPersona(  "0801-1997-12345",  //Identidad
+                            123456789,          //Telefono
+                            "Bob",              //Nombre
+                            "Esponja",          //ApellidoA
+                            "Gaaar");           //ApellidoB
+    //Imprimir en pantalla los datos de Bob:
+    BobEsponja.PrintPersona();
 
-
+   
 
     return 0;
 }
