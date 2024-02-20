@@ -92,15 +92,15 @@ int main() {
     doctorcito.setUserData("080119981234" ,"doctorcito", "1234");
     
 
-    //Crear archivo con usuario y contraseña
-        // File.open("user.dat", fstream::out);
-        // if(File.is_open()){
-        //     File << "User" << '\n';
-        //     File << doctorcito.User << '\n';
-        //     File << "Password" << '\n';
-        //     File << doctorcito.Password << '\n';
-        //     File.close();
-        // }
+    // // Crear archivo con usuario y contraseña
+    //     File.open("user.dat", fstream::out);
+    //     if(File.is_open()){
+    //         File << "User" << '\n';
+    //         File << doctorcito.User << '\n';
+    //         File << "Password" << '\n';
+    //         File << doctorcito.Password << '\n';
+    //         File.close();
+    //     }
 
     string UserInput, PasswordInput;
     std::cout << "Ingresar Usuario: " << '\n';
