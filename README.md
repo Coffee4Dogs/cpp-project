@@ -21,16 +21,21 @@ será agregada opcionalmente según la complejidad del programa
 ![diagrama de clases](https://github.com/Coffee4Dogs/cpp-project/assets/59121551/5e9e72d5-f280-49ed-ba26-12b3d2c119ad)
 
 
-# Diagrama CRC
-![Diagrama CRC](https://github.com/Coffee4Dogs/cpp-project/assets/59121551/3d18620a-88a7-4620-b898-e6c31adce207)
 
 # Descripción de las clases: 
-CLASE PERSONA: Define lo que es una Persona en la vida real. En la vida real podemos encontrar varios tipos de personas. El médico, El paciente, El acompañante del paciente, etc. 
-CLASE PACIENTE: La clase PACIENTE puede verse como el “Perfil”del paciente. Contiene toda la información del paciente, sus enfermedades, su edad, su Índice de Masa Corporal, Su Nombre, Apellidos, Identidad, Contactos, Dirección, y se relaciona con los Expedientes.
-CLASE ACOMPAÑANTE: Consideramos que la clase ACOMPAÑANTE podría ser una buena propuesta para reducir código. La razón por la que se tomó esta decisión es porque todo PACIENTE podría tener un acompañante. En algunos casos es importante tener un número de emergencia para contactar a alguien en caso de emergencia aparte del paciente. Por eso el acompañante ya hereda el Número, Nombre, y Apellidos. La forma en cómo se va a enlazar es con la Identidad. En caso de ser necesario podríamos crear otros atributos o lógica para que se conecten.
-CLASE MÉDICO: Mantiene un sistema de registro para los médicos con usuarios (User), contraseñas (Password) y muestra la lista de pacientes que tiene que atender cada Médico al día según su hora de cita.  
-CLASE EXPEDIENTE: Esta clase agrega expedientes con un nuevo número de Registro de Expediente que el doctor/médico agrega cuando el paciente se presente con una nueva enfermedad cada vez que se presente en la consulta.
+### CLASE PERSONA: 
+Define lo que es una Persona en la vida real. En la vida real podemos encontrar varios tipos de personas. El médico, El paciente, El acompañante del paciente, etc. 
+### CLASE PACIENTE: 
+La clase PACIENTE puede verse como el “Perfil”del paciente. Contiene toda la información del paciente, sus enfermedades, su edad, su Índice de Masa Corporal, Su Nombre, Apellidos, Identidad, Contactos, Dirección, y se relaciona con los Expedientes.
+### CLASE ACOMPAÑANTE: 
+Consideramos que la clase ACOMPAÑANTE podría ser una buena propuesta para reducir código. La razón por la que se tomó esta decisión es porque todo PACIENTE podría tener un acompañante. En algunos casos es importante tener un número de emergencia para contactar a alguien en caso de emergencia aparte del paciente. Por eso el acompañante ya hereda el Número, Nombre, y Apellidos. La forma en cómo se va a enlazar es con la Identidad. En caso de ser necesario podríamos crear otros atributos o lógica para que se conecten.
+### CLASE MÉDICO: 
+Mantiene un sistema de registro para los médicos con usuarios (User), contraseñas (Password) y muestra la lista de pacientes que tiene que atender cada Médico al día según su hora de cita.  
+### CLASE EXPEDIENTE: 
+Esta clase agrega expedientes con un nuevo número de Registro de Expediente que el doctor/médico agrega cuando el paciente se presente con una nueva enfermedad cada vez que se presente en la consulta.
 
+# Diagrama CRC
+![Diagrama CRC](https://github.com/Coffee4Dogs/cpp-project/assets/59121551/3d18620a-88a7-4620-b898-e6c31adce207)
 
 # Métodos:
 ### CLASE PACIENTE:
