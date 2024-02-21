@@ -221,26 +221,25 @@ class PACIENTE : public PERSONA{
             //PrintPaciente - Imprime todos los atributos del paciente para depurar el codigo.
             void PrintPaciente(){
 
-                string Nacimiento;
-                int DiaNacimiento;
-                int MesNacimiento;
-                int AñoNacimiento;
-                int Edad;
-                double IMS;
-                double Altura;
-                double Peso;
-                string TipoSangre;
-                string Cita;
-                int DiaCita;
-                int HoraCita;
-                int MinutoCita;
-                string Antecedentes;
-                string EnfermedadActual;
-                string Direccion;
-
+                std::cout << "Nacimiento: " <<Nacimiento << '\n';
+                std::cout << "DiaNacimiento: " <<DiaNacimiento << '\n';
+                std::cout << "MesNacimiento: " <<MesNacimiento << '\n';
+                std::cout << "AnoNacimiento: " <<AñoNacimiento << '\n';
+                std::cout << "Edad: " <<Edad << '\n';
+                std::cout << "IMS: " <<IMS << '\n';
+                std::cout << "Altura: " <<Altura << '\n';
+                std::cout << "Peso: " <<Peso << '\n';
+                std::cout << "TipoSangre: " <<TipoSangre << '\n';
+                std::cout << "Cita: " <<Cita << '\n';
+                std::cout << "DiaCita: " <<DiaCita << '\n';
+                std::cout << "HoraCita: " <<HoraCita << '\n';
+                std::cout << "MinutoCita: " <<MinutoCita << '\n';
+                std::cout << "Antecedentes: " <<Antecedentes << '\n';
+                std::cout << "EnfermedadActual: " <<EnfermedadActual << '\n';
+                std::cout << "Direccion: " <<Direccion << std::endl;
             }
             
-
+            
 
 
 
@@ -273,7 +272,9 @@ int main() {
 
     UnaPersona.PrintPersona();
     
+    std::cout << "---------PACIENTE: ----------" << '\n';
     UnPaciente.PrintPersona();
+    UnPaciente.PrintPaciente();
     
 
 
