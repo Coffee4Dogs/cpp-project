@@ -184,7 +184,20 @@ class PACIENTE : public PERSONA{
             int getDiaNacimiento(){return this->DiaNacimiento;}
             int getMesNacimiento(){return this->MesNacimiento;}
             int getAñoNacimiento(){return this->AñoNacimiento;}
-             
+            int getEdad(){return this-> Edad;}
+            double getIMS(){return this->IMS;}
+            double getAltura(){return this->Altura;}
+            double getPeso(){return this->Peso;}
+            string getTipoSangre(){return this->TipoSangre;}
+            string getCita(){return this-> Cita;}
+            int getDiaCita(){return this-> DiaCita;}
+            int getHoraCita(){return this-> HoraCita;}
+            int getMinutoCita(){return this-> MinutoCita;}
+            string getAntecedentes(){return this->Antecedentes;}
+            string getEnfermedadActual(){return this-> EnfermedadActual;}
+            string getDireccion(){return this-> Direccion;}
+
+
 
 
 
