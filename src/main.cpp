@@ -155,14 +155,6 @@ class PACIENTE : public PERSONA{
             this-> Direccion = Direccion;
         }
 
-<<<<<<< Updated upstream
-        void setDiaNacimiento(int DiaNacimiento){
-            this-> DiaNacimiento = DiaNacimiento;
-        }
-        void setMesNacimiento(string MesNacimiento){
-            
-        }
-=======
         void CalcularIMS(double Altura, double Peso){
             double AlturaCuadrados = Altura * Altura;
             this->IMS = (Peso / AlturaCuadrados);
@@ -251,7 +243,6 @@ class PACIENTE : public PERSONA{
 
 
 
->>>>>>> Stashed changes
 
 
 
