@@ -103,10 +103,6 @@ class PERSONA{
 
 }; //Fin de la clase PERSONA
 
-// DiaNacimiento, MesNacimiento, AñoNacimiento, Edad Altura(m), 
-// Peso (KG), IMS (Índice de Masa Corporal), TipoSangre, 
-// DiaCita, HoraCita, Antecedentes, Enfermedad Actual (Motivo Consulta), Direccion
-
 class PACIENTE : public PERSONA{
     protected:
         string Nacimiento;
@@ -159,12 +155,103 @@ class PACIENTE : public PERSONA{
             this-> Direccion = Direccion;
         }
 
+<<<<<<< Updated upstream
         void setDiaNacimiento(int DiaNacimiento){
             this-> DiaNacimiento = DiaNacimiento;
         }
         void setMesNacimiento(string MesNacimiento){
             
         }
+=======
+        void CalcularIMS(double Altura, double Peso){
+            double AlturaCuadrados = Altura * Altura;
+            this->IMS = (Peso / AlturaCuadrados);
+        }
+
+        // Metodos Set:
+            // Atributos
+            void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento;}
+            void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;}
+            void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;}
+            void setAñoNacimiento(int AñoNacimiento){this->AñoNacimiento = AñoNacimiento;}
+            void setEdad(int Edad){this-> Edad = Edad;}
+            void setIMS(double IMS){this->IMS = IMS;}
+            void setAltura(double Altura){this->Altura = Altura;}
+            void setPeso(double Peso){this->Peso = Peso;}
+            void setTipoSangre(string TipoSangre){this->TipoSangre = TipoSangre;}
+            void setCita(string Cita){this-> Cita = Cita;}
+            void setDiaCita(int DiaCita){this-> DiaCita = DiaCita;}
+            void setHoraCita(int HoraCita){this-> HoraCita = HoraCita;}
+            void setMinutoCita(int MinutoCita){this-> MinutoCita = MinutoCita;}
+            void setAntecedentes(string Antecedentes){this->Antecedentes = Antecedentes;}
+            void setEnfermedadActual(string EnfermedadActual){this-> EnfermedadActual = EnfermedadActual;}
+            void setDireccion(string Direccion){this-> Direccion = Direccion;}
+
+            //Set todos atributos
+            void setPaciente(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad, double IMS, double Altura, double Peso, string TipoSangre, string Cita, int DiaCita, int HoraCita, int MinutoCita, string Antecedentes, string EnfermedadActual, string Direccion){
+                this-> Nacimiento = Nacimiento;
+                this-> DiaNacimiento = DiaNacimiento;
+                this-> MesNacimiento = MesNacimiento;
+                this-> AñoNacimiento = AñoNacimiento;
+                this-> Edad = Edad;
+                this-> IMS = IMS;
+                this-> Altura = Altura;
+                this-> Peso = Peso;
+                this-> TipoSangre = TipoSangre;
+                this-> Cita = Cita;
+                this-> DiaCita = DiaCita;
+                this-> HoraCita = HoraCita;
+                this-> MinutoCita = MinutoCita;
+                this-> Antecedentes = Antecedentes;
+                this-> EnfermedadActual = EnfermedadActual;
+                this-> Direccion = Direccion;
+            }
+
+        // Metodos Get:
+            // Atributos
+            string getNacimiento(){return this->Nacimiento;}
+            int getDiaNacimiento(){return this->DiaNacimiento;}
+            int getMesNacimiento(){return this->MesNacimiento;}
+            int getAñoNacimiento(){return this->AñoNacimiento;}
+            int getEdad(){return this-> Edad;}
+            double getIMS(){return this->IMS;}
+            double getAltura(){return this->Altura;}
+            double getPeso(){return this->Peso;}
+            string getTipoSangre(){return this->TipoSangre;}
+            string getCita(){return this-> Cita;}
+            int getDiaCita(){return this-> DiaCita;}
+            int getHoraCita(){return this-> HoraCita;}
+            int getMinutoCita(){return this-> MinutoCita;}
+            string getAntecedentes(){return this->Antecedentes;}
+            string getEnfermedadActual(){return this-> EnfermedadActual;}
+            string getDireccion(){return this-> Direccion;}
+
+            //PrintPaciente - Imprime todos los atributos del paciente para depurar el codigo.
+            void PrintPaciente(){
+
+                string Nacimiento;
+                int DiaNacimiento;
+                int MesNacimiento;
+                int AñoNacimiento;
+                int Edad;
+                double IMS;
+                double Altura;
+                double Peso;
+                string TipoSangre;
+                string Cita;
+                int DiaCita;
+                int HoraCita;
+                int MinutoCita;
+                string Antecedentes;
+                string EnfermedadActual;
+                string Direccion;
+
+            }
+            
+
+
+
+>>>>>>> Stashed changes
 
 
 
@@ -176,16 +263,28 @@ class PACIENTE : public PERSONA{
         ~PACIENTE(){}
 };
 
+
+
 int main() {
-    PERSONA BobEsponja;
-    
-    BobEsponja.setPersona(  "0801-1997-12345",  //Identidad
+    PERSONA UnaPersona;
+    PACIENTE UnPaciente;
+
+    UnaPersona.setPersona(  "0801-1997-12345",  //Identidad
                             123456789,          //Telefono
                             "Bob",              //Nombre
                             "Esponja",          //ApellidoA
                             "Gaaar");           //ApellidoB
     //Imprimir en pantalla los datos de Bob:
-    BobEsponja.PrintPersona();
+
+    UnPaciente.setPersona("1234-5678-00000",123456789,"Arenita","Estrella","Estrellita");
+    UnPaciente.setPaciente("Nacimiento", 23, 6, 1997, 0, 0, 180, 70, "A", "Cita", 20, 8, 30, "Sin Antecedentes", "Gripe", "La U");
+    
+
+    UnaPersona.PrintPersona();
+    
+    UnPaciente.PrintPersona();
+    
+
 
 
 
