@@ -164,12 +164,12 @@ class PACIENTE : public PERSONA{
 
     public:
         // Constructor
-        PACIENTE(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad,
-                double IMS, double Altura, double Peso, string TipoSangre, 
+        PACIENTE(int DiaNacimiento, int MesNacimiento, int AñoNacimiento,
+                double Altura, double Peso, string TipoSangre, 
                 string Cita, int DiaCita, int HoraCita, int MinutoCita,
                 string Antecedentes, string EnfermedadActual, string Direccion){
+                calcularEdad(DiaNacimiento, MesNacimiento, AñoNacimiento);
             // Logica del Constructor
-            this-> Nacimiento = Nacimiento;
             this-> DiaNacimiento = DiaNacimiento;
             this-> MesNacimiento = MesNacimiento;
             this-> AñoNacimiento = AñoNacimiento;
@@ -187,10 +187,26 @@ class PACIENTE : public PERSONA{
             this-> Direccion = Direccion;
         }
 
-      
+        void calcularEdad(int DiaNacimiento, int MesNacimiento, int AñoNacimiento) {
+        // Obtiene la fecha actual
+ 
+        std::time_t t = std::time(0);
+        std::tm* now = std::localtime(&t);
+
+        // Calcula la edad
+        Edad = now->tm_year + 1900 - AñoNacimiento;
+        if (now->tm_mon < MesNacimiento - 1 || (now->tm_mon == MesNacimiento - 1 && now->tm_mday < DiaNacimiento)) {
+            Edad--;
+        }
+
+         this -> Edad = Edad; 
+    }
+  
+        int getEdad() const {
+        return Edad;
+    }
 
 
-        
         
         
         
@@ -198,7 +214,9 @@ class PACIENTE : public PERSONA{
 
 
         // Metodo Vacio
-        PACIENTE(){}
+        PACIENTE(){
+            
+        }
 
         // Destructor
         ~PACIENTE(){}
@@ -216,6 +234,17 @@ int main() {
     //Imprimir en pantalla los datos de Bob:
     BobEsponja.PrintPersona();
    
+
+   //PACIENTE BobEsponja2(15, 2, 1972, 1.90, 76, "A", "XD", 15, 18, 89, "NA", "GRIPE", "TEGUS" );
+    PACIENTE BobEsponja3(23, 06, 1997, 1.90, 78, "A", "NA", 13, 15, 98, "NA", "NA", "TEGUCIGALPA");
+   
+   std::cout << BobEsponja3.getEdad() << '\n';
+
+
+
+
+
+
 
 
 
