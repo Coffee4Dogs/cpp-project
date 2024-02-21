@@ -1,11 +1,15 @@
 #include <iostream>
+#include <iomanip>
+#include <cmath>
 
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
-
-
+using std::setprecision;
+using std::setw;
+using std::fixed;
+using std::pow;
 
 
 
@@ -106,43 +110,32 @@ class PERSONA{
 class PACIENTE : public PERSONA{
     protected:
         string Nacimiento;
-            int DiaNacimiento;
-            int MesNacimiento; //Diciembre or diciembre or 12
-            int AñoNacimiento;
-
+        int DiaNacimiento;
+        int MesNacimiento; //Diciembre or diciembre or 12
+        int AñoNacimiento;
         int Edad;
-
-        double IMS;         //(Índice de Masa Corporal)
-            double Altura;  //Edad Altura(m)
-            double Peso;    //(KG)
-        
-        
+        double IMS = -1;         //(Índice de Masa Corporal)
+        double Altura;  //Edad Altura(m)
+        double Peso;    //(KG)
         string TipoSangre; // A+, A-, B, AB, O, etc...
-        
         string Cita;        //Una cita contiene dia, hora y minuto:
-            int DiaCita;
-            int HoraCita;
-            int MinutoCita;
-
+        int DiaCita;
+        int HoraCita;
+        int MinutoCita;
         string Antecedentes;            //Total de enfermedades.
-            string EnfermedadActual;    //La ultima enfermedad.
-        
+        string EnfermedadActual;    //La ultima enfermedad.
         string Direccion;   //Direccion del paciente.
 
 
     public:
         // Constructor
-        PACIENTE(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad,
-                double IMS, double Altura, double Peso, string TipoSangre, 
-                string Cita, int DiaCita, int HoraCita, int MinutoCita,
-                string Antecedentes, string EnfermedadActual, string Direccion){
-            // Logica del Constructor
+        PACIENTE(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad,  double Altura, double Peso, string TipoSangre, string Cita, int DiaCita, int HoraCita, int MinutoCita, string Antecedentes, string EnfermedadActual, string Direccion){
             this-> Nacimiento = Nacimiento;
             this-> DiaNacimiento = DiaNacimiento;
             this-> MesNacimiento = MesNacimiento;
             this-> AñoNacimiento = AñoNacimiento;
             this-> Edad = Edad;
-            this-> IMS = IMS;
+            // this-> IMS = IMS; // Existe this->IMS, pero no IMS porque no es necesaria.
             this-> Altura = Altura;
             this-> Peso = Peso;
             this-> TipoSangre = TipoSangre;
@@ -155,10 +148,9 @@ class PACIENTE : public PERSONA{
             this-> Direccion = Direccion;
         }
 
-        void CalcularIMS(double Altura, double Peso){
-            double AlturaCuadrados = Altura * Altura;
-            this->IMS = (Peso / AlturaCuadrados);
-        }
+        
+
+        
 
         // Metodos Set:
             // Atributos
@@ -167,9 +159,14 @@ class PACIENTE : public PERSONA{
             void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;}
             void setAñoNacimiento(int AñoNacimiento){this->AñoNacimiento = AñoNacimiento;}
             void setEdad(int Edad){this-> Edad = Edad;}
-            void setIMS(double IMS){this->IMS = IMS;}
-            void setAltura(double Altura){this->Altura = Altura;}
-            void setPeso(double Peso){this->Peso = Peso;}
+            void setAltura(double Altura){
+                this->Altura = Altura;
+                CalcularIMS(); //Al establecer una Altura (Metros) luego se calcula el IMS.
+            }
+            void setPeso(double Peso){
+                this->Peso = Peso;
+                CalcularIMS();  //Al establecer un Peso(KG) luego se calcula el IMS.
+            }
             void setTipoSangre(string TipoSangre){this->TipoSangre = TipoSangre;}
             void setCita(string Cita){this-> Cita = Cita;}
             void setDiaCita(int DiaCita){this-> DiaCita = DiaCita;}
@@ -179,7 +176,12 @@ class PACIENTE : public PERSONA{
             void setEnfermedadActual(string EnfermedadActual){this-> EnfermedadActual = EnfermedadActual;}
             void setDireccion(string Direccion){this-> Direccion = Direccion;}
 
-            //Set todos atributos
+            //Calculos y Otros Metodos:
+            void CalcularIMS(){
+                this->IMS = this->Peso / (pow(this->Altura, 2));
+            }
+
+            //Set todos atributos 
             void setPaciente(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad, double IMS, double Altura, double Peso, string TipoSangre, string Cita, int DiaCita, int HoraCita, int MinutoCita, string Antecedentes, string EnfermedadActual, string Direccion){
                 this-> Nacimiento = Nacimiento;
                 this-> DiaNacimiento = DiaNacimiento;
@@ -256,29 +258,19 @@ class PACIENTE : public PERSONA{
 
 
 int main() {
+    cout << fixed << setprecision(2) << setw(10); //Ajustar la precision de la salida que se muestra en pantalla.
     PERSONA UnaPersona;
     PACIENTE UnPaciente;
-
-    UnaPersona.setPersona(  "0801-1997-12345",  //Identidad
-                            123456789,          //Telefono
-                            "Bob",              //Nombre
-                            "Esponja",          //ApellidoA
-                            "Gaaar");           //ApellidoB
-    //Imprimir en pantalla los datos de Bob:
-
-    UnPaciente.setPersona("1234-5678-00000",123456789,"Arenita","Estrella","Estrellita");
-    UnPaciente.setPaciente("Nacimiento", 23, 6, 1997, 0, 0, 180, 70, "A", "Cita", 20, 8, 30, "Sin Antecedentes", "Gripe", "La U");
     
-
-    UnaPersona.PrintPersona();
     
-    std::cout << "---------PACIENTE: ----------" << '\n';
-    UnPaciente.PrintPersona();
-    UnPaciente.PrintPaciente();
+    UnPaciente.setAltura(1.83);
+    UnPaciente.setPeso(80);
+
+
+    std::cout << "Altura: " << UnPaciente.getAltura() << '\n';
+    std::cout << "Peso: "<< UnPaciente.getPeso() << '\n';
+    std::cout <<  "El indice de Masa Corporal (IMS): " << UnPaciente.getIMS() << '\n';
     
-
-
-
 
     return 0;
 }
