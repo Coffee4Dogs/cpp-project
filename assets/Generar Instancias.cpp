@@ -20,6 +20,6 @@ int main() {
         int instancia = persona.CrearPersona();
         std::cout << "Persona generada: " << instancia << std::endl;
     }
-
+    
     return 0;
 }
