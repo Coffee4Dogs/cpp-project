@@ -11,7 +11,7 @@ using std::setw;
 using std::fixed;
 using std::pow;
 
-
+string UserInput;
 
 class PERSONA{
     protected:
@@ -269,6 +269,44 @@ class PACIENTE : public PERSONA{
 
 
 
+void DisplayMainMenu(){
+    std::cout << "- Crear Usuario: New, Nuevo, 0000." << std::endl;
+    std::cout << "- Buscar Usuario: <Numero Identidad>" << std::endl;
+    std::cout << "- Salir/Exit" << std::endl;
+}
+
+void PreguntarUsuario(){
+    int c = 0;
+    while(c < 1){
+        //Crear Usuario
+        DisplayMainMenu();
+        std::getline(std::cin, UserInput);
+        if(
+                (UserInput.at(0) == '0') && (UserInput.at(1) == '0') && (UserInput.at(2) == '0') && (UserInput.at(3) == '0') ||
+                ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'e') || (UserInput.at(1) == 'E')) && ((UserInput.at(2) == 'w') || (UserInput.at(2) == 'W')) ||
+                ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'u') || (UserInput.at(1) == 'U')) && ((UserInput.at(2) == 'e') || (UserInput.at(2) == 'E')) && ((UserInput.at(3) == 'v') || (UserInput.at(3) == 'V')) && ((UserInput.at(4) == 'o') || (UserInput.at(4) == 'O'))
+            ){
+            std::cout << "Seleccionaste la opcion Crear Usuario." << '\n';
+            
+        }
+
+        //Exit, Salir 
+        else if(
+                ((UserInput.at(0) == 'E') || (UserInput.at(0) == 'e')) && ((UserInput.at(1) == 'x') || (UserInput.at(1) == 'X')) && ((UserInput.at(2) == 'i') || (UserInput.at(2) == 'I')) && ((UserInput.at(3) == 't') || (UserInput.at(3) == 'T')) ||
+                ((UserInput.at(0) == 's') || (UserInput.at(0) == 'S')) && ((UserInput.at(1) == 'a') || (UserInput.at(1) == 'A')) && ((UserInput.at(2) == 'l') || (UserInput.at(2) == 'L')) && ((UserInput.at(3) == 'i') || (UserInput.at(3) == 'I')) && ((UserInput.at(4) == 'r') || (UserInput.at(4) == 'R'))
+            ){
+            std::cout << "Seleccionaste la opcion Salir." << '\n';
+        }
+        else{
+            std::cout << "Buscando usuario: " << UserInput << '\n'; 
+        }
+    }
+}
+
+
+
+
+
 int main() {
     cout << fixed << setprecision(2) << setw(10); //Ajustar la precision de la salida que se muestra en pantalla.
     PERSONA UnaPersona;
@@ -290,7 +328,7 @@ int main() {
     UnPaciente.CalcularEdad();
 
     UnPaciente.getEdad();
-    //end
+    
 
 
     return 0;
