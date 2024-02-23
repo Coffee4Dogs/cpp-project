@@ -154,9 +154,9 @@ class PACIENTE : public PERSONA{
 
         // Metodos Set:
             // Atributos
-            void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento;}
-            void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;}
-            void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;}
+            void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento; CalcularEdad();}
+            void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;CalcularEdad();}
+            void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;CalcularEdad();}
             void setAñoNacimiento(int AñoNacimiento){this->AñoNacimiento = AñoNacimiento;}
             void setEdad(int Edad){this-> Edad = Edad;}
             void setAltura(double Altura){
@@ -175,8 +175,20 @@ class PACIENTE : public PERSONA{
             void setAntecedentes(string Antecedentes){this->Antecedentes = Antecedentes;}
             void setEnfermedadActual(string EnfermedadActual){this-> EnfermedadActual = EnfermedadActual;}
             void setDireccion(string Direccion){this-> Direccion = Direccion;}
-
+            
+            
             //Calculos y Otros Metodos:
+            void CalcularEdad() {
+            time_t now = time(0);
+            tm* localTime = localtime(&now);
+            int currentYear = 1900 + localTime->tm_year;
+            this->Edad = currentYear - this->AñoNacimiento;
+            if (localTime->tm_mon + 1 < this->MesNacimiento || 
+                (localTime->tm_mon + 1 == this->MesNacimiento && localTime->tm_mday < this->DiaNacimiento)) {
+                this->Edad--;
+            }
+            }
+            
             void CalcularIMS(){
                 this->IMS = this->Peso / (pow(this->Altura, 2));
             }
@@ -207,8 +219,8 @@ class PACIENTE : public PERSONA{
             int getDiaNacimiento(){return this->DiaNacimiento;}
             int getMesNacimiento(){return this->MesNacimiento;}
             int getAñoNacimiento(){return this->AñoNacimiento;}
-            int getEdad(){return this-> Edad;}
             double getIMS(){return this->IMS;}
+            int getEdad(){return Edad;}
             double getAltura(){return this->Altura;}
             double getPeso(){return this->Peso;}
             string getTipoSangre(){return this->TipoSangre;}
@@ -271,6 +283,15 @@ int main() {
     std::cout << "Peso: "<< UnPaciente.getPeso() << '\n';
     std::cout <<  "El indice de Masa Corporal (IMS): " << UnPaciente.getIMS() << '\n';
     
+    UnPaciente.setDiaNacimiento(8);
+    UnPaciente.setMesNacimiento(9);
+    UnPaciente.setAñoNacimiento(2004);
+
+    UnPaciente.CalcularEdad();
+
+    UnPaciente.getEdad();
+    //end
+
 
     return 0;
 }
