@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include <cmath>
+#include <cmath> //Para poder elevar al cuadrado
+#include <fstream>
 
 using std::string;
 using std::cout;
@@ -9,7 +10,9 @@ using std::endl;
 using std::setprecision;
 using std::setw;
 using std::fixed;
-using std::pow;
+using std::pow; //Para poder elevar al cuadrado
+using std::fstream;
+
 
 string UserInput;
 
@@ -288,15 +291,15 @@ class MEDICO : public PERSONA{
     protected:
     string Especialidad;
     string NumeroColegiado;
-    double tarifa= 0.00;
+    double Tarifa= 0.00;
     
     public:
     //metodo constructor
-    MEDICO(string Especialidad, string NumeroColegiado, double tarifa){
+    MEDICO(string Especialidad, string NumeroColegiado, double Tarifa){
     
     this-> Especialidad = Especialidad;
     this-> NumeroColegiado = NumeroColegiado;
-    this-> tarifa = tarifa;
+    this-> Tarifa = Tarifa;
 
     }
     
@@ -311,8 +314,8 @@ class MEDICO : public PERSONA{
         this-> NumeroColegiado = NumeroColegiado;
     }
 
-    void settarifa(double tarifa){
-       this->tarifa = tarifa;
+    void setTarifa(double Tarifa){
+       this->Tarifa = Tarifa;
     }
 
     // Metodos Get:
@@ -322,8 +325,8 @@ class MEDICO : public PERSONA{
     string getNumeroColegiado(){
         return this-> NumeroColegiado;
     }
-    double gettarifa(){
-        return this->tarifa;
+    double getTarifa(){
+        return this->Tarifa;
     }
 
 
@@ -385,28 +388,36 @@ int main() {
     
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
     
-    EXPEDIENTE expediente;
-
-    //Set
-    expediente.setNumeroExpediente(1);
-    //Get
-    std::cout << "No. Expediente: " << expediente.getNumeroExpediente() << '\n';
-
-
-    MEDICO Manuel;
-
-    //Set
-    Manuel.setEspecialidad("Urologia");
-    Manuel.setNumeroColegiado("1205-0984-06549");
-    Manuel.settarifa(20000.00);
-
-    //Get
-    std::cout << "Especialidad: " << Manuel.getEspecialidad() << std::endl;
-    std::cout << "No. Colegiado: " << Manuel.getNumeroColegiado() << std::endl;
-    std::cout << "Tarifa: " << Manuel.gettarifa() << std::endl;
+    ////------------------/////
     
+    //Variables
+    fstream file; 
+    string address = "Datos_Pacientes.txt";
+    string temp;
+    //Instancias
+    PACIENTE P1;
+    
+    
+    
+    
+    file.open(address, fstream::app);
+    if(file.is_open()){
+        std::cout << "Ingrese el nombre del paciente: " << '\n';
+        std::cin >> temp; P1.setNombre(temp); //Poner lo que el usuario pone en set Nombre. Uso una variable temporal para ayudarme.
+        file << P1.getNombre() << '\n';
+          
+        std::cout << "Ingrese su primer apellido: " << '\n';
+        std::cin >> temp; P1.setApellidoA(temp);
+        file << P1.getApellidoA() << '\n';
 
+        
+        // std::cout << "Ingrese su segundo apellido: " << '\n';
+
+
+        file.close();
+    }
    
+    
 
 
 
