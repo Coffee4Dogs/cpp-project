@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <fstream>
 
 using std::string;
 using std::cout;
@@ -10,11 +11,13 @@ using std::setprecision;
 using std::setw;
 using std::fixed;
 using std::pow;
+using std::fstream;
 
 string UserInput;
 
 class PERSONA{
     protected:
+        static int INST_PERSONA;
         string Identidad = "-1";
         int Telefono = -1;
         string Nombre = "-1";
@@ -31,58 +34,66 @@ class PERSONA{
         this->ApellidoB = ApellidoB;
     }
 
+    //Crear una instancia del Paciente
+        int CrearPersona(){
+            return INST_PERSONA++;
+
+        }
+
     //Metodos Set
-    void setIdentidad(string Identidad){
-        this->Identidad = Identidad;
-    }
+        // Set Atributos:
+        void setIdentidad(string Identidad){
+            this->Identidad = Identidad;
+        }
 
-    void setTelefono(int Telefono){
-        this->Telefono = Telefono;
-    }
+        void setTelefono(int Telefono){
+            this->Telefono = Telefono;
+        }
 
-    void setNombre(string Nombre){
-        this->Nombre = Nombre;
-    }
+        void setNombre(string Nombre){
+            this->Nombre = Nombre;
+        }
 
-    void setApellidoA(string ApellidoA){
-        this->ApellidoA = ApellidoA;
-    }
+        void setApellidoA(string ApellidoA){
+            this->ApellidoA = ApellidoA;
+        }
 
-    void setApellidoB(string ApellidoB){
-        this->ApellidoB = ApellidoB;
-    }
+        void setApellidoB(string ApellidoB){
+            this->ApellidoB = ApellidoB;
+        }
 
-    //Otros Set:
-    void setPersona(string Identidad, int Telefono, string Nombre, string ApellidoA, string ApellidoB){
-        this->Identidad = Identidad;
-        this->Telefono = Telefono;
-        this->Nombre = Nombre;
-        this->ApellidoA = ApellidoA;
-        this->ApellidoB = ApellidoB;
-    }
+        //Otros Set:
+        void setPersona(string Identidad, int Telefono, string Nombre, string ApellidoA, string ApellidoB){
+            this->Identidad = Identidad;
+            this->Telefono = Telefono;
+            this->Nombre = Nombre;
+            this->ApellidoA = ApellidoA;
+            this->ApellidoB = ApellidoB;
+        }
 
 
 
     // Metodos Get
-    string getIdentidad(){
-        return this->Identidad;
-    }
+        //Atributos:
+        string getIdentidad(){
+            return this->Identidad;
+        }
 
-    int getTelefono(){
-        return this->Telefono;
-    }
+        int getTelefono(){
+            return this->Telefono;
+        }
 
-    string getNombre(){
-        return this->Nombre;
-    }
+        string getNombre(){
+            return this->Nombre;
+        }
 
-    string getApellidoA(){
-        return this->ApellidoA;
-    }
+        string getApellidoA(){
+            return this->ApellidoA;
+        }
 
-    string getApellidoB(){
-        return this->ApellidoB;
-    }
+        string getApellidoB(){
+            return this->ApellidoB;
+        }
 
     //Imprimir Atributos Pantalla en void (util para depurar):
     void PrintPersona(){
@@ -105,8 +116,13 @@ class PERSONA{
 
 }; //Fin de la clase PERSONA
 
+int PERSONA :: INST_PERSONA = 1;
+
 class PACIENTE : public PERSONA{
+    private:
+        static int INST_PACIENTE;
     protected:
+        
         string Nacimiento;
         int DiaNacimiento;
         int MesNacimiento; //Diciembre or diciembre or 12
@@ -146,71 +162,79 @@ class PACIENTE : public PERSONA{
             this-> Direccion = Direccion;
         }
 
+        //Crear una instancia del Paciente
+        int CrearPaciente(){
+            return INST_PACIENTE++;
+
+        }
+
         
 
         
 
         // Metodos Set:
-        void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento; CalcularEdad();}
-        void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;CalcularEdad();}
-        void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;CalcularEdad();}
-        void setAñoNacimiento(int AñoNacimiento){this->AñoNacimiento = AñoNacimiento;}
-        void setEdad(int Edad){this-> Edad = Edad;}
-        void setAltura(double Altura){
-            this->Altura = Altura;
-            CalcularIMS(); //Al establecer una Altura (Metros) luego se calcula el IMS.
-        }
-        void setPeso(double Peso){
-            this->Peso = Peso;
-            CalcularIMS();  //Al establecer un Peso(KG) luego se calcula el IMS.
-        }
-        void setTipoSangre(string TipoSangre){this->TipoSangre = TipoSangre;}
-        void setCita(string Cita){this-> Cita = Cita;}
-        void setDiaCita(int DiaCita){this-> DiaCita = DiaCita;}
-        void setHoraCita(int HoraCita){this-> HoraCita = HoraCita;}
-        void setMinutoCita(int MinutoCita){this-> MinutoCita = MinutoCita;}
-        void setAntecedentes(string Antecedentes){this->Antecedentes = Antecedentes;}
-        void setEnfermedadActual(string EnfermedadActual){this-> EnfermedadActual = EnfermedadActual;}
-        void setDireccion(string Direccion){this-> Direccion = Direccion;}
-        
-        
-        //Calculos:
-        void CalcularEdad() {
-        time_t now = time(0);
-        tm* localTime = localtime(&now);
-        int currentYear = 1900 + localTime->tm_year;
-        this->Edad = currentYear - this->AñoNacimiento;
-        if (localTime->tm_mon + 1 < this->MesNacimiento || 
-            (localTime->tm_mon + 1 == this->MesNacimiento && localTime->tm_mday < this->DiaNacimiento)) {
-            this->Edad--;
-        }
-        }
-        
-        void CalcularIMS(){
-            this->IMS = this->Peso / (pow(this->Altura, 2));
-        }
+            // Atributos
+            void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento; CalcularEdad();}
+            void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;CalcularEdad();}
+            void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;CalcularEdad();}
+            void setAñoNacimiento(int AñoNacimiento){this->AñoNacimiento = AñoNacimiento;}
+            void setEdad(int Edad){this-> Edad = Edad;}
+            void setAltura(double Altura){
+                this->Altura = Altura;
+                CalcularIMS(); //Al establecer una Altura (Metros) luego se calcula el IMS.
+            }
+            void setPeso(double Peso){
+                this->Peso = Peso;
+                CalcularIMS();  //Al establecer un Peso(KG) luego se calcula el IMS.
+            }
+            void setTipoSangre(string TipoSangre){this->TipoSangre = TipoSangre;}
+            void setCita(string Cita){this-> Cita = Cita;}
+            void setDiaCita(int DiaCita){this-> DiaCita = DiaCita;}
+            void setHoraCita(int HoraCita){this-> HoraCita = HoraCita;}
+            void setMinutoCita(int MinutoCita){this-> MinutoCita = MinutoCita;}
+            void setAntecedentes(string Antecedentes){this->Antecedentes = Antecedentes;}
+            void setEnfermedadActual(string EnfermedadActual){this-> EnfermedadActual = EnfermedadActual;}
+            void setDireccion(string Direccion){this-> Direccion = Direccion;}
+            
+            
+            //Calculos y Otros Metodos:
+            void CalcularEdad() {
+            time_t now = time(0);
+            tm* localTime = localtime(&now);
+            int currentYear = 1900 + localTime->tm_year;
+            this->Edad = currentYear - this->AñoNacimiento;
+            if (localTime->tm_mon + 1 < this->MesNacimiento || 
+                (localTime->tm_mon + 1 == this->MesNacimiento && localTime->tm_mday < this->DiaNacimiento)) {
+                this->Edad--;
+            }
+            }
+            
+            void CalcularIMS(){
+                this->IMS = this->Peso / (pow(this->Altura, 2));
+            }
 
-        //Otros metodos set no necesarios (solo para depurar)
-        void setPaciente(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad, double IMS, double Altura, double Peso, string TipoSangre, string Cita, int DiaCita, int HoraCita, int MinutoCita, string Antecedentes, string EnfermedadActual, string Direccion){
-            this-> Nacimiento = Nacimiento;
-            this-> DiaNacimiento = DiaNacimiento;
-            this-> MesNacimiento = MesNacimiento;
-            this-> AñoNacimiento = AñoNacimiento;
-            this-> Edad = Edad;
-            this-> IMS = IMS;
-            this-> Altura = Altura;
-            this-> Peso = Peso;
-            this-> TipoSangre = TipoSangre;
-            this-> Cita = Cita;
-            this-> DiaCita = DiaCita;
-            this-> HoraCita = HoraCita;
-            this-> MinutoCita = MinutoCita;
-            this-> Antecedentes = Antecedentes;
-            this-> EnfermedadActual = EnfermedadActual;
-            this-> Direccion = Direccion;
-        }
+            //Set todos atributos 
+            void setPaciente(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad, double IMS, double Altura, double Peso, string TipoSangre, string Cita, int DiaCita, int HoraCita, int MinutoCita, string Antecedentes, string EnfermedadActual, string Direccion){
+                this-> Nacimiento = Nacimiento;
+                this-> DiaNacimiento = DiaNacimiento;
+                this-> MesNacimiento = MesNacimiento;
+                this-> AñoNacimiento = AñoNacimiento;
+                this-> Edad = Edad;
+                this-> IMS = IMS;
+                this-> Altura = Altura;
+                this-> Peso = Peso;
+                this-> TipoSangre = TipoSangre;
+                this-> Cita = Cita;
+                this-> DiaCita = DiaCita;
+                this-> HoraCita = HoraCita;
+                this-> MinutoCita = MinutoCita;
+                this-> Antecedentes = Antecedentes;
+                this-> EnfermedadActual = EnfermedadActual;
+                this-> Direccion = Direccion;
+            }
 
         // Metodos Get:
+            // Atributos
             string getNacimiento(){return this->Nacimiento;}
             int getDiaNacimiento(){return this->DiaNacimiento;}
             int getMesNacimiento(){return this->MesNacimiento;}
@@ -228,8 +252,9 @@ class PACIENTE : public PERSONA{
             string getEnfermedadActual(){return this-> EnfermedadActual;}
             string getDireccion(){return this-> Direccion;}
 
-            //PrintPaciente - (solo para depurar)
+            //PrintPaciente - Imprime todos los atributos del paciente para depurar el codigo.
             void PrintPaciente(){
+
                 std::cout << "Nacimiento: " <<Nacimiento << '\n';
                 std::cout << "DiaNacimiento: " <<DiaNacimiento << '\n';
                 std::cout << "MesNacimiento: " <<MesNacimiento << '\n';
@@ -247,6 +272,13 @@ class PACIENTE : public PERSONA{
                 std::cout << "EnfermedadActual: " <<EnfermedadActual << '\n';
                 std::cout << "Direccion: " <<Direccion << std::endl;
             }
+            
+            
+
+
+
+
+
 
         // Metodo Vacio
         PACIENTE(){}
@@ -255,83 +287,19 @@ class PACIENTE : public PERSONA{
         ~PACIENTE(){}
 };
 
-
-class EXPEDIENTE : public PACIENTE{
-    protected:
-    int NumeroExpediente;
-
-    public:
-    //Constructor:
-    EXPEDIENTE(int NumeroExpediente){
-        this->NumeroExpediente = NumeroExpediente;
-    }
-
-    //Metodo Set:
-    void setNumeroExpediente(int NumeroExpediente){
-        this-> NumeroExpediente = NumeroExpediente;
-    }
-
-    //Metodos Get:
-    int getNumeroExpediente(){
-        return this->NumeroExpediente;
-    }
+int PACIENTE :: INST_PACIENTE = 1;
 
 
-    //Metodo sin nada.
-    EXPEDIENTE(){}
-
-    //Destructor
-    ~EXPEDIENTE(){}
-};
-
-class MEDICO : public PERSONA{
-    protected:
-    string Especialidad;
-    string NumeroColegiado;
-    int tarifa= 0.00;
-    
-    //Metodo sin nada.
-    MEDICO(){
-        
-
-    }
-    //metodo constructor
-    MEDICO(string Especialidad, string NumeroColegiado, int tarifa){
-    
-    this-> Especialidad = Especialidad;
-    this-> NumeroColegiado = NumeroColegiado;
-    this-> tarifa = tarifa;
-
-    }
-
-    string setEspecialidad(string Espcialidad){
-        return Especialidad;
-    }
-    
-    ~MEDICO(){}
-
-
-
-
-
-};
-
-
-
-
-// -Despliega las opciones del menu.
 void DisplayMainMenu(){
     std::cout << "- Crear Usuario: New, Nuevo, 0000." << std::endl;
     std::cout << "- Buscar Usuario: <Numero Identidad>" << std::endl;
     std::cout << "- Salir/Exit" << std::endl;
 }
 
-
-// -MENU: Funcion que pregunta al usuario que opcion quiere.
 void PreguntarUsuario(){
     int c = 0;
     while(c < 1){
-        // -Crear Usuario
+        //Crear Usuario
         DisplayMainMenu();
         std::getline(std::cin, UserInput);
         if(
@@ -358,20 +326,47 @@ void PreguntarUsuario(){
 
 
 
-
-
 int main() {
-    
-    cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
-    
-    EXPEDIENTE expediente;
+    PACIENTE Usuario;
 
-    expediente.setNumeroExpediente(1);
-    std::cout << expediente.getNumeroExpediente() << '\n';
-    
-    
+    // Generar e imprimir instancias
+    // for (int i = 0; i < 5; ++i) {
+    //     int Pasiente = Jose.CrearPaciente();
+    //     std::cout << "Persona generada: " << Pasiente << std::endl;
+
+    // }
     
 
+    int Menu;
+    int c = 0;
+    while(c > 0){
+        std::cout << "1. Crear Usuario" << '\n';
+        std::cout << "2. Salir" << '\n';
+        std::cin  >> Menu;
+        switch (Menu){
+        case 1:
+            // Crear Usuario
+            int Nuevo_Paciente = Usuario.CrearPaciente();
+            std::cout << Nuevo_Paciente << '\n';
+            break;
 
+        case 2:
+            // Salir
+            c = 1;
+            std::cout << "Salir" << '\n';
+            break;
+        
+        default:
+            std::cout << "Otra Opcion" << '\n';
+            break;
+        }
+
+    }
+    
+    
     return 0;
 }
+
+
+
+
