@@ -288,11 +288,11 @@ class MEDICO : public PERSONA{
     protected:
     string Especialidad;
     string NumeroColegiado;
-    int tarifa= 0.00;
+    double tarifa= 0.00;
     
     public:
     //metodo constructor
-    MEDICO(string Especialidad, string NumeroColegiado, int tarifa){
+    MEDICO(string Especialidad, string NumeroColegiado, double tarifa){
     
     this-> Especialidad = Especialidad;
     this-> NumeroColegiado = NumeroColegiado;
@@ -300,7 +300,7 @@ class MEDICO : public PERSONA{
 
     }
     
-    //METODOS SET 
+    //Metodos Set: 
     void setEspecialidad(string Especialidad){
          this-> Especialidad = Especialidad;
 
@@ -311,8 +311,19 @@ class MEDICO : public PERSONA{
         this-> NumeroColegiado = NumeroColegiado;
     }
 
-    void settarifa(int tarifa){
+    void settarifa(double tarifa){
        this->tarifa = tarifa;
+    }
+
+    // Metodos Get:
+    string getEspecialidad(){
+        return this-> Especialidad;
+    }
+    string getNumeroColegiado(){
+        return this-> NumeroColegiado;
+    }
+    double gettarifa(){
+        return this->tarifa;
     }
 
 
@@ -376,11 +387,26 @@ int main() {
     
     EXPEDIENTE expediente;
 
+    //Set
     expediente.setNumeroExpediente(1);
-    std::cout << expediente.getNumeroExpediente() << '\n';
+    //Get
+    std::cout << "No. Expediente: " << expediente.getNumeroExpediente() << '\n';
 
 
     MEDICO Manuel;
+
+    //Set
+    Manuel.setEspecialidad("Urologia");
+    Manuel.setNumeroColegiado("1205-0984-06549");
+    Manuel.settarifa(20000.00);
+
+    //Get
+    std::cout << "Especialidad: " << Manuel.getEspecialidad() << std::endl;
+    std::cout << "No. Colegiado: " << Manuel.getNumeroColegiado() << std::endl;
+    std::cout << "Tarifa: " << Manuel.gettarifa() << std::endl;
+    
+
+   
 
 
 
