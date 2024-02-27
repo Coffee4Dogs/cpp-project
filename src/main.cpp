@@ -290,11 +290,7 @@ class MEDICO : public PERSONA{
     string NumeroColegiado;
     int tarifa= 0.00;
     
-    //Metodo sin nada.
-    MEDICO(){
-        
-
-    }
+    public:
     //metodo constructor
     MEDICO(string Especialidad, string NumeroColegiado, int tarifa){
     
@@ -303,16 +299,30 @@ class MEDICO : public PERSONA{
     this-> tarifa = tarifa;
 
     }
-
-    string setEspecialidad(string Espcialidad){
-        return Especialidad;
-    }
     
+    //METODOS SET 
+    void setEspecialidad(string Especialidad){
+         this-> Especialidad = Especialidad;
+
+
+    }
+
+    void setNumeroColegiado (string NumeroColegiado){
+        this-> NumeroColegiado = NumeroColegiado;
+    }
+
+    void settarifa(int tarifa){
+       this->tarifa = tarifa;
+    }
+
+
+
+
+    //Metodo sin nada.
+    MEDICO(){}
+    
+    //Destructor
     ~MEDICO(){}
-
-
-
-
 
 };
 
@@ -368,6 +378,15 @@ int main() {
 
     expediente.setNumeroExpediente(1);
     std::cout << expediente.getNumeroExpediente() << '\n';
+
+
+    MEDICO Manuel;
+
+
+
+    
+
+    
     
     
     
