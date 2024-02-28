@@ -394,6 +394,8 @@ int main() {
     fstream file; 
     string address = "Datos_Pacientes.txt";
     string temp;
+    int itemp;
+    int count = 0;
     //Instancias
     PACIENTE P1;
     
@@ -402,17 +404,91 @@ int main() {
     
     file.open(address, fstream::app);
     if(file.is_open()){
-        std::cout << "Ingrese el nombre del paciente: " << '\n';
-        std::cin >> temp; P1.setNombre(temp); //Poner lo que el usuario pone en set Nombre. Uso una variable temporal para ayudarme.
-        file << P1.getNombre() << '\n';
-          
-        std::cout << "Ingrese su primer apellido: " << '\n';
-        std::cin >> temp; P1.setApellidoA(temp);
-        file << P1.getApellidoA() << '\n';
+
+        //Nombre
+            std::cout << "Ingrese el nombre del paciente: " << '\n';
+            std::cin >> temp; P1.setNombre(temp);
+            file << P1.getNombre() << '\n';
+        //ApellidoA
+            std::cout << "Ingrese su primer apellido: " << '\n';
+            std::cin >> temp; P1.setApellidoA(temp);
+            file << P1.getApellidoA() << '\n';
+            //---------NO TESTEADO ------------------
+        //ApellidoB
+            std::cout << "Ingrese su segundo apellido: " << '\n';
+            std::cin >> temp; P1.setApellidoB(temp);
+            file << P1.getApellidoB() << '\n';
+        //IDENTIDAD
+            std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
+            std::cin >> temp; P1.setIdentidad(temp);
+            file << P1.getIdentidad() << '\n';
+
+            // ------Josue-----------
+            // string Identidad = "-1";
+            // int Telefono = -1;
+            // string Nacimiento;
+            // int DiaNacimiento;
+            // int MesNacimiento; //Diciembre or diciembre or 12
+            // int AñoNacimiento;
+            // int Edad;
+            // double IMS = -1;         //(Índice de Masa Corporal)
+
+            //-------- Jack------
+            // double Altura;  //Edad Altura(m)
+            // double Peso;    //(KG)
+            // string TipoSangre; // A+, A-, B, AB, O, etc...
+            // string Cita;        //Una cita contiene dia, hora y minuto:
+            // int DiaCita;
+            
+        //HoraCita
+            count = 0;
+            while(count < 1){
+                std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
+                std::cin >> itemp; 
+                // if((itemp >= 0) && (itemp <= 24)){
+                //     count = 1;
+                // }
+                // else{
+                //     count = -1;
+                // }
+                ((itemp >= 0) && (itemp <= 24)) ? count = 1 : count = -1;
+
+                P1.setHoraCita(itemp);
+                
+                file << P1.getHoraCita() << '\n';
+            }
+
+            // int MinutoCita;
+            // string Antecedentes;            //Total de enfermedades.
+            // string EnfermedadActual;    //<-- Esto tiene que ir el expediente
 
         
-        // std::cout << "Ingrese su segundo apellido: " << '\n';
+        //MinutoCita
+            count = 0;
+            while(count < 1){
+                std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
+                std::cin >> itemp;
+                // if((itemp >= 0) && (itemp <= 59)){
+                //     count = 1;
+                // }
+                // else{
+                //     count = -1;
+                // }   
 
+                (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
+                //El usuario puso una hora entre 0 a 59?
+                P1.setMinutoCita(itemp);
+                file << P1.getMinutoCita() << '\n';
+            }
+
+            
+            
+
+        
+        //Direccion
+            std::cout << "Ingrese la direccion del paciente: " << '\n';
+            std::cin >> temp; P1.setDireccion(temp);
+            file << P1.getDireccion() << '\n';
 
         file.close();
     }
