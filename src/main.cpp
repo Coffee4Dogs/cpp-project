@@ -15,6 +15,7 @@ using std::fstream;
 
 
 string UserInput;
+string GruposSanguineos[8] = {"A+"," A-", "B+", "B-", "AB+", "AB-", "O+" ,"O-"};
 
 class PERSONA{
     protected:
@@ -392,10 +393,15 @@ int main() {
     
     //Variables
     fstream file; 
-    string address = "Datos_Pacientes.txt";
-    string temp;
-    int itemp;
+    string address = "Datos_Pacientes.txt"; 
+
+    //Variables temporales:
+        string stemp = "";      //Variale stemporal para guardar cualquier string.
+        int itemp = 0;         //variable stemporal para guardar cualquier int.
+        double dtemp = 0.0;     //Variable temporal para guardar cualquier double.
+
     int count = 0;
+    
     //Instancias
     PACIENTE P1;
     
@@ -407,73 +413,60 @@ int main() {
 
         //Nombre
             std::cout << "Ingrese el nombre del paciente: " << '\n';
-            std::cin >> temp; P1.setNombre(temp);
+            std::cin >> stemp; P1.setNombre(stemp);
             file << P1.getNombre() << '\n';
         //ApellidoA
             std::cout << "Ingrese su primer apellido: " << '\n';
-            std::cin >> temp; P1.setApellidoA(temp);
+            std::cin >> stemp; P1.setApellidoA(stemp);
             file << P1.getApellidoA() << '\n';
             //---------NO TESTEADO ------------------
         //ApellidoB
             std::cout << "Ingrese su segundo apellido: " << '\n';
-            std::cin >> temp; P1.setApellidoB(temp);
+            std::cin >> stemp; P1.setApellidoB(stemp);
             file << P1.getApellidoB() << '\n';
         //IDENTIDAD
             std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
-            std::cin >> temp; P1.setIdentidad(temp);
+            std::cin >> stemp; P1.setIdentidad(stemp);
             file << P1.getIdentidad() << '\n';
 
-            // ------Josue-----------
-            // string Identidad = "-1";
-            // int Telefono = -1;
-            // string Nacimiento;
-            // int DiaNacimiento;
-            // int MesNacimiento; //Diciembre or diciembre or 12
-            // int AñoNacimiento;
-            // int Edad;
-            // double IMS = -1;         //(Índice de Masa Corporal)
 
             //-------- Jack------
             // double Altura;  //Edad Altura(m)
             // double Peso;    //(KG)
-            // string TipoSangre; // A+, A-, B, AB, O, etc...
-            // string Cita;        //Una cita contiene dia, hora y minuto:
-            // int DiaCita;
+
             
+        //Altura
+            std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
+            std::cin >> dtemp; P1.setAltura(dtemp);
+            file << P1.getAltura() << '\n';
+
+        //Altura
+            std::cout << "Ingrese el peso en Kilogramos (Sistema Internacional): " << '\n';
+            std::cin >> dtemp; P1.setPeso(dtemp);
+            file << P1.getPeso() << '\n';
+        
+        //IMS
+            file << P1.getIMS() << '\n';
+
+
         //HoraCita
             count = 0;
             while(count < 1){
                 std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
                 std::cin >> itemp; 
-                // if((itemp >= 0) && (itemp <= 24)){
-                //     count = 1;
-                // }
-                // else{
-                //     count = -1;
-                // }
-                ((itemp >= 0) && (itemp <= 24)) ? count = 1 : count = -1;
+                ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
 
                 P1.setHoraCita(itemp);
                 
                 file << P1.getHoraCita() << '\n';
             }
 
-            // int MinutoCita;
-            // string Antecedentes;            //Total de enfermedades.
-            // string EnfermedadActual;    //<-- Esto tiene que ir el expediente
-
-        
         //MinutoCita
             count = 0;
             while(count < 1){
                 std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
                 std::cin >> itemp;
-                // if((itemp >= 0) && (itemp <= 59)){
-                //     count = 1;
-                // }
-                // else{
-                //     count = -1;
-                // }   
+                  
 
                 (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
                 //El usuario puso una hora entre 0 a 59?
@@ -481,15 +474,24 @@ int main() {
                 file << P1.getMinutoCita() << '\n';
             }
 
-            
-            
-
-        
-        //Direccion
-            std::cout << "Ingrese la direccion del paciente: " << '\n';
-            std::cin >> temp; P1.setDireccion(temp);
-            file << P1.getDireccion() << '\n';
-
+        //Grupo Sanguineo
+            count = 0;
+            while(count < 1){
+                std::cout << "Seleccione un grupo sanguineo:" << '\n';
+                std::cout << "Opciones: ";
+                for(string i : GruposSanguineos){
+                    std::cout << i << ", ";
+                }
+                std::cin >> stemp;
+                if(stemp == "A+" || stemp == "A-" || stemp == "B+" || stemp == "B-" || stemp == "AB+" || stemp == "AB-" || stemp == "O+" || stemp == "O-"){
+                    count = 1;
+                }
+                else{
+                    count = -1;
+                }
+            }
+            P1.setTipoSangre(stemp);
+            file << P1.getTipoSangre() << '\n';
         file.close();
     }
    
