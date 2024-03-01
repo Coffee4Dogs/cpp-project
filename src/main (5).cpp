@@ -261,7 +261,6 @@ class PACIENTE : public PERSONA{
         ~PACIENTE(){}
 };
 
-
 class EXPEDIENTE : public PACIENTE{
     protected:
     int NumeroExpediente;
@@ -309,8 +308,6 @@ class MEDICO : public PERSONA{
     //Metodos Set: 
     void setEspecialidad(string Especialidad){
          this-> Especialidad = Especialidad;
-
-
     }
 
     void setNumeroColegiado (string NumeroColegiado){
@@ -367,7 +364,6 @@ void PreguntarUsuario(){
                 ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'u') || (UserInput.at(1) == 'U')) && ((UserInput.at(2) == 'e') || (UserInput.at(2) == 'E')) && ((UserInput.at(3) == 'v') || (UserInput.at(3) == 'V')) && ((UserInput.at(4) == 'o') || (UserInput.at(4) == 'O'))
             ){
             std::cout << "Seleccionaste la opcion Crear Usuario." << '\n';
-            
         }
 
         //Exit, Salir 
@@ -376,12 +372,15 @@ void PreguntarUsuario(){
                 ((UserInput.at(0) == 's') || (UserInput.at(0) == 'S')) && ((UserInput.at(1) == 'a') || (UserInput.at(1) == 'A')) && ((UserInput.at(2) == 'l') || (UserInput.at(2) == 'L')) && ((UserInput.at(3) == 'i') || (UserInput.at(3) == 'I')) && ((UserInput.at(4) == 'r') || (UserInput.at(4) == 'R'))
             ){
             std::cout << "Seleccionaste la opcion Salir." << '\n';
+
         }
         else{
             std::cout << "Buscando usuario: " << UserInput << '\n'; 
         }
     }
 }
+
+
 
 
 
@@ -528,12 +527,13 @@ void CrearPaciente(){
 
 int main() {
     
+    
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
     
     ////------------------/////
     
 
-    CrearPaciente();
+    
 
 
 
