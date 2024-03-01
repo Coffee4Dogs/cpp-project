@@ -405,9 +405,7 @@ int main() {
     //Instancias
     PACIENTE P1;
     
-    
-    
-    
+
     file.open(address, fstream::app);
     if(file.is_open()){
 
@@ -428,7 +426,6 @@ int main() {
             std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
             std::cin >> stemp; P1.setIdentidad(stemp);
             file << P1.getIdentidad() << '\n';
-
             
         //Altura
             std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
