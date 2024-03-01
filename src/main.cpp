@@ -429,11 +429,6 @@ int main() {
             std::cin >> stemp; P1.setIdentidad(stemp);
             file << P1.getIdentidad() << '\n';
 
-
-            //-------- Jack------
-            // double Altura;  //Edad Altura(m)
-            // double Peso;    //(KG)
-
             
         //Altura
             std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
