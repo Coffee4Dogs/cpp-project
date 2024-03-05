@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cstdlib> //La vamos a usar solamente para limpiar la consola system("cls") <- (clear screen).
 
+
 using std::string;
 using std::cout;
 using std::cin;
@@ -15,6 +16,8 @@ using std::pow; //Para poder elevar al cuadrado
 using std::fstream;
 
 string vrs = "2.2.2 - (Aurora) "; //Current Patch/Version
+
+
 string UserInput;
 string GruposSanguineos[8] = {"A+"," A-", "B+", "B-", "AB+", "AB-", "O+" ,"O-"};
 
@@ -142,12 +145,12 @@ class PACIENTE : public PERSONA{
             this-> Altura = Altura;
             this-> Peso = Peso;
             this-> TipoSangre = TipoSangre;
-           // this-> Cita = Cita; (OPCIONAL)
-            //this-> DiaCita = DiaCita;  (OPCIONAL)
+            this-> Cita = Cita;
+            this-> DiaCita = DiaCita;
             this-> HoraCita = HoraCita;
             this-> MinutoCita = MinutoCita;
             this-> Antecedentes = Antecedentes;
-           // this-> EnfermedadActual = EnfermedadActual;  (ANTEECEDENTES)
+            this-> EnfermedadActual = EnfermedadActual;
             this-> Direccion = Direccion;
         }
 
@@ -156,9 +159,9 @@ class PACIENTE : public PERSONA{
         
 
         // Metodos Set:
-        void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento; }
-        void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;}
-        void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;}
+        void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento; CalcularEdad();}
+        void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;CalcularEdad();}
+        void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;CalcularEdad();}
         void setAñoNacimiento(int AñoNacimiento){this->AñoNacimiento = AñoNacimiento;}
         void setEdad(int Edad){this-> Edad = Edad;}
         void setAltura(double Altura){
@@ -174,9 +177,7 @@ class PACIENTE : public PERSONA{
         void setDiaCita(int DiaCita){this-> DiaCita = DiaCita;}
         void setHoraCita(int HoraCita){this-> HoraCita = HoraCita;}
         void setMinutoCita(int MinutoCita){this-> MinutoCita = MinutoCita;}
-        void setAntecedentes(string Antecedentes){
-            this->Antecedentes = Antecedentes;
-        }
+        void setAntecedentes(string Antecedentes){this->Antecedentes = Antecedentes;}
         void setEnfermedadActual(string EnfermedadActual){this-> EnfermedadActual = EnfermedadActual;}
         void setDireccion(string Direccion){this-> Direccion = Direccion;}
         
@@ -309,6 +310,8 @@ class MEDICO : public PERSONA{
     //Metodos Set: 
     void setEspecialidad(string Especialidad){
          this-> Especialidad = Especialidad;
+
+
     }
 
     void setNumeroColegiado (string NumeroColegiado){
@@ -342,18 +345,73 @@ class MEDICO : public PERSONA{
 };
 
 
+//De mayor a menor.
+void BubbleSort(int array[], int size){
+    int temp;
+    for(int i = 0; i<size-1; i++){
+        for(int j = 0; j < size - i - 1; j++){
+            if(array[j]<array[j+1]){
+                temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+            } 
+        }
+    }
+}
 
+// -Despliega las opciones del menu.
+void DisplayMainMenu(){
+    std::cout << "- Crear Usuario: New, Nuevo." << std::endl;
+    std::cout << "- Buscar Usuario: <Numero Identidad>" << std::endl;
+    std::cout << "- Salir/Exit" << std::endl;
+}
 
+// -MENU: Funcion que pregunta al usuario que opcion quiere.
+void PreguntarUsuario(){
+    int c = 0;
+    while(c < 1){
+        // -Crear Usuario
+        DisplayMainMenu();
+        std::getline(std::cin, UserInput);
+        if(
+                (UserInput.at(0) == '0') && (UserInput.at(1) == '0') && (UserInput.at(2) == '0') && (UserInput.at(3) == '0') ||
+                ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'e') || (UserInput.at(1) == 'E')) && ((UserInput.at(2) == 'w') || (UserInput.at(2) == 'W')) ||
+                ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'u') || (UserInput.at(1) == 'U')) && ((UserInput.at(2) == 'e') || (UserInput.at(2) == 'E')) && ((UserInput.at(3) == 'v') || (UserInput.at(3) == 'V')) && ((UserInput.at(4) == 'o') || (UserInput.at(4) == 'O'))
+            ){
+            std::cout << "Seleccionaste la opcion Crear Usuario." << '\n';
+            
+        }
 
+        //Exit, Salir 
+        else if(
+                ((UserInput.at(0) == 'E') || (UserInput.at(0) == 'e')) && ((UserInput.at(1) == 'x') || (UserInput.at(1) == 'X')) && ((UserInput.at(2) == 'i') || (UserInput.at(2) == 'I')) && ((UserInput.at(3) == 't') || (UserInput.at(3) == 'T')) ||
+                ((UserInput.at(0) == 's') || (UserInput.at(0) == 'S')) && ((UserInput.at(1) == 'a') || (UserInput.at(1) == 'A')) && ((UserInput.at(2) == 'l') || (UserInput.at(2) == 'L')) && ((UserInput.at(3) == 'i') || (UserInput.at(3) == 'I')) && ((UserInput.at(4) == 'r') || (UserInput.at(4) == 'R'))
+            ){
+            std::cout << "Seleccionaste la opcion Salir." << '\n';
+        }
+        else{
+            std::cout << "Buscando usuario: " << UserInput << '\n'; 
+        }
+    }
+}
 
+string CCipher(int shift, string line){
+    // ----------  Caesar Cipher Encryption  -----------
+        //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
+        //-Line: El texto que se quiere encriptar.
+    string NewLine = "";
+    int size = line.size();
+    char temp;
 
+    for(int i = 0; i < size; i++){
+        temp = line.at(i);
+        temp = temp + shift;
+        NewLine = NewLine + temp;
+    }
+    return NewLine;
+}
 
-
-
-
-
-void CrearPaciente(){
-    //Code
+void CrearUsuario(){
     
     //Variables
     fstream file; 
@@ -361,9 +419,9 @@ void CrearPaciente(){
 
     //Variables temporales:
         string stemp = "";      //Variale stemporal para guardar cualquier string.
-        int itemp = 0;          //variable stemporal para guardar cualquier int.
+        int itemp = 0;         //variable stemporal para guardar cualquier int.
         double dtemp = 0.0;     //Variable temporal para guardar cualquier double.
-        
+
     int count = 0;
     
     //Instancias
@@ -373,59 +431,63 @@ void CrearPaciente(){
     file.open(address, fstream::app);
     if(file.is_open()){
 
-        //IDENTIDAD
-            std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
-            std::cin >> stemp; P1.setIdentidad(stemp);
-            file << P1.getIdentidad() << ' ';
-        // Telefono
-            std::cout << "Ingrese el numero de telefono del paciente " << '\n';
-            std::cin >> itemp; P1.setTelefono(itemp);
-            file << P1.getTelefono() << ' ';
         //Nombre
             std::cout << "Ingrese el nombre del paciente: " << '\n';
             std::cin >> stemp; P1.setNombre(stemp);
-            file << P1.getNombre() << ' ';
+            file << P1.getNombre() << '\n';
         //ApellidoA
             std::cout << "Ingrese su primer apellido: " << '\n';
             std::cin >> stemp; P1.setApellidoA(stemp);
-            file << P1.getApellidoA() << ' ';
+            file << P1.getApellidoA() << '\n';
+            //---------NO TESTEADO ------------------
         //ApellidoB
             std::cout << "Ingrese su segundo apellido: " << '\n';
             std::cin >> stemp; P1.setApellidoB(stemp);
-            file << P1.getApellidoB() << ' ';
-        // int DiaNacimiento;
-              count = 0;
-            while(count < 1){
-                std::cout << "Ingrese el dia de su nacimiento (0-31)" << '\n';    
-                std::cin >> itemp; 
-                ((itemp >= 0) && (itemp <= 31)) ? count = 1 : count = -1;
-                P1.setDiaNacimiento(itemp);
-                file << P1.getDiaNacimiento() << ' ';
-            }
-        // int MesNacimiento;
+            file << P1.getApellidoB() << '\n';
+        //IDENTIDAD
+            std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
+            std::cin >> stemp; P1.setIdentidad(stemp);
+            file << P1.getIdentidad() << '\n';
+            
+        //Altura
+            std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
+            std::cin >> dtemp; P1.setAltura(dtemp);
+            file << P1.getAltura() << '\n';
+
+        //Altura
+            std::cout << "Ingrese el peso en Kilogramos (Sistema Internacional): " << '\n';
+            std::cin >> dtemp; P1.setPeso(dtemp);
+            file << P1.getPeso() << '\n';
+        
+        //IMS
+            file << P1.getIMS() << '\n';
+
+
+        //HoraCita
             count = 0;
             while(count < 1){
-                std::cout << "Ingrese el mes de nacimiento (0-12)" << '\n';    
+                std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
                 std::cin >> itemp; 
-                ((itemp >= 0) && (itemp <= 12)) ? count = 1 : count = -1;
-                P1.setMesNacimiento(itemp);
-                file << P1.getMesNacimiento() << ' ';
+                ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
+
+                P1.setHoraCita(itemp);
+                
+                file << P1.getHoraCita() << '\n';
             }
-        // int AñoNacimiento;
-            std::cout << "Ingrese el ano de nacimiento: " << '\n';
-            std::cin >> itemp; P1.setAñoNacimiento(itemp);
-            file << P1.getAñoNacimiento() << ' ';
-            P1.CalcularEdad();
-        // int Edad;
-            file << P1.getEdad() << ' ';
-        //Altura
-            std::cout << "Ingrese la altura en metros (Sistema Internacional): " << '\n';
-            std::cin >> dtemp; P1.setAltura(dtemp);
-            file << P1.getAltura() << ' ';
-        //Peso
-            std::cout << "Ingrese el peso en kilogramos (Sistema Internacional): " << '\n';
-            std::cin >> dtemp; P1.setPeso(dtemp);
-            file << P1.getPeso() << ' ';
+
+        //MinutoCita
+            count = 0;
+            while(count < 1){
+                std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
+                std::cin >> itemp;
+                  
+
+                (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
+                //El usuario puso una hora entre 0 a 59?
+                P1.setMinutoCita(itemp);
+                file << P1.getMinutoCita() << '\n';
+            }
+
         //Grupo Sanguineo
             count = 0;
             while(count < 1){
@@ -443,171 +505,76 @@ void CrearPaciente(){
                 }
             }
             P1.setTipoSangre(stemp);
-            file << P1.getTipoSangre() << ' ';
-        //HoraCita
-            count = 0;
-            while(count < 1){
-                std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
-                std::cin >> itemp; 
-                ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
-                P1.setHoraCita(itemp);
-                file << P1.getHoraCita() << ' ';
-            }
-        //MinutoCita
-            count = 0;
-            while(count < 1){
-                std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
-                std::cin >> itemp;
-                ((itemp >= 0) && (itemp <= 59)) ? count = 1 : count = -1;
-                //El usuario puso una hora entre 0 a 59?
-                P1.setMinutoCita(itemp);
-                file << P1.getMinutoCita() << ' ';
-            }
-        // string Antecedentes;
-            std::cout << "Escriba los antecedentes del paciente. ";
-            count = 0;
-            while(count < 1){
-                std::cout << "Escriba exit/salir para continuar. Escriba una enfermedad para Ingresarla a los antecentes." << '\n';
-                std::cin >> stemp; 
-                if(((stemp.at(0) == 'E') || (stemp.at(0) == 'e')) && ((stemp.at(1) == 'x') || (stemp.at(1) == 'X')) && ((stemp.at(2) == 'i') || (stemp.at(2) == 'I')) && ((stemp.at(3) == 't') || (stemp.at(3) == 'T'))){
-                    count = 1;
-                }
-                else{
-                    stemp = stemp + ", ";
-                    P1.setAntecedentes(stemp);
-                    count = -1;
-                }
-                file << P1.getAntecedentes() << ' ';
-            }
-        //Direccion
-            //Municipio, Ciudad, Calle, Direccion (Sin espacios) (Agregar estos a PERSONA)  
+            file << P1.getTipoSangre() << '\n';
         file.close();
     }
    
     
-
-
-
-
-
-}
-//De mayor a menor.
-void BubbleSort(int array[], int size){
-    int temp;
-    for(int i = 0; i<size-1; i++){
-        for(int j = 0; j < size - i - 1; j++){
-            if(array[j]<array[j+1]){
-                temp = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = temp;
-            } 
-        }
-    }
-}
-
-
-
-// -Despliega las opciones del menu.
-void DisplayMainMenu(){
-    
-    std::cout<<"VERSION         \t\t\t    --version, -version"<<std::endl;
-    std::cout<<"CREAR USUARIO   \t\t\t    -new, -nuevo, mkdir, New User."<<std::endl;
-    std::cout<<"AYUDA           \t\t\t    --help, help, ayuda, aiuda."<<std::endl;
-    std::cout<<"SALIR           \t\t\t    --exit, exit(), salir."<<std::endl;
-}
-
-    // ----------  Caesar Cipher Encryption  -----------
-        //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
-        //-Line: El texto que se quiere encriptar.
-
-string CCipher(int shift, string line){
-    string NewLine = "";
-    int size = line.size();
-    char temp;
-
-    for(int i = 0; i < size; i++){
-        temp = line.at(i);
-        temp = temp + shift;
-        NewLine = NewLine + temp;
-    }
-    return NewLine;
-}
-
-void Hi(){
-    fstream file;   string address = "decoration.txt";
-    file.open(address, fstream::in);
-    string line;
-    if(file.is_open()){
-        for(int i = 0; i < 20; i++){
-            if(i>10){
-                std::getline(file, line);
-                std::cout << line << '\n';
-            }
-            
-        }
-
-        file.close();
-    }
 }
 
 int main() {
-    
     
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
     
     ////------------------/////
     
 
+
+
     
     //--------- MENU ---------
     //Inspirado en los LLM Ref. Andrej Karpathy -> https://www.youtube.com/watch?v=zduSFxRajkE
     //Bag of words:
-    string Nuevo[] = {"ew", "uev", "mkdir"}; //Steaming ->New, Nuevo, mkdir
-    string Help[] = {"elp", "uda"};
-    string Salir[] = {"xit", "alir"};
-    string Version[] = {"ersion"};
-
-    int m = 1; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
+    string Nuevo[] = {"e","w", "uevo"}; //Steaming ->New, Nuevo
+    string Help[] = {"e","lp", "uda"};
+    string Salir[] = {"xit", "a","lir"};
+    string Version[] = {"ers","ion"};
+    
+    int m = 0; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
     
     //Existing Layers:
     int N, n1, n2, n3;
-    int S, s1, s2;
-    int H, h1, h2;
-    int V, v1;
+    int S, s1, s2, s3;
+    int H, h1, h2, h3;
+    int V, v1, v2;
 
 
-    while(m<2){
+    while(m<1){
         std::cout << "\t - $ ";
-        cin >> UserInput;
+        // cin >> UserInput;
+        std::getline(std::cin, UserInput);
         
         //Reset Everything
-        N = 0; n1 = 0; n2 = 0; n3 = 0;
-        S = 0; s1 = 0; s2 = 0;
-        H = 0; h1 = 0; h2 = 0;
-        V = 0; v1 = 0;
+        N = 0; n1 = 0; n2 = 0; n3 = 0; 
+        S = 0; s1 = 0; s2 = 0; s3 = 0;
+        H = 0; h1 = 0; h2 = 0; h3 = 0;
+        V = 0; v1 = 0; v2 = 0;
 
         // Pre-Process:
         //Layer N:
         for(int i = 0; i < Nuevo[0].size(); i++){n1 = UserInput.find(Nuevo[0].at(i));}
         for(int i = 0; i < Nuevo[1].size(); i++){n2 = UserInput.find(Nuevo[1].at(i));}
-        for(int i = 0; i < Nuevo[2].size(); i++){n3 = UserInput.find(Nuevo[2].at(i));}  
-        
+        for(int i = 0; i < Nuevo[2].size(); i++){n3 = UserInput.find(Nuevo[2].at(i));}
+
         //Layer S:
         for(int i = 0; i < Salir[0].size(); i++){s1 = UserInput.find(Salir[0].at(i));}
         for(int i = 0; i < Salir[1].size(); i++){s2 = UserInput.find(Salir[1].at(i));}
+        for(int i = 0; i < Salir[2].size(); i++){s3 = UserInput.find(Salir[2].at(i));}
 
         //Layer H:
         for(int i = 0; i < Help[0].size(); i++){h1 = UserInput.find(Help[0].at(i));}
         for(int i = 0; i < Help[1].size(); i++){h2 = UserInput.find(Help[1].at(i));}
+        for(int i = 0; i < Help[2].size(); i++){h3 = UserInput.find(Help[2].at(i));}
 
         //Layer V:
         for(int i = 0; i < Version[0].size(); i++){v1 = UserInput.find(Version[0].at(i));}
+        for(int i = 0; i < Version[1].size(); i++){v2 = UserInput.find(Version[1].at(i));}
             
         //Process:
             N = n1 + n2 + n3; 
-            S = s1 + s2;
-            H = h1 + h2;
-            V = v1;
+            S = s1 + s2 + s3;
+            H = h1 + h2 + h3;
+            V = v1 + v2;
 
         //Bubble Sort me dira es la mas grande del arreglo, osea cual es la respuesta que acumulo mas puntos.
         //En una red neuronal, la que activo mas neuronas.
@@ -618,20 +585,21 @@ int main() {
         // Responses: (Comparamos la respuesta con cada posibilidad)
             // Layer N:
             if(N == response[0]){
-                std::cout << "Escribiste la palabra New/Nuevo." << '\n';
+                std::cout << "Crear un usuario." << '\n';
                 m = -1;
+                CrearUsuario();
             }
             //Layer S:
             else if(S == response[0]){
-                std::cout << "Escribiste la palabra Exit/Salir" << '\n';
+                std::cout << "Seleccionaste Salir." << '\n';
                 m = 1;
             }
             //Layer H:
             else if(H == response[0]){
+                
                 system("cls"); //system sirve para usar comandos del cmd. cls es lo mismo que clear en unix/ubuntu (clear screen).
                 DisplayMainMenu();
                 
-                std::cout << "Escribiste la palabra Help/Ayuda" << '\n';
                 m = -1;
             }
             //Layer V:
@@ -647,10 +615,14 @@ int main() {
             }
     }
 
-            
 
+    
+
+    
+    
+    
+    
 
 
     return 0;
-
 }

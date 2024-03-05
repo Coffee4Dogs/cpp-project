@@ -412,7 +412,7 @@ int main() {
     
     //Variables
     fstream file; 
-    string address = "Datos_Pacientes.txt"; 
+    string address_pacientes = "Datos_Pacientes.txt"; 
 
     //Variables temporales:
         string stemp = "";      //Variale stemporal para guardar cualquier string.
@@ -425,7 +425,7 @@ int main() {
     PACIENTE P1;
     
 
-    file.open(address, fstream::app);
+    file.open(address_pacientes, fstream::app);
     if(file.is_open()){
 
         //Nombre
