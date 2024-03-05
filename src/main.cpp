@@ -15,7 +15,7 @@ using std::fixed;
 using std::pow; //Para poder elevar al cuadrado
 using std::fstream;
 
-string vrs = "2.2.4 - (Aurora) "; //Current Patch/Version
+string vrs = "3.0.2 - Dr.Meow "; //Current Patch/Version
 
 
 string UserInput;
