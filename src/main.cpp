@@ -1,16 +1,19 @@
 #include <iostream>
-#include <iomanip>
-#include <cmath> //Para poder elevar al cuadrado
-#include <fstream>
-
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
+
+#include <iomanip>
 using std::setprecision;
 using std::setw;
 using std::fixed;
+
+#include <cmath> //Para poder elevar al cuadrado
 using std::pow; //Para poder elevar al cuadrado
+
+
+#include <fstream>
 using std::fstream;
 
 
@@ -456,16 +459,13 @@ int main() {
         //IMS
             file << P1.getIMS() << '\n';
 
-
         //HoraCita
             count = 0;
             while(count < 1){
                 std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
                 std::cin >> itemp; 
                 ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
-
                 P1.setHoraCita(itemp);
-                
                 file << P1.getHoraCita() << '\n';
             }
 
@@ -474,7 +474,6 @@ int main() {
             while(count < 1){
                 std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
                 std::cin >> itemp;
-                  
 
                 (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
                 //El usuario puso una hora entre 0 a 59?

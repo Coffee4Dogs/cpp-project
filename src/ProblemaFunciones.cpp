@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <cmath> //Para poder elevar al cuadrado
 #include <fstream>
+#include <cstdlib> //La vamos a usar solamente para limpiar la consola system("cls") <- (clear screen).
 
 using std::string;
 using std::cout;
@@ -13,7 +14,7 @@ using std::fixed;
 using std::pow; //Para poder elevar al cuadrado
 using std::fstream;
 
-
+string vrs = "2.2.1"; //Current Patch/Version
 string UserInput;
 string GruposSanguineos[8] = {"A+"," A-", "B+", "B-", "AB+", "AB-", "O+" ,"O-"};
 
@@ -345,40 +346,15 @@ class MEDICO : public PERSONA{
 
 // -Despliega las opciones del menu.
 void DisplayMainMenu(){
-    std::cout << "- Crear Usuario: New, Nuevo, 0000." << std::endl;
-    std::cout << "- Buscar Usuario: <Numero Identidad>" << std::endl;
-    std::cout << "- Salir/Exit" << std::endl;
+    
+    std::cout<<"VERSION         \t\t\t    --version, -version"<<std::endl;
+    std::cout<<"CREAR USUARIO   \t\t\t    -new, -nuevo, mkdir, New User."<<std::endl;
+    std::cout<<"AYUDA           \t\t\t    --help, help, ayuda, aiuda."<<std::endl;
+    std::cout<<"SALIR           \t\t\t    --exit, exit(), salir."<<std::endl;
 }
 
 
-// -MENU: Funcion que pregunta al usuario que opcion quiere.
-void PreguntarUsuario(){
-    int c = 0;
-    while(c < 1){
-        // -Crear Usuario
-        DisplayMainMenu();
-        std::getline(std::cin, UserInput);
-        if(
-                (UserInput.at(0) == '0') && (UserInput.at(1) == '0') && (UserInput.at(2) == '0') && (UserInput.at(3) == '0') ||
-                ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'e') || (UserInput.at(1) == 'E')) && ((UserInput.at(2) == 'w') || (UserInput.at(2) == 'W')) ||
-                ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'u') || (UserInput.at(1) == 'U')) && ((UserInput.at(2) == 'e') || (UserInput.at(2) == 'E')) && ((UserInput.at(3) == 'v') || (UserInput.at(3) == 'V')) && ((UserInput.at(4) == 'o') || (UserInput.at(4) == 'O'))
-            ){
-            std::cout << "Seleccionaste la opcion Crear Usuario." << '\n';
-        }
 
-        //Exit, Salir 
-        else if(
-                ((UserInput.at(0) == 'E') || (UserInput.at(0) == 'e')) && ((UserInput.at(1) == 'x') || (UserInput.at(1) == 'X')) && ((UserInput.at(2) == 'i') || (UserInput.at(2) == 'I')) && ((UserInput.at(3) == 't') || (UserInput.at(3) == 'T')) ||
-                ((UserInput.at(0) == 's') || (UserInput.at(0) == 'S')) && ((UserInput.at(1) == 'a') || (UserInput.at(1) == 'A')) && ((UserInput.at(2) == 'l') || (UserInput.at(2) == 'L')) && ((UserInput.at(3) == 'i') || (UserInput.at(3) == 'I')) && ((UserInput.at(4) == 'r') || (UserInput.at(4) == 'R'))
-            ){
-            std::cout << "Seleccionaste la opcion Salir." << '\n';
-
-        }
-        else{
-            std::cout << "Buscando usuario: " << UserInput << '\n'; 
-        }
-    }
-}
 
 
 
@@ -523,7 +499,19 @@ void CrearPaciente(){
 
 
 }
-
+//De mayor a menor.
+void BubbleSort(int array[], int size){
+    int temp;
+    for(int i = 0; i<size-1; i++){
+        for(int j = 0; j < size - i - 1; j++){
+            if(array[j]<array[j+1]){
+                temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+            } 
+        }
+    }
+}
 
 int main() {
     
@@ -537,11 +525,138 @@ int main() {
 
 
 
+
+
+    // -MENU: Funcion que pregunta al usuario que opcion quiere.
+
+    // int m = 0;
+    // while(m < 1){
+    //     // -Crear Usuario
+        
+    //     std::getline(std::cin, UserInput);
+
+    //     //Nuevo//New
+    //     if(
+    //             ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'e') || (UserInput.at(1) == 'E')) && ((UserInput.at(2) == 'w') || (UserInput.at(2) == 'W')) ||
+    //             ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'u') || (UserInput.at(1) == 'U')) && ((UserInput.at(2) == 'e') || (UserInput.at(2) == 'E')) && ((UserInput.at(3) == 'v') || (UserInput.at(3) == 'V')) && ((UserInput.at(4) == 'o') || (UserInput.at(4) == 'O'))
+    //         ){
+    //         std::cout << "Seleccionaste la opcion Crear Usuario." << '\n';
+            
+    //     }
+
+    //     //Exit//Salir 
+    //     else if(
+    //             ((UserInput.at(0) == 'E') || (UserInput.at(0) == 'e')) && ((UserInput.at(1) == 'x') || (UserInput.at(1) == 'X')) && ((UserInput.at(2) == 'i') || (UserInput.at(2) == 'I')) && ((UserInput.at(3) == 't') || (UserInput.at(3) == 'T')) ||
+    //             ((UserInput.at(0) == 's') || (UserInput.at(0) == 'S')) && ((UserInput.at(1) == 'a') || (UserInput.at(1) == 'A')) && ((UserInput.at(2) == 'l') || (UserInput.at(2) == 'L')) && ((UserInput.at(3) == 'i') || (UserInput.at(3) == 'I')) && ((UserInput.at(4) == 'r') || (UserInput.at(4) == 'R'))
+    //         ){
+    //         std::cout << "Seleccionaste la opcion Salir." << '\n';
+    //     }
+
+        
+    //     //Error (Input error, error al ingresar los datos).
+    //     else{
+    //         system("cls");
+    //         std::cout << " El commando ' "<< UserInput << " ' no existe. Utilice  ' -help ' o " << '\n'; 
+    //     }
+    // }
+
+
+    //-------------------------------------------------------------------------------------
+
+
     
-    
-    
-    
+    //Inspirado en los LLM. - Jack.
+    // Ref. Andrej Karpathy (Mi guru de AI.) -> https://www.youtube.com/watch?v=zduSFxRajkE
+
+    //Bag of words:
+    string Nuevo[] = {"ew", "uev", "mkdir"}; //Steaming ->
+    string Help[] = {"elp", "uda"};
+    string Salir[] = {"xit", "alir"};
+    string Version[] = {"version"};
+
+    std::cout << "Hola, como puedo ayudarte?" << '\n';
+        cin >> UserInput;
+        
+        // Pre-Process:
+            //Layer N
+            int N = 0; int n1 = 0; int n2 = 0; int n3 = 0;
+            for(int i = 0; i < Nuevo[0].size(); i++){
+                n1 = UserInput.find(Nuevo[0].at(i));
+            }
+            for(int i = 0; i < Nuevo[1].size(); i++){
+                n2 = UserInput.find(Nuevo[1].at(i));
+            }
+            for(int i = 0; i < Nuevo[2].size(); i++){
+                n3 = UserInput.find(Nuevo[2].at(i));
+            }  
+            
+            //Layer:S
+            int S = 0; int s1 = 0; int s2 = 0;
+            for(int i = 0; i < Salir[0].size(); i++){
+                s1 = UserInput.find(Salir[0].at(i));
+            }
+            for(int i = 0; i < Salir[1].size(); i++){
+                s2 = UserInput.find(Salir[1].at(i));
+            }
+
+            //Layer:H
+            int H = 0; int h1 = 0; int h2 = 0;
+            for(int i = 0; i < Help[0].size(); i++){
+                h1 = UserInput.find(Help[0].at(i));
+            }
+            for(int i = 0; i < Help[1].size(); i++){
+                h2 = UserInput.find(Help[1].at(i));
+            }
+
+            //Layer:V
+            int V = 0; int v1 = 0;
+            for(int i = 0; i < Help[0].size(); i++){
+                h1 = UserInput.find(Help[0].at(i));
+            }
+            
+        
+        //Process:
+            N = n1 + n2 + n3; 
+            S = s1 + s2;
+            H = h1 + h2;
+            V = v1;
+        //Bubble Sort me dira es la mas grande del arreglo, osea cual es la respuesta que acumulo mas puntos.
+        //En una red neuronal, la que activo mas neuronas.
+            int response[] = {N, S, H, V};
+            int size_response = sizeof(response) / sizeof(response[0]);
+            BubbleSort(response, size_response);
+
+        //Comparamos la respuesta con cada posibilidad.    
+        // Responses:
+            // Layer N:
+            if(N == response[0]){
+                std::cout << "Escribiste la palabra New/Nuevo." << '\n';
+            }
+            //Layer S:
+            else if(S == response[0]){
+                std::cout << "Escribiste la palabra Exit/Salir" << '\n';
+            }
+            //Layer H:
+            else if(H == response[0]){
+                system("cls"); //system sirve para usar comandos del cmd. cls es lo mismo que clear en unix/ubuntu (clear screen).
+                DisplayMainMenu();
+                
+                std::cout << "Escribiste la palabra Help/Ayuda" << '\n';
+            }
+            //Layer H:
+            else if(V == response[0]){
+                std::cout << "Version actual: "<< vrs << '\n';
+            }
+
+
+            //Error Message:
+            else{
+                std::cout << "No entendi lo que dijiste..." << '\n';
+            }
+            
+
 
 
     return 0;
+
 }
