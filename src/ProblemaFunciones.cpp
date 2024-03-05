@@ -505,6 +505,22 @@ void BubbleSort(int array[], int size){
     }
 }
 
+void Hi(){
+    fstream file;   string address = "decoration.txt";
+    file.open(address, fstream::in);
+    string line;
+    if(file.is_open()){
+        for(int i = 0; i < 20; i++){
+            if(i>10){
+                std::getline(file, line);
+                std::cout << line << '\n';
+            }
+            
+        }
+
+        file.close();
+    }
+}
 
 // -Despliega las opciones del menu.
 void DisplayMainMenu(){
@@ -515,11 +531,26 @@ void DisplayMainMenu(){
     std::cout<<"SALIR           \t\t\t    --exit, exit(), salir."<<std::endl;
 }
 
+    // ----------  Caesar Cipher Encryption  -----------
+        //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
+        //-Line: El texto que se quiere encriptar.
 
+string CCipher(int shift, string line){
+    string NewLine = "";
+    int size = line.size();
+    char temp;
+
+    for(int i = 0; i < size; i++){
+        temp = line.at(i);
+        temp = temp + shift;
+        NewLine = NewLine + temp;
+    }
+    return NewLine;
+}
 
 int main() {
     
-    
+    Hi();
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
     
     ////------------------/////
@@ -544,7 +575,7 @@ int main() {
 
 
     while(m<2){
-        std::cout << "- $ ";
+        std::cout << "\t - $ ";
         cin >> UserInput;
         
         //Reset Everything
