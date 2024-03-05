@@ -19,6 +19,7 @@ string vrs = "2.2.4 - (Aurora) "; //Current Patch/Version
 
 
 string UserInput;
+int IDPacientes;
 string GruposSanguineos[8] = {"A+"," A-", "B+", "B-", "AB+", "AB-", "O+" ,"O-"};
 
 class PERSONA{
@@ -399,8 +400,26 @@ string CCipher(int shift, string line){
     return NewLine;
 }
 
+int ContarRegistros(string address){
+    fstream file;
+    file.open(address, fstream::in);
+    string line;
+    int TotalRegistros=0;
+    if(file.is_open()){
+        while(getline(file, line)){
+            TotalRegistros++;    
+        }
+        file.close();
+    }
+    if(TotalRegistros >= 1){
+        return TotalRegistros;
+    }
+    else{
+        return -1;
+    }
+}
+
 void CrearUsuario(){
-    
     //Variables
     fstream file; 
     string address = "Datos_Pacientes.txt"; 
@@ -418,23 +437,24 @@ void CrearUsuario(){
 
     file.open(address, fstream::app);
     if(file.is_open()){
+
         //Nombre-string
             std::cout << "Ingrese el nombre del paciente: " << '\n';
             std::cin >> stemp; P1.setNombre(stemp);
-            file << CCipher(1, P1.getNombre()) << ' ';
+            file << P1.getNombre() << ' ';
         //ApellidoA-string
             std::cout << "Ingrese su primer apellido: " << ' ';
             std::cin >> stemp; P1.setApellidoA(stemp);
-            file << CCipher(1, P1.getApellidoA()) << ' ';
+            file << P1.getApellidoA() << ' ';
             //---------NO TESTEADO ------------------
         //ApellidoB-string
             std::cout << "Ingrese su segundo apellido: " << '\n';
             std::cin >> stemp; P1.setApellidoB(stemp);
-            file << CCipher(1, P1.getApellidoB()) << ' ';
+            file <<  P1.getApellidoB() << ' ';
         //IDENTIDAD-string
             std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
             std::cin >> stemp; P1.setIdentidad(stemp);
-            file << CCipher(1, P1.getIdentidad()) << ' ';
+            file <<  P1.getIdentidad() << ' ';
             
         //Altura
             std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
@@ -475,7 +495,7 @@ void CrearUsuario(){
                 file << P1.getMinutoCita() << ' ';
             }
 
-        //Grupo Sanguineo -String
+        //Grupo Sanguineo 
             count = 0;
             while(count < 1){
                 
@@ -503,114 +523,12 @@ void CrearUsuario(){
     
 }
 
-void LeerUsuario(){
-    
-    //Variables
-    fstream file; 
-    string address = "Datos_Pacientes.txt"; 
-
-    //Variables temporales:
-        string stemp = "";      //Variale stemporal para guardar cualquier string.
-        int itemp = 0;         //variable stemporal para guardar cualquier int.
-        double dtemp = 0.0;     //Variable temporal para guardar cualquier double.
-
-    int count = 0;
-    
-    //Instancias
-    PACIENTE P1;
-    
-
-    file.open(address, fstream::app);
-    if(file.is_open()){
-        //Nombre-string
-            std::cout << "Ingrese el nombre del paciente: " << '\n';
-            std::cin >> stemp; P1.setNombre(stemp);
-            file << CCipher(1, P1.getNombre()) << ' ';
-        //ApellidoA-string
-            std::cout << "Ingrese su primer apellido: " << ' ';
-            std::cin >> stemp; P1.setApellidoA(stemp);
-            file << CCipher(1, P1.getApellidoA()) << ' ';
-            //---------NO TESTEADO ------------------
-        //ApellidoB-string
-            std::cout << "Ingrese su segundo apellido: " << '\n';
-            std::cin >> stemp; P1.setApellidoB(stemp);
-            file << CCipher(1, P1.getApellidoB()) << ' ';
-        //IDENTIDAD-string
-            std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
-            std::cin >> stemp; P1.setIdentidad(stemp);
-            file << CCipher(1, P1.getIdentidad()) << ' ';
-            
-        //Altura
-            std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
-            std::cin >> dtemp; P1.setAltura(dtemp);
-            file << P1.getAltura() << ' ';
-
-        //Peso
-            std::cout << "Ingrese el peso en Kilogramos (Sistema Internacional): " << '\n';
-            std::cin >> dtemp; P1.setPeso(dtemp);
-            file << P1.getPeso() << ' ';
-        
-        //IMS
-            file << P1.getIMS() << ' ';
-
-
-        //HoraCita
-            count = 0;
-            while(count < 1){
-                std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
-                std::cin >> itemp; 
-                ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
-
-                P1.setHoraCita(itemp);
-                
-                file << P1.getHoraCita() << ' ';
-            }
-
-        //MinutoCita
-            count = 0;
-            while(count < 1){
-                std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
-                std::cin >> itemp;
-                  
-
-                (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
-                //El usuario puso una hora entre 0 a 59?
-                P1.setMinutoCita(itemp);
-                file << P1.getMinutoCita() << ' ';
-            }
-
-        //Grupo Sanguineo -String
-            count = 0;
-            while(count < 1){
-                
-                std::cout << "Seleccione un grupo sanguineo:" << '\n';
-                std::cout << "Opciones: "<< std::endl;
-                for(string i : GruposSanguineos){
-                    std::cout << i << ", ";
-                }
-                std::cin >> stemp;
-                if(stemp == "A+" || stemp == "A-" || stemp == "B+" || stemp == "B-" || stemp == "AB+" || stemp == "AB-" || stemp == "O+" || stemp == "O-"){
-                    count = 1;
-                }
-                else{
-                    count = -1;
-                }
-            }
-            P1.setTipoSangre(stemp);
-            file << P1.getTipoSangre() << ' ';
-
-            //Fin de Crear Usuario.
-            file << '\n';
-        file.close();
-    }
-   
-    
-}
 
 
 
 int main() {
     DisplayWelcome();
+    ;std::cout << ContarRegistros("Datos_Pacientes.txt") << '\n';
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
     
     ////------------------/////
@@ -622,10 +540,10 @@ int main() {
     //--------- MENU ---------
     //Inspirado en los LLM Ref. Andrej Karpathy -> https://www.youtube.com/watch?v=zduSFxRajkE
     //Bag of words:
-    string Nuevo[] = {"n","e","w" };    //-Nuevo Usuario
-    string Help[] = {"h","e", "l"};     //-Help Command
-    string Salir[] = {"x","i","t"};
-    string Version[] = {"s","r","o"};
+    string Nuevo[] = {"n","e","w" };    // 3 -new new, New
+    string Help[] = {"h","e", "l"};     // 1 -Help Command
+    string Salir[] = {"x","i","t"};     //exit
+    string Version[] = {"s","r","o"};   //version llm
     
     int m = 0; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
     
@@ -637,12 +555,12 @@ int main() {
 
 
     while(m<1){
-        std::cout << "\t - $ ";
-        // cin >> UserInput;
-        std::getline(std::cin, UserInput);
+        std::cout << "   - $ ";
+        cin >> UserInput;
+
         
         //Reset Everything
-        N = 0; n1 = 0; n2 = 0; n3 = 0; 
+        N = 0; n1 = 0; n2 = 0; n3 = 0;
         S = 0; s1 = 0; s2 = 0; s3 = 0;
         H = 0; h1 = 0; h2 = 0; h3 = 0;
         V = 0; v1 = 0; v2 = 0; v3 = 0;
@@ -670,7 +588,7 @@ int main() {
             
         //Process:
             N = n1 + n2 + n3; 
-            S = s1 + s2 + s3;
+            S = s1 + s2 + s3; 
             H = h1 + h2 + h3;
             V = v1 + v2 + v3;
 
