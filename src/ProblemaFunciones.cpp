@@ -14,7 +14,7 @@ using std::fixed;
 using std::pow; //Para poder elevar al cuadrado
 using std::fstream;
 
-string vrs = "2.2.1"; //Current Patch/Version
+string vrs = "2.2.2 - (Aurora) "; //Current Patch/Version
 string UserInput;
 string GruposSanguineos[8] = {"A+"," A-", "B+", "B-", "AB+", "AB-", "O+" ,"O-"};
 
@@ -529,75 +529,91 @@ int main() {
             //          --------- MENU ---------
     //Inspirado en los LLM Ref. Andrej Karpathy -> https://www.youtube.com/watch?v=zduSFxRajkE
     //Bag of words:
-    string Nuevo[] = {"ew", "uev", "mkdir"}; //Steaming ->
+    string Nuevo[] = {"ew", "uev", "mkdir"}; //Steaming ->New, Nuevo, mkdir
     string Help[] = {"elp", "uda"};
     string Salir[] = {"xit", "alir"};
     string Version[] = {"ersion"};
 
-    std::cout << "Hola, como puedo ayudarte?" << '\n';
-    cin >> UserInput;
-        
-    // Pre-Process:
-    //Layer N:
-    int N = 0; int n1 = 0; int n2 = 0; int n3 = 0;
-    for(int i = 0; i < Nuevo[0].size(); i++){n1 = UserInput.find(Nuevo[0].at(i));}
-    for(int i = 0; i < Nuevo[1].size(); i++){n2 = UserInput.find(Nuevo[1].at(i));}
-    for(int i = 0; i < Nuevo[2].size(); i++){n3 = UserInput.find(Nuevo[2].at(i));}  
+    int m = 1; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
     
-    //Layer S:
-    int S = 0; int s1 = 0; int s2 = 0;
-    for(int i = 0; i < Salir[0].size(); i++){s1 = UserInput.find(Salir[0].at(i));}
-    for(int i = 0; i < Salir[1].size(); i++){s2 = UserInput.find(Salir[1].at(i));}
+    //Existing Layers:
+    int N, n1, n2, n3;
+    int S, s1, s2;
+    int H, h1, h2;
+    int V, v1;
 
-    //Layer H:
-    int H = 0; int h1 = 0; int h2 = 0;
-    for(int i = 0; i < Help[0].size(); i++){h1 = UserInput.find(Help[0].at(i));}
-    for(int i = 0; i < Help[1].size(); i++){h2 = UserInput.find(Help[1].at(i));}
 
-    //Layer V:
-    int V = 0; int v1 = 0;
-    for(int i = 0; i < Version[0].size(); i++){v1 = UserInput.find(Version[0].at(i));}
+    while(m<2){
+        std::cout << "- $ ";
+        cin >> UserInput;
         
+        //Reset Everything
+        N = 0; n1 = 0; n2 = 0; n3 = 0;
+        S = 0; s1 = 0; s2 = 0;
+        H = 0; h1 = 0; h2 = 0;
+        V = 0; v1 = 0;
 
-    //Process:
-        N = n1 + n2 + n3; 
-        S = s1 + s2;
-        H = h1 + h2;
-        V = v1;
-
-    //Bubble Sort me dira es la mas grande del arreglo, osea cual es la respuesta que acumulo mas puntos.
-    //En una red neuronal, la que activo mas neuronas.
-        int response[] = {N, S, H, V};
-        int size_response = sizeof(response) / sizeof(response[0]);
-        BubbleSort(response, size_response);
-
-
-    // Responses: (Comparamos la respuesta con cada posibilidad)
-        // Layer N:
-        if(N == response[0]){
-            std::cout << "Escribiste la palabra New/Nuevo." << '\n';
-        }
+        // Pre-Process:
+        //Layer N:
+        for(int i = 0; i < Nuevo[0].size(); i++){n1 = UserInput.find(Nuevo[0].at(i));}
+        for(int i = 0; i < Nuevo[1].size(); i++){n2 = UserInput.find(Nuevo[1].at(i));}
+        for(int i = 0; i < Nuevo[2].size(); i++){n3 = UserInput.find(Nuevo[2].at(i));}  
+        
         //Layer S:
-        else if(S == response[0]){
-            std::cout << "Escribiste la palabra Exit/Salir" << '\n';
-        }
+        for(int i = 0; i < Salir[0].size(); i++){s1 = UserInput.find(Salir[0].at(i));}
+        for(int i = 0; i < Salir[1].size(); i++){s2 = UserInput.find(Salir[1].at(i));}
+
         //Layer H:
-        else if(H == response[0]){
-            system("cls"); //system sirve para usar comandos del cmd. cls es lo mismo que clear en unix/ubuntu (clear screen).
-            DisplayMainMenu();
-            
-            std::cout << "Escribiste la palabra Help/Ayuda" << '\n';
-        }
+        for(int i = 0; i < Help[0].size(); i++){h1 = UserInput.find(Help[0].at(i));}
+        for(int i = 0; i < Help[1].size(); i++){h2 = UserInput.find(Help[1].at(i));}
+
         //Layer V:
-        else if(V == response[0]){
-            std::cout << "Version actual: "<< vrs << '\n';
-        }
+        for(int i = 0; i < Version[0].size(); i++){v1 = UserInput.find(Version[0].at(i));}
+            
+        //Process:
+            N = n1 + n2 + n3; 
+            S = s1 + s2;
+            H = h1 + h2;
+            V = v1;
 
+        //Bubble Sort me dira es la mas grande del arreglo, osea cual es la respuesta que acumulo mas puntos.
+        //En una red neuronal, la que activo mas neuronas.
+            int response[] = {N, S, H, V};
+            int size_response = sizeof(response) / sizeof(response[0]);
+            BubbleSort(response, size_response);
 
-        //Error Message:
-        else{
-            std::cout << "No entendi lo que dijiste..." << '\n';
-        }
+        // Responses: (Comparamos la respuesta con cada posibilidad)
+            // Layer N:
+            if(N == response[0]){
+                std::cout << "Escribiste la palabra New/Nuevo." << '\n';
+                m = -1;
+            }
+            //Layer S:
+            else if(S == response[0]){
+                std::cout << "Escribiste la palabra Exit/Salir" << '\n';
+                m = 1;
+            }
+            //Layer H:
+            else if(H == response[0]){
+                system("cls"); //system sirve para usar comandos del cmd. cls es lo mismo que clear en unix/ubuntu (clear screen).
+                DisplayMainMenu();
+                
+                std::cout << "Escribiste la palabra Help/Ayuda" << '\n';
+                m = -1;
+            }
+            //Layer V:
+            else if(V == response[0]){
+                std::cout << "Version actual: "<< vrs << '\n';
+                m = -1;
+            }
+
+            //Error Message:
+            else{
+                std::cout << "No entendi lo que dijiste..." << '\n';
+                m = -1;
+            }
+    }
+
             
 
 
