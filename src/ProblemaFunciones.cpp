@@ -531,10 +531,11 @@ void DisplayMainMenu(){
     std::cout<<"SALIR           \t\t\t    --exit, exit(), salir."<<std::endl;
 }
 
-    // ----------  Caesar Cipher Encryption  -----------
-        //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
-        //-Line: El texto que se quiere encriptar.
 
+
+// ----------  Caesar Cipher Encryption  -----------
+    //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
+    //-Line: El texto que se quiere encriptar.
 string CCipher(int shift, string line){
     string NewLine = "";
     int size = line.size();
@@ -618,6 +619,7 @@ int main() {
             if(N == response[0]){
                 std::cout << "Escribiste la palabra New/Nuevo." << '\n';
                 m = -1;
+                CrearPaciente();
             }
             //Layer S:
             else if(S == response[0]){
