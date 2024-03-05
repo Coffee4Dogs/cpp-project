@@ -382,6 +382,22 @@ void PreguntarUsuario(){
 }
 
 
+    // ----------  Caesar Cipher Encryption  -----------
+        //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
+        //-Line: El texto que se quiere encriptar.
+
+string CCipher(int shift, string line){
+    string NewLine = "";
+    int size = line.size();
+    char temp;
+
+    for(int i = 0; i < size; i++){
+        temp = line.at(i);
+        temp = temp + shift;
+        NewLine = NewLine + temp;
+    }
+    return NewLine;
+}
 
 
 
