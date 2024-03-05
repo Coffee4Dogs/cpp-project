@@ -419,6 +419,26 @@ int ContarRegistros(string address){
     }
 }
 
+
+
+int AsignarID(){
+
+    int totalregistros;
+    totalregistros = ContarRegistros("Datos_Pacientes.txt");
+    if(totalregistros > 0){
+        totalregistros ++;
+    }
+    else{
+        totalregistros = 1;
+        totalregistros ++;
+    }
+
+    return totalregistros; 
+}
+
+
+
+
 void CrearUsuario(){
     //Variables
     fstream file; 
@@ -437,6 +457,9 @@ void CrearUsuario(){
 
     file.open(address, fstream::app);
     if(file.is_open()){
+
+        //Registro
+            file << AsignarID() << ' ';
 
         //Nombre-string
             std::cout << "Ingrese el nombre del paciente: " << '\n';
@@ -520,7 +543,8 @@ void CrearUsuario(){
         file.close();
     }
    
-    
+   
+   
 }
 
 
@@ -528,9 +552,9 @@ void CrearUsuario(){
 
 int main() {
     DisplayWelcome();
-    ;std::cout << ContarRegistros("Datos_Pacientes.txt") << '\n';
+    std::cout << ContarRegistros("Datos_Pacientes.txt") << '\n';
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
-    
+   
     ////------------------/////
     
 
@@ -540,10 +564,11 @@ int main() {
     //--------- MENU ---------
     //Inspirado en los LLM Ref. Andrej Karpathy -> https://www.youtube.com/watch?v=zduSFxRajkE
     //Bag of words:
-    string Nuevo[] = {"n","e","w" };    // 3 -new new, New
-    string Help[] = {"h","e", "l"};     // 1 -Help Command
-    string Salir[] = {"x","i","t"};     //exit
-    string Version[] = {"s","r","o"};   //version llm
+    string Nuevo[] = {"n","e","w" };    //  -new new, New
+    string Help[] = {"h","e", "l"};     //  -Help Command
+    string Salir[] = {"x","i","t"};     //Exit
+    string Version[] = {"s","r","o"};   //Version
+    
     
     int m = 0; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
     
