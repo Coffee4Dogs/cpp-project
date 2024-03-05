@@ -371,8 +371,14 @@ void DisplayHelp(){
 
 void DisplayWelcome(){
     system("cls"); std::cout << "\n";
-    
-
+    fstream file; string line;
+    file.open("welcome.txt", fstream::in);
+    if(file.is_open()){
+        while(getline(file, line)){
+            std::cout << line << '\n';
+        }
+        file.close();
+    }
 }
 
 
