@@ -1,3 +1,16 @@
+/* ***************************************
+    
+    Nombre: Jack Hollmann Lagos Mejia
+    Numero Registro: 32011727
+
+    Nombre: Josue Eliezer Castillo Soto
+    Numero Registro:  32151059
+
+Rep: //https://github.com/Coffee4Dogs/cpp-project
+
+***************************************** */
+
+
 #include <iostream>
 #include <iomanip>
 #include <cmath> //Para poder elevar al cuadrado
