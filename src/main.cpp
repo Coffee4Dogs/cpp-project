@@ -568,6 +568,7 @@ int main() {
     string Help[] = {"h","e", "l"};     //  -Help Command
     string Salir[] = {"x","i","t"};     //Exit
     string Version[] = {"s","r","o"};   //Version
+   
     
     
     int m = 0; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
