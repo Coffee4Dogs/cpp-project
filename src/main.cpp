@@ -1,20 +1,21 @@
 #include <iostream>
+#include <iomanip>
+#include <cmath> //Para poder elevar al cuadrado
+#include <fstream>
+#include <cstdlib> //La vamos a usar solamente para limpiar la consola system("cls") <- (clear screen).
+
+
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
-
-#include <iomanip>
 using std::setprecision;
 using std::setw;
 using std::fixed;
-
-#include <cmath> //Para poder elevar al cuadrado
 using std::pow; //Para poder elevar al cuadrado
-
-
-#include <fstream>
 using std::fstream;
+
+string vrs = "2.2.4 - (Aurora) "; //Current Patch/Version
 
 
 string UserInput;
@@ -262,7 +263,6 @@ class PACIENTE : public PERSONA{
         ~PACIENTE(){}
 };
 
-
 class EXPEDIENTE : public PACIENTE{
     protected:
     int NumeroExpediente;
@@ -345,51 +345,42 @@ class MEDICO : public PERSONA{
 };
 
 
-
-
-// -Despliega las opciones del menu.
-void DisplayMainMenu(){
-    std::cout << "- Crear Usuario: New, Nuevo, 0000." << std::endl;
-    std::cout << "- Buscar Usuario: <Numero Identidad>" << std::endl;
-    std::cout << "- Salir/Exit" << std::endl;
-}
-
-
-// -MENU: Funcion que pregunta al usuario que opcion quiere.
-void PreguntarUsuario(){
-    int c = 0;
-    while(c < 1){
-        // -Crear Usuario
-        DisplayMainMenu();
-        std::getline(std::cin, UserInput);
-        if(
-                (UserInput.at(0) == '0') && (UserInput.at(1) == '0') && (UserInput.at(2) == '0') && (UserInput.at(3) == '0') ||
-                ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'e') || (UserInput.at(1) == 'E')) && ((UserInput.at(2) == 'w') || (UserInput.at(2) == 'W')) ||
-                ((UserInput.at(0) == 'n') || (UserInput.at(0) == 'N')) && ((UserInput.at(1) == 'u') || (UserInput.at(1) == 'U')) && ((UserInput.at(2) == 'e') || (UserInput.at(2) == 'E')) && ((UserInput.at(3) == 'v') || (UserInput.at(3) == 'V')) && ((UserInput.at(4) == 'o') || (UserInput.at(4) == 'O'))
-            ){
-            std::cout << "Seleccionaste la opcion Crear Usuario." << '\n';
-            
-        }
-
-        //Exit, Salir 
-        else if(
-                ((UserInput.at(0) == 'E') || (UserInput.at(0) == 'e')) && ((UserInput.at(1) == 'x') || (UserInput.at(1) == 'X')) && ((UserInput.at(2) == 'i') || (UserInput.at(2) == 'I')) && ((UserInput.at(3) == 't') || (UserInput.at(3) == 'T')) ||
-                ((UserInput.at(0) == 's') || (UserInput.at(0) == 'S')) && ((UserInput.at(1) == 'a') || (UserInput.at(1) == 'A')) && ((UserInput.at(2) == 'l') || (UserInput.at(2) == 'L')) && ((UserInput.at(3) == 'i') || (UserInput.at(3) == 'I')) && ((UserInput.at(4) == 'r') || (UserInput.at(4) == 'R'))
-            ){
-            std::cout << "Seleccionaste la opcion Salir." << '\n';
-        }
-        else{
-            std::cout << "Buscando usuario: " << UserInput << '\n'; 
+//De mayor a menor.
+void BubbleSort(int array[], int size){
+    int temp;
+    for(int i = 0; i<size-1; i++){
+        for(int j = 0; j < size - i - 1; j++){
+            if(array[j]<array[j+1]){
+                temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+            } 
         }
     }
 }
 
+// -Despliega las opciones cuando se llama -help
+void DisplayHelp(){
+    system("cls"); std::cout << "\n";
+    
+    std::cout << "VERSION \t\t -version  --version (Ultima version)." << std::endl;
+    std::cout << "NUEVO PACIENTE \t\t -new (Crear un nuevo usuario)." << std::endl;
+    std::cout << "LISTA PACIENTES \t -list (Lista de todos los pacientes)." << std::endl;
+    std::cout << "EXIT \t\t\t -exit (Salir del programa)." << std::endl;
+}
 
+void DisplayWelcome(){
+    system("cls"); std::cout << "\n";
+    
+
+}
+
+
+
+string CCipher(int shift, string line){
     // ----------  Caesar Cipher Encryption  -----------
         //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
         //-Line: El texto que se quiere encriptar.
-
-string CCipher(int shift, string line){
     string NewLine = "";
     int size = line.size();
     char temp;
@@ -402,17 +393,11 @@ string CCipher(int shift, string line){
     return NewLine;
 }
 
-
-
-int main() {
-    
-    cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
-    
-    ////------------------/////
+void CrearUsuario(){
     
     //Variables
     fstream file; 
-    string address_pacientes = "Datos_Pacientes.txt"; 
+    string address = "Datos_Pacientes.txt"; 
 
     //Variables temporales:
         string stemp = "";      //Variale stemporal para guardar cualquier string.
@@ -425,39 +410,39 @@ int main() {
     PACIENTE P1;
     
 
-    file.open(address_pacientes, fstream::app);
+    file.open(address, fstream::app);
     if(file.is_open()){
-
-        //Nombre
+        //Nombre-string
             std::cout << "Ingrese el nombre del paciente: " << '\n';
             std::cin >> stemp; P1.setNombre(stemp);
-            file << P1.getNombre() << '\n';
-        //ApellidoA
-            std::cout << "Ingrese su primer apellido: " << '\n';
+            file << CCipher(1, P1.getNombre()) << ' ';
+        //ApellidoA-string
+            std::cout << "Ingrese su primer apellido: " << ' ';
             std::cin >> stemp; P1.setApellidoA(stemp);
-            file << P1.getApellidoA() << '\n';
+            file << CCipher(1, P1.getApellidoA()) << ' ';
             //---------NO TESTEADO ------------------
-        //ApellidoB
+        //ApellidoB-string
             std::cout << "Ingrese su segundo apellido: " << '\n';
             std::cin >> stemp; P1.setApellidoB(stemp);
-            file << P1.getApellidoB() << '\n';
-        //IDENTIDAD
+            file << CCipher(1, P1.getApellidoB()) << ' ';
+        //IDENTIDAD-string
             std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
             std::cin >> stemp; P1.setIdentidad(stemp);
-            file << P1.getIdentidad() << '\n';
+            file << CCipher(1, P1.getIdentidad()) << ' ';
             
         //Altura
             std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
             std::cin >> dtemp; P1.setAltura(dtemp);
-            file << P1.getAltura() << '\n';
+            file << P1.getAltura() << ' ';
 
-        //Altura
+        //Peso
             std::cout << "Ingrese el peso en Kilogramos (Sistema Internacional): " << '\n';
             std::cin >> dtemp; P1.setPeso(dtemp);
-            file << P1.getPeso() << '\n';
+            file << P1.getPeso() << ' ';
         
         //IMS
-            file << P1.getIMS() << '\n';
+            file << P1.getIMS() << ' ';
+
 
         //HoraCita
             count = 0;
@@ -465,8 +450,10 @@ int main() {
                 std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
                 std::cin >> itemp; 
                 ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
+
                 P1.setHoraCita(itemp);
-                file << P1.getHoraCita() << '\n';
+                
+                file << P1.getHoraCita() << ' ';
             }
 
         //MinutoCita
@@ -474,18 +461,20 @@ int main() {
             while(count < 1){
                 std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
                 std::cin >> itemp;
+                  
 
                 (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
                 //El usuario puso una hora entre 0 a 59?
                 P1.setMinutoCita(itemp);
-                file << P1.getMinutoCita() << '\n';
+                file << P1.getMinutoCita() << ' ';
             }
 
-        //Grupo Sanguineo
+        //Grupo Sanguineo -String
             count = 0;
             while(count < 1){
+                
                 std::cout << "Seleccione un grupo sanguineo:" << '\n';
-                std::cout << "Opciones: ";
+                std::cout << "Opciones: "<< std::endl;
                 for(string i : GruposSanguineos){
                     std::cout << i << ", ";
                 }
@@ -498,12 +487,225 @@ int main() {
                 }
             }
             P1.setTipoSangre(stemp);
-            file << P1.getTipoSangre() << '\n';
+            file << P1.getTipoSangre() << ' ';
+
+            //Fin de Crear Usuario.
+            file << '\n';
         file.close();
     }
    
     
+}
 
+void LeerUsuario(){
+    
+    //Variables
+    fstream file; 
+    string address = "Datos_Pacientes.txt"; 
+
+    //Variables temporales:
+        string stemp = "";      //Variale stemporal para guardar cualquier string.
+        int itemp = 0;         //variable stemporal para guardar cualquier int.
+        double dtemp = 0.0;     //Variable temporal para guardar cualquier double.
+
+    int count = 0;
+    
+    //Instancias
+    PACIENTE P1;
+    
+
+    file.open(address, fstream::app);
+    if(file.is_open()){
+        //Nombre-string
+            std::cout << "Ingrese el nombre del paciente: " << '\n';
+            std::cin >> stemp; P1.setNombre(stemp);
+            file << CCipher(1, P1.getNombre()) << ' ';
+        //ApellidoA-string
+            std::cout << "Ingrese su primer apellido: " << ' ';
+            std::cin >> stemp; P1.setApellidoA(stemp);
+            file << CCipher(1, P1.getApellidoA()) << ' ';
+            //---------NO TESTEADO ------------------
+        //ApellidoB-string
+            std::cout << "Ingrese su segundo apellido: " << '\n';
+            std::cin >> stemp; P1.setApellidoB(stemp);
+            file << CCipher(1, P1.getApellidoB()) << ' ';
+        //IDENTIDAD-string
+            std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
+            std::cin >> stemp; P1.setIdentidad(stemp);
+            file << CCipher(1, P1.getIdentidad()) << ' ';
+            
+        //Altura
+            std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
+            std::cin >> dtemp; P1.setAltura(dtemp);
+            file << P1.getAltura() << ' ';
+
+        //Peso
+            std::cout << "Ingrese el peso en Kilogramos (Sistema Internacional): " << '\n';
+            std::cin >> dtemp; P1.setPeso(dtemp);
+            file << P1.getPeso() << ' ';
+        
+        //IMS
+            file << P1.getIMS() << ' ';
+
+
+        //HoraCita
+            count = 0;
+            while(count < 1){
+                std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
+                std::cin >> itemp; 
+                ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
+
+                P1.setHoraCita(itemp);
+                
+                file << P1.getHoraCita() << ' ';
+            }
+
+        //MinutoCita
+            count = 0;
+            while(count < 1){
+                std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
+                std::cin >> itemp;
+                  
+
+                (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
+                //El usuario puso una hora entre 0 a 59?
+                P1.setMinutoCita(itemp);
+                file << P1.getMinutoCita() << ' ';
+            }
+
+        //Grupo Sanguineo -String
+            count = 0;
+            while(count < 1){
+                
+                std::cout << "Seleccione un grupo sanguineo:" << '\n';
+                std::cout << "Opciones: "<< std::endl;
+                for(string i : GruposSanguineos){
+                    std::cout << i << ", ";
+                }
+                std::cin >> stemp;
+                if(stemp == "A+" || stemp == "A-" || stemp == "B+" || stemp == "B-" || stemp == "AB+" || stemp == "AB-" || stemp == "O+" || stemp == "O-"){
+                    count = 1;
+                }
+                else{
+                    count = -1;
+                }
+            }
+            P1.setTipoSangre(stemp);
+            file << P1.getTipoSangre() << ' ';
+
+            //Fin de Crear Usuario.
+            file << '\n';
+        file.close();
+    }
+   
+    
+}
+
+
+
+int main() {
+    DisplayWelcome();
+    cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
+    
+    ////------------------/////
+    
+
+
+
+    
+    //--------- MENU ---------
+    //Inspirado en los LLM Ref. Andrej Karpathy -> https://www.youtube.com/watch?v=zduSFxRajkE
+    //Bag of words:
+    string Nuevo[] = {"n","e","w" };    //-Nuevo Usuario
+    string Help[] = {"h","e", "l"};     //-Help Command
+    string Salir[] = {"x","i","t"};
+    string Version[] = {"s","r","o"};
+    
+    int m = 0; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
+    
+    //Existing Layers:
+    int N, n1, n2, n3;
+    int S, s1, s2, s3;
+    int H, h1, h2, h3;
+    int V, v1, v2, v3;
+
+
+    while(m<1){
+        std::cout << "\t - $ ";
+        // cin >> UserInput;
+        std::getline(std::cin, UserInput);
+        
+        //Reset Everything
+        N = 0; n1 = 0; n2 = 0; n3 = 0; 
+        S = 0; s1 = 0; s2 = 0; s3 = 0;
+        H = 0; h1 = 0; h2 = 0; h3 = 0;
+        V = 0; v1 = 0; v2 = 0; v3 = 0;
+
+        // Pre-Process:
+        //Layer N:
+        for(int i = 0; i < Nuevo[0].size(); i++){n1 = UserInput.find(Nuevo[0].at(i));}
+        for(int i = 0; i < Nuevo[1].size(); i++){n2 = UserInput.find(Nuevo[1].at(i));}
+        for(int i = 0; i < Nuevo[2].size(); i++){n3 = UserInput.find(Nuevo[2].at(i));}
+
+        //Layer S:
+        for(int i = 0; i < Salir[0].size(); i++){s1 = UserInput.find(Salir[0].at(i));}
+        for(int i = 0; i < Salir[1].size(); i++){s2 = UserInput.find(Salir[1].at(i));}
+        for(int i = 0; i < Salir[2].size(); i++){s3 = UserInput.find(Salir[2].at(i));}
+
+        //Layer H:
+        for(int i = 0; i < Help[0].size(); i++){h1 = UserInput.find(Help[0].at(i));}
+        for(int i = 0; i < Help[1].size(); i++){h2 = UserInput.find(Help[1].at(i));}
+        for(int i = 0; i < Help[2].size(); i++){h3 = UserInput.find(Help[2].at(i));}
+
+        //Layer V:
+        for(int i = 0; i < Version[0].size(); i++){v1 = UserInput.find(Version[0].at(i));}
+        for(int i = 0; i < Version[1].size(); i++){v2 = UserInput.find(Version[1].at(i));}
+        for(int i = 0; i < Version[2].size(); i++){v3 = UserInput.find(Version[2].at(i));}
+            
+        //Process:
+            N = n1 + n2 + n3; 
+            S = s1 + s2 + s3;
+            H = h1 + h2 + h3;
+            V = v1 + v2 + v3;
+
+        //Bubble Sort me dira es la mas grande del arreglo, osea cual es la respuesta que acumulo mas puntos.
+        //En una red neuronal, la que activo mas neuronas.
+            int response[] = {N, S, H, V};
+            int size_response = sizeof(response) / sizeof(response[0]);
+            BubbleSort(response, size_response);
+
+        // Responses: (Comparamos la respuesta con cada posibilidad)
+            // Layer N:
+            if(N == response[0]){
+                std::cout << "Crear un usuario." << '\n';
+                m = -1;
+                CrearUsuario();
+            }
+            //Layer S:
+            else if(S == response[0]){
+                std::cout << "Seleccionaste Salir." << '\n';
+                m = 1;
+            }
+            //Layer H:
+            else if(H == response[0]){
+                
+                system("cls"); //system sirve para usar comandos del cmd. cls es lo mismo que clear en unix/ubuntu (clear screen).
+                DisplayHelp();
+                
+                m = -1;
+            }
+            //Layer V:
+            else if(V == response[0]){
+                std::cout << "Version actual: "<< vrs << '\n';
+                m = -1;
+            }
+
+            //Error Message:
+            else{
+                std::cout << "No entendi lo que dijiste..." << '\n';
+                m = -1;
+            }
+    }
 
 
     
