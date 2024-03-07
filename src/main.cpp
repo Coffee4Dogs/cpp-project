@@ -6,34 +6,49 @@
     Nombre: Josue Eliezer Castillo Soto
     Numero Registro:  32151059
 
-Rep: //https://github.com/Coffee4Dogs/cpp-project
-
+//Repository: //https://github.com/Coffee4Dogs/cpp-project
 ***************************************** */
+//cout, cin, endl, etc...
+    #include <iostream>
+//Prec de variables double (setprecision()) y lim caracteres (setw()).
+    #include <iomanip>
+//Elevar al cuadrado
+    #include <cmath> 
+//Manipular archivos
+    #include <fstream>
+//INVESTIGAR UNA LIBRERIA.
+    #include <cstdlib> 
+// Nos permite usar comandos de la consola de windows. 
+// En este caso la vamos a usar para limpiar pantalla cuando querramos.
+// system("cls"); <- (hace el comando del cmd clear screen).
+    #include <ctime>
+// nos permite usar time(nullptr) para poder calcular el tiempo
 
+//Version Actual:
+std::string vrs = "3.0.2";
 
-#include <iostream>
-#include <iomanip>
-#include <cmath> //Para poder elevar al cuadrado
-#include <fstream>
-#include <cstdlib> //La vamos a usar solamente para limpiar la consola system("cls") <- (clear screen).
-
-
-using std::string;
-using std::cout;
-using std::cin;
+using std::string; 
+using std::cout; 
+using std::cin; 
 using std::endl;
-using std::setprecision;
-using std::setw;
+using std::setprecision; 
+using std::setw; 
 using std::fixed;
-using std::pow; //Para poder elevar al cuadrado
+using std::pow; 
 using std::fstream;
 
-string vrs = "3.0.2 - Dr.Meow "; //Current Patch/Version
+ 
 
-
+//Entrada de tipo string usada input de usuario.
 string UserInput;
+
+//Variables de Registro (como el ID en una base de datos):
 int IDPacientes;
-string GruposSanguineos[8] = {"A+"," A-", "B+", "B-", "AB+", "AB-", "O+" ,"O-"};
+int IDExpediente; 
+
+//Solo hay 8 "Tipos de Sangre":
+const std::string GruposSanguineos[8] = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
+
 
 class PERSONA{
     protected:
@@ -167,10 +182,6 @@ class PACIENTE : public PERSONA{
             this-> EnfermedadActual = EnfermedadActual;
             this-> Direccion = Direccion;
         }
-
-        
-
-        
 
         // Metodos Set:
         void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento; CalcularEdad();}
@@ -378,7 +389,7 @@ void DisplayHelp(){
     
     std::cout << "VERSION \t\t -version  --version (Ultima version)." << std::endl;
     std::cout << "NUEVO PACIENTE \t\t -new, -nuevo, -new patient, -nuevo paciente (Crear un nuevo usuario)." << std::endl;
-    std::cout << "ALL/TODOS \t -all, -todos  (Muestra una lista de todos los pacientes)." << std::endl;
+    std::cout << "ALL/TODOS \t\t -all, -todos  (Muestra una lista de todos los pacientes)." << std::endl;
     std::cout << "EXIT \t\t\t -exit, -salir, exit(), exit, salir (Salir del programa)." << std::endl;
 }
 
@@ -473,11 +484,12 @@ void CrearUsuario(){
             std::cout << "Ingrese el nombre del paciente: " << '\n';
             std::cin >> stemp; P1.setNombre(stemp);
             file << P1.getNombre() << ' ';
+
         //ApellidoA-string
             std::cout << "Ingrese su primer apellido: " << ' ';
             std::cin >> stemp; P1.setApellidoA(stemp);
             file << P1.getApellidoA() << ' ';
-            //---------NO TESTEADO ------------------
+            
         //ApellidoB-string
             std::cout << "Ingrese su segundo apellido: " << '\n';
             std::cin >> stemp; P1.setApellidoB(stemp);
@@ -486,6 +498,31 @@ void CrearUsuario(){
             std::cout << "Ingrese su numero de IDENTIDAD: " << '\n';
             std::cin >> stemp; P1.setIdentidad(stemp);
             file <<  P1.getIdentidad() << ' ';
+
+        //Telefono
+            std::cout << "Ingrese el telefono: " << '\n';
+            std::cin >> itemp; P1.setTelefono(itemp);
+            file << P1.getTelefono() << ' ';
+
+        
+        //DiaNacimiento
+            std::cout << "Dia de Nacimiento  (Numero)" << '\n';
+            std::cin >> itemp; P1.setDiaNacimiento(itemp);
+            file << P1.getDiaNacimiento() << ' ';
+
+        //MesNacimiento
+            std::cout << "Mes de Nacimiento (Numero) " << '\n';
+            std::cin >> itemp; P1.setMesNacimiento(itemp);
+            file << P1.getMesNacimiento() << ' ';
+        
+        //AñoNacimiento
+            std::cout << "Ano de Nacimiento  (Numero)" << '\n';
+            std::cin >> itemp; P1.setAñoNacimiento(itemp);
+            file << P1.getAñoNacimiento() << ' ';
+        
+        //Edad
+            std::cout << "Se genero la edad del paciente: " << P1.getEdad() << '\n';
+            file << P1.getEdad() << ' ';
             
         //Altura
             std::cout << "Ingrese la altura en Metros (Sistema Internacional): " << '\n';
@@ -498,33 +535,8 @@ void CrearUsuario(){
             file << P1.getPeso() << ' ';
         
         //IMS
+            std::cout << "Generado Indice de Masa Corporal (IMS)" << P1.getIMS() << '\n';
             file << P1.getIMS() << ' ';
-
-
-        //HoraCita
-            count = 0;
-            while(count < 1){
-                std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
-                std::cin >> itemp; 
-                ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
-
-                P1.setHoraCita(itemp);
-                
-                file << P1.getHoraCita() << ' ';
-            }
-
-        //MinutoCita
-            count = 0;
-            while(count < 1){
-                std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
-                std::cin >> itemp;
-                  
-
-                (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
-                //El usuario puso una hora entre 0 a 59?
-                P1.setMinutoCita(itemp);
-                file << P1.getMinutoCita() << ' ';
-            }
 
         //Grupo Sanguineo 
             count = 0;
@@ -545,6 +557,42 @@ void CrearUsuario(){
             }
             P1.setTipoSangre(stemp);
             file << P1.getTipoSangre() << ' ';
+        
+        //Antecedentes
+            std::cout << "Escriba los antecedentes (enfermedades previas) separado por el siguiente simbolo: \n ->  /  <-" << '\n';
+            std::cout << "Ejemplo: Hipertension/Diabetes" << '\n';
+            std::cout << "Si la persona NO TIENE enfermedades previas, ingrese un punto -> . <-" << std::endl;
+            std::cin >> stemp; P1.setAntecedentes("%");
+            file << P1.getAntecedentes() << ' ';
+
+
+        // //HoraCita
+        //     count = 0;
+        //     while(count < 1){
+        //         std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
+        //         std::cin >> itemp; 
+        //         ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
+
+        //         P1.setHoraCita(itemp);
+                
+        //         file << P1.getHoraCita() << ' ';
+        //     }
+
+        // //MinutoCita
+        //     count = 0;
+        //     while(count < 1){
+        //         std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
+        //         std::cin >> itemp;
+                  
+
+        //         (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
+        //         //El usuario puso una hora entre 0 a 59?
+        //         P1.setMinutoCita(itemp);
+        //         file << P1.getMinutoCita() << ' ';
+        //     }
+
+        //Direccion ha sido eliminado.
+
 
             //Fin de Crear Usuario.
             file << '\n';
@@ -555,36 +603,29 @@ void CrearUsuario(){
    
 }
 
+// int size = ContarRegistros("Datos_Pacientes.txt")
+// for(int i = 0; i < size; i++){
+//     file >> ID >> Identidad >> Telefono >> Nombre >> ApellidoA >> ApellidoB >> Identidad >> Altura >> Peso >> HoraCita >> MinutoCita >> GrupoSanguineo;
+//     std::cout << "El usuario es: " << Nombre << "y su edad es: " <<  << '\n';
+
+// }
+
 //Recorre 
 void LeerUsuario() {
-    fstream file;
-    string address = "Datos_Pacientes.txt";
+    fstream file; string address = "Datos_Pacientes.txt"; string line;
     file.open(address, fstream::in);
-
-    int ID;
-    string Nombre, ApellidoA, ApellidoB, Identidad;
-    double Altura, Peso;
-    int Edad, HoraCita, MinutoCita;
-    char GrupoSanguineo;
-    // file >> ID >> Nombre >> ApellidoA >> ApellidoB >> Identidad >> 
-    if (file.is_open()) {
-        string line;
-        while (getline(file, line)) {
-        std::cout << line << '\n';
-        file >> ID >> Nombre;
-        std::cout << "El nombre es: "<< Nombre << '\n';
+    if(file.is_open()){
+        while(getline(file, line)){
+            std::cout << line << std::endl;
         }
-
-    file.close();
-    
-    } 
+        file.close();
+    }
 }  
 
 
 
 int main() {
     DisplayWelcome();
-    LeerUsuario();
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
    
     ////------------------/////
@@ -601,6 +642,7 @@ int main() {
         }
         //Leer todos los pacientes
         else if(UserInput == "-all" || UserInput=="-todos" || UserInput == "all" || UserInput == "todos"){
+            std::cout << "Mostrando todos los pacientes:" << '\n';
             LeerUsuario();
             m = -1; //Mantenerse en el menu.
         }
@@ -612,7 +654,8 @@ int main() {
         else if(UserInput=="-exit" || UserInput=="-salir" || UserInput=="exit()" || UserInput=="exit" || UserInput=="salir"){   
             m = 1; //Salir del menu.
         }
-        else if(UserInput=="-version" || UserInput=="--version"){   
+        else if(UserInput=="-version" || UserInput=="--version"){
+            std::cout << "Version " << vrs << '\n';
             m = 1; //Salir del menu.
         }
 
