@@ -44,7 +44,7 @@ vector<int> VRegistro;
 vector<string> VNombre;
 vector<string> VApellidoA; 
 vector<string> VApellidoB;
-vector<string> VIDENTIDAD;
+vector<string> VIdentidad;
 vector<int> VTelefono;
 vector<int> VDiaNacimiento;
 vector<int> VMesNacimiento;
@@ -658,19 +658,37 @@ void LeerUsuario() {
 // vector<string> VGrupoSanguineo;
 // vector<string> VAntecedentes;
 
-void Read(string address){
-    fstream file;
+void EscanearPaciente(){
+    fstream file; string address;
+    address = "Datos_Pacientes.txt";
     file.open(address, fstream::in);
     if(file.is_open()){
-        int Registro; string Nombre; string ApellidoA; string ApellidoB; string IDENTIDAD; int Telefono; 
+        int Registro; string Nombre; string ApellidoA; string ApellidoB; string Identidad; int Telefono; 
         int DiaNacimiento; int MesNacimiento; int AñoNacimiento; int Edad; double Altura; double Peso; double IMS; string GrupoSanguineo; string Antecedentes;
         
         //1 Bob Esponja Pantalones 1234-5678 7777777 23 6 1999 2023 3.3 4.4 0.40404 A+ .
 
-        while(file >> Registro >> Nombre >> ApellidoA >> ApellidoB >> IDENTIDAD >> Telefono >> DiaNacimiento >> MesNacimiento >> AñoNacimiento >> Edad >> Altura >> Peso >> IMS >> GrupoSanguineo >> Antecedentes){
-            std::cout << Nombre << '\n';
-        }
+        while(file >> Registro >> Nombre >> ApellidoA >> ApellidoB >> Identidad >> Telefono >> DiaNacimiento >> MesNacimiento >> AñoNacimiento >> Edad >> Altura >> Peso >> IMS >> GrupoSanguineo >> Antecedentes){
+            VRegistro.push_back(Registro);
+            VNombre.push_back(Nombre);
+            VApellidoA.push_back(ApellidoA);
+            VApellidoB.push_back(ApellidoB);
+            VIdentidad.push_back(Identidad);
+            VTelefono.push_back(Telefono);
+            VDiaNacimiento.push_back(DiaNacimiento);
+            VMesNacimiento.push_back(MesNacimiento);
+            VAñoNacimiento.push_back(AñoNacimiento);
+            VEdad.push_back(Edad);
+            VAltura.push_back(Altura);
+            VPeso.push_back(Peso);
+            VIMS.push_back(IMS);
+            VGrupoSanguineo.push_back(GrupoSanguineo);
+            VAntecedentes.push_back(Antecedentes);
 
+        }
+        std::cout << "Archivo pacientes escaneado." << '\n';
+
+        
         file.close();
     }
 }
@@ -714,8 +732,8 @@ int main() {
 
         else if(UserInput=="-search"){
             std::cout << "Leyendo el archivo... " << '\n';
-            Read("Datos_Pacientes.txt");
-            
+            EscanearPaciente();
+            std::cout << "ID:" << VRegistro[2] << " con nombre " << VNombre[2] << " y numero de telefono: " << VTelefono [2] << '\n';
             MantenerBucle = true;
         }
 
