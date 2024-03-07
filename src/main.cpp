@@ -31,7 +31,7 @@ using std::fstream;
 string vrs = "3.0.2 - Dr.Meow "; //Current Patch/Version
 
 
-string UserInput;
+string Prompt;
 int IDPacientes;
 string GruposSanguineos[8] = {"A+"," A-", "B+", "B-", "AB+", "AB-", "O+" ,"O-"};
 
@@ -358,8 +358,7 @@ class MEDICO : public PERSONA{
 
 };
 
-
-//De mayor a menor.
+//Ordena un arreglo (De mayor a menor). Parametros: array, el tamaño en numero entero.
 void BubbleSort(int array[], int size){
     int temp;
     for(int i = 0; i<size-1; i++){
@@ -373,7 +372,7 @@ void BubbleSort(int array[], int size){
     }
 }
 
-// -Despliega las opciones cuando se llama -help
+// cuand -help muestra un texto con instrucciones al usuario.
 void DisplayHelp(){
     system("cls"); std::cout << "\n";
     
@@ -383,6 +382,7 @@ void DisplayHelp(){
     std::cout << "EXIT \t\t\t -exit (Salir del programa)." << std::endl;
 }
 
+//Trae un archivo de decoracion de un gato como presentacion.
 void DisplayWelcome(){
     system("cls"); std::cout << "\n";
     fstream file; string line;
@@ -395,8 +395,7 @@ void DisplayWelcome(){
     }
 }
 
-
-
+//Encripta un string si le damos un shift. Ejem la a -> b con shift +1.
 string CCipher(int shift, string line){
     // ----------  Caesar Cipher Encryption  -----------
         //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
@@ -413,6 +412,7 @@ string CCipher(int shift, string line){
     return NewLine;
 }
 
+//Dar total de registros. Si no hay retorna -1.
 int ContarRegistros(string address){
     fstream file;
     file.open(address, fstream::in);
@@ -432,10 +432,8 @@ int ContarRegistros(string address){
     }
 }
 
-
-
+//Asignar ID cuando esta en modo escritura.
 int AsignarID(){
-
     int totalregistros;
     totalregistros = ContarRegistros("Datos_Pacientes.txt");
     if(totalregistros > 0){
@@ -443,15 +441,12 @@ int AsignarID(){
     }
     else{
         totalregistros = 1;
-        totalregistros ++;
+        // totalregistros ++;
     }
-
     return totalregistros; 
 }
 
-
-
-
+//Crea un usuario cada vez que se le llama.
 void CrearUsuario(){
     //Variables
     fstream file; 
@@ -560,12 +555,15 @@ void CrearUsuario(){
    
 }
 
+//Recorre 
+void LeerUsuario(){
+
+}
 
 
 
 int main() {
     DisplayWelcome();
-    std::cout << ContarRegistros("Datos_Pacientes.txt") << '\n';
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
    
     ////------------------/////
@@ -580,8 +578,8 @@ int main() {
     string Nuevo[] = {"n","e","w" };    //  -new new, New
     string Help[] = {"h","e", "l"};     //  -Help Command
     string Salir[] = {"x","i","t"};     //Exit
-    string Version[] = {"s","r","o"};   //Version
-   
+    string Version[] = {"v","e","r"};   //Version
+    string List[] = {"l","i","s","t"};  //List
     
     
     int m = 0; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
@@ -591,11 +589,12 @@ int main() {
     int S, s1, s2, s3;
     int H, h1, h2, h3;
     int V, v1, v2, v3;
-
+    int L, l1, l2, l3, l4;
+    int ELSE;
 
     while(m<1){
         std::cout << "   - $ ";
-        cin >> UserInput;
+        cin >> Prompt;
 
         
         //Reset Everything
@@ -603,54 +602,63 @@ int main() {
         S = 0; s1 = 0; s2 = 0; s3 = 0;
         H = 0; h1 = 0; h2 = 0; h3 = 0;
         V = 0; v1 = 0; v2 = 0; v3 = 0;
+        L = 0; l1 = 0; l2 = 0; l3 = 0; l4 = 0;
+        ELSE = 1;
 
         // Pre-Process:
         //Layer N:
-        for(int i = 0; i < Nuevo[0].size(); i++){n1 = UserInput.find(Nuevo[0].at(i));}
-        for(int i = 0; i < Nuevo[1].size(); i++){n2 = UserInput.find(Nuevo[1].at(i));}
-        for(int i = 0; i < Nuevo[2].size(); i++){n3 = UserInput.find(Nuevo[2].at(i));}
+        for(int i = 0; i < Nuevo[0].size(); i++){n1 = Prompt.find(Nuevo[0].at(i));}
+        for(int i = 0; i < Nuevo[1].size(); i++){n2 = Prompt.find(Nuevo[1].at(i));}
+        for(int i = 0; i < Nuevo[2].size(); i++){n3 = Prompt.find(Nuevo[2].at(i));}
 
         //Layer S:
-        for(int i = 0; i < Salir[0].size(); i++){s1 = UserInput.find(Salir[0].at(i));}
-        for(int i = 0; i < Salir[1].size(); i++){s2 = UserInput.find(Salir[1].at(i));}
-        for(int i = 0; i < Salir[2].size(); i++){s3 = UserInput.find(Salir[2].at(i));}
+        for(int i = 0; i < Salir[0].size(); i++){s1 = Prompt.find(Salir[0].at(i));}
+        for(int i = 0; i < Salir[1].size(); i++){s2 = Prompt.find(Salir[1].at(i));}
+        for(int i = 0; i < Salir[2].size(); i++){s3 = Prompt.find(Salir[2].at(i));}
 
         //Layer H:
-        for(int i = 0; i < Help[0].size(); i++){h1 = UserInput.find(Help[0].at(i));}
-        for(int i = 0; i < Help[1].size(); i++){h2 = UserInput.find(Help[1].at(i));}
-        for(int i = 0; i < Help[2].size(); i++){h3 = UserInput.find(Help[2].at(i));}
+        for(int i = 0; i < Help[0].size(); i++){h1 = Prompt.find(Help[0].at(i));}
+        for(int i = 0; i < Help[1].size(); i++){h2 = Prompt.find(Help[1].at(i));}
+        for(int i = 0; i < Help[2].size(); i++){h3 = Prompt.find(Help[2].at(i));}
 
         //Layer V:
-        for(int i = 0; i < Version[0].size(); i++){v1 = UserInput.find(Version[0].at(i));}
-        for(int i = 0; i < Version[1].size(); i++){v2 = UserInput.find(Version[1].at(i));}
-        for(int i = 0; i < Version[2].size(); i++){v3 = UserInput.find(Version[2].at(i));}
-            
+        for(int i = 0; i < Version[0].size(); i++){v1 = Prompt.find(Version[0].at(i));}
+        for(int i = 0; i < Version[1].size(); i++){v2 = Prompt.find(Version[1].at(i));}
+        for(int i = 0; i < Version[2].size(); i++){v3 = Prompt.find(Version[2].at(i));}
+
+        //Layer L:
+        for(int i = 0; i < List[0].size(); i++){l1 = Prompt.find(List[0].at(i));}
+        for(int i = 0; i < List[1].size(); i++){l2 = Prompt.find(List[1].at(i));}
+        for(int i = 0; i < List[2].size(); i++){l3 = Prompt.find(List[2].at(i));}
+        for(int i = 0; i < List[3].size(); i++){l4 = Prompt.find(List[3].at(i));}
+
         //Process:
             N = n1 + n2 + n3; 
             S = s1 + s2 + s3; 
             H = h1 + h2 + h3;
             V = v1 + v2 + v3;
+            L = l1 + l2 + l3 + l4;
 
         //Bubble Sort me dira es la mas grande del arreglo, osea cual es la respuesta que acumulo mas puntos.
         //En una red neuronal, la que activo mas neuronas.
-            int response[] = {N, S, H, V};
-            int size_response = sizeof(response) / sizeof(response[0]);
-            BubbleSort(response, size_response);
+            int Response[] = {N, S, H, V, L, ELSE};
+            int size_Response = sizeof(Response) / sizeof(Response[0]);
+            BubbleSort(Response, size_Response);
 
         // Responses: (Comparamos la respuesta con cada posibilidad)
             // Layer N:
-            if(N == response[0]){
-                std::cout << "Crear un usuario." << '\n';
+            if(N == Response[0]){
+                std::cout << "\t > Crear un usuario." << '\n';
                 m = -1;
                 CrearUsuario();
             }
             //Layer S:
-            else if(S == response[0]){
-                std::cout << "Seleccionaste Salir." << '\n';
+            else if(S == Response[0]){
+                std::cout << "\t > Seleccionaste Salir." << '\n';
                 m = 1;
             }
             //Layer H:
-            else if(H == response[0]){
+            else if(H == Response[0]){
                 
                 system("cls"); //system sirve para usar comandos del cmd. cls es lo mismo que clear en unix/ubuntu (clear screen).
                 DisplayHelp();
@@ -658,14 +666,25 @@ int main() {
                 m = -1;
             }
             //Layer V:
-            else if(V == response[0]){
-                std::cout << "Version actual: "<< vrs << '\n';
+            else if(V == Response[0]){
+                std::cout << "\t > Version actual: "<< vrs << '\n';
+                m = -1;
+            }
+
+            //Layer L:
+            else if(L == Response[0]){
+                std::cout << "\t > Seleccionaste List: " << '\n';
+                m = -1;
+            }
+
+            else if(ELSE == Response[0]){
+                std::cout << "\t > No entendi lo que dijiste..."<< '\n';
                 m = -1;
             }
 
             //Error Message:
             else{
-                std::cout << "No entendi lo que dijiste..." << '\n';
+                std::cout << "\t > No entendi lo que dijiste..." << '\n';
                 m = -1;
             }
     }
