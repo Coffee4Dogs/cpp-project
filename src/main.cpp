@@ -16,13 +16,14 @@
     #include <cmath> 
 //Manipular archivos
     #include <fstream>
+//Crear Vectores
+    #include <vector>
 //INVESTIGAR UNA LIBRERIA.
     #include <cstdlib> 
 // Nos permite usar comandos de la consola de windows. 
 // En este caso la vamos a usar para limpiar pantalla cuando querramos.
 // system("cls"); <- (hace el comando del cmd clear screen).
-    #include <ctime>
-// nos permite usar time(nullptr) para poder calcular el tiempo
+    
 
 //Version Actual:
 std::string vrs = "3.0.2";
@@ -36,8 +37,24 @@ using std::setw;
 using std::fixed;
 using std::pow; 
 using std::fstream;
+using std::vector;
 
- 
+//Vectores:
+vector<int> VRegistro;
+vector<string> VNombre;
+vector<string> VApellidoA; 
+vector<string> VApellidoB;
+vector<string> VIDENTIDAD;
+vector<int> VTelefono;
+vector<int> VDiaNacimiento;
+vector<int> VMesNacimiento;
+vector<int> VAñoNacimiento;
+vector<int> VEdad;
+vector<double> VAltura;
+vector<double> VPeso;
+vector<double> VIMS;
+vector<string> VGrupoSanguineo;
+vector<string> VAntecedentes;
 
 //Entrada de tipo string usada input de usuario.
 string UserInput;
@@ -387,10 +404,11 @@ void BubbleSort(int array[], int size){
 void DisplayHelp(){
     system("cls"); std::cout << "\n";
     
-    std::cout << "VERSION \t\t -version  --version (Ultima version)." << std::endl;
-    std::cout << "NUEVO PACIENTE \t\t -new, -nuevo, -new patient, -nuevo paciente (Crear un nuevo usuario)." << std::endl;
-    std::cout << "ALL/TODOS \t\t -all, -todos  (Muestra una lista de todos los pacientes)." << std::endl;
-    std::cout << "EXIT \t\t\t -exit, -salir, exit(), exit, salir (Salir del programa)." << std::endl;
+    std::cout << "VERSION \n\t -version  --version" << std::endl;
+    std::cout << "CLEAR SCREEN \n\t cls, clear" << std::endl;
+    std::cout << "NUEVO PACIENTE \n\t -new, -nuevo, -new patient, -nuevo paciente (Crear un nuevo usuario)." << std::endl;
+    std::cout << "TODOS LOS PACIENTES \n\t -all, -todos (Muestra la lista de todos los pacientes)." << std::endl;
+    std::cout << "SALIR/EXIT \n\t -exit, -salir, exit(), exit, salir" << std::endl;
 }
 
 //Trae un archivo de decoracion de un gato como presentacion.
@@ -562,10 +580,11 @@ void CrearUsuario(){
             std::cout << "Escriba los antecedentes (enfermedades previas) separado por el siguiente simbolo: \n ->  /  <-" << '\n';
             std::cout << "Ejemplo: Hipertension/Diabetes" << '\n';
             std::cout << "Si la persona NO TIENE enfermedades previas, ingrese un punto -> . <-" << std::endl;
-            std::cin >> stemp; P1.setAntecedentes("%");
+            std::cin >> stemp; 
+            P1.setAntecedentes(stemp);
             file << P1.getAntecedentes() << ' ';
 
-
+        //Quizas esto deberia de ir en expediente...
         // //HoraCita
         //     count = 0;
         //     while(count < 1){
@@ -622,9 +641,42 @@ void LeerUsuario() {
     }
 }  
 
+//Vectores:
+// vector<int> VRegistro;
+// vector<string> VNombre;
+// vector<string> VApellidoA; 
+// vector<string> VApellidoB;
+// vector<string> VIDENTIDAD;
+// vector<int> VTelefono;
+// vector<int> VDiaNacimiento;
+// vector<int> VMesNacimiento;
+// vector<int> VAñoNacimiento;
+// vector<int> VEdad;
+// vector<double> VAltura;
+// vector<double> VPeso;
+// vector<double> VIMS;
+// vector<string> VGrupoSanguineo;
+// vector<string> VAntecedentes;
 
+void Read(string address){
+    fstream file;
+    file.open(address, fstream::in);
+    if(file.is_open()){
+        int Registro; string Nombre; string ApellidoA; string ApellidoB; string IDENTIDAD; int Telefono; 
+        int DiaNacimiento; int MesNacimiento; int AñoNacimiento; int Edad; double Altura; double Peso; double IMS; string GrupoSanguineo; string Antecedentes;
+        
+        //1 Bob Esponja Pantalones 1234-5678 7777777 23 6 1999 2023 3.3 4.4 0.40404 A+ .
+
+        while(file >> Registro >> Nombre >> ApellidoA >> ApellidoB >> IDENTIDAD >> Telefono >> DiaNacimiento >> MesNacimiento >> AñoNacimiento >> Edad >> Altura >> Peso >> IMS >> GrupoSanguineo >> Antecedentes){
+            std::cout << Nombre << '\n';
+        }
+
+        file.close();
+    }
+}
 
 int main() {
+    int itemp; string stemp;
     DisplayWelcome();
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
    
@@ -632,36 +684,70 @@ int main() {
     
 
     //--Menu--
-    int m = -1;
-    while (m < 0){
+    
+    bool MantenerBucle = true; 
+    while (MantenerBucle == true){
         std::cout << " - $ ";
         cin >> UserInput;
         if(UserInput == "-new" || UserInput=="-nuevo" || UserInput == "-new patient" || UserInput=="-nuevo paciente" || UserInput == "new" || UserInput == "nuevo"){
             CrearUsuario();
-            m = -1; //Mantenerse en el menu.
+            MantenerBucle = true;
         }
         //Leer todos los pacientes
         else if(UserInput == "-all" || UserInput=="-todos" || UserInput == "all" || UserInput == "todos"){
             std::cout << "Mostrando todos los pacientes:" << '\n';
             LeerUsuario();
-            m = -1; //Mantenerse en el menu.
+            MantenerBucle = true;
         }
 
         else if(UserInput=="-help" || UserInput=="--help" || UserInput=="help"){
             DisplayHelp();
-            m = -1; //Mantenerse en el menu.
+            MantenerBucle = true;
         }
         else if(UserInput=="-exit" || UserInput=="-salir" || UserInput=="exit()" || UserInput=="exit" || UserInput=="salir"){   
-            m = 1; //Salir del menu.
+            MantenerBucle = false;
         }
         else if(UserInput=="-version" || UserInput=="--version"){
             std::cout << "Version " << vrs << '\n';
-            m = 1; //Salir del menu.
+            MantenerBucle = true;
+        }
+
+        else if(UserInput=="-read"){
+            std::cout << "Leyendo el archivo... " << '\n';
+            Read("Datos_Pacientes.txt");
+            
+            MantenerBucle = true;
+        }
+
+        else if(UserInput=="-search"){ 
+            
+            std::cout << "Seleccione una opcion de busqueda:" << '\n';
+            std::cout << "1. Identidad" << '\n';
+            std::cout << "2. Numero de Telefono" << '\n';
+            itemp == 0; cin >> itemp;
+            if(itemp == 1){
+                std::cout << "Buscar por Identidad. Ingrese la identidad:" << '\n';
+                cin >> stemp;
+                std::cout << "Buscando: " << stemp << '\n';
+
+            }
+            if(itemp == 2){
+                std::cout << "Buscar por Telefono" << '\n';
+                cin >> itemp;
+                std::cout << "Buscando: " << itemp << '\n';
+            }
+            MantenerBucle = true;
+        }
+        
+
+        else if(UserInput=="clear" || UserInput=="cls"){
+            system("cls");
+            MantenerBucle = true;
         }
 
         else{
             std::cout << "El comando " << UserInput << "no es un comando reconocido. \nUtilice -help o --help para mostrar todos los comandos disponibles." << '\n';
-            m = -1; //Mantenerse en el menu.
+            MantenerBucle = true;
 
         }
 
