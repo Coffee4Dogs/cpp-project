@@ -757,7 +757,6 @@ int main() {
             MantenerBucle = true;
         }
         
-
         else if(UserInput=="clear" || UserInput=="cls"){
             system("cls");
             MantenerBucle = true;
