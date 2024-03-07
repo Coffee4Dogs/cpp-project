@@ -712,7 +712,7 @@ int main() {
             MantenerBucle = true;
         }
 
-        else if(UserInput=="-read"){
+        else if(UserInput=="-search"){
             std::cout << "Leyendo el archivo... " << '\n';
             Read("Datos_Pacientes.txt");
             
