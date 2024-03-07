@@ -5,3 +5,4 @@
 5 Cangrejo ricachon cascarudo 1234-9999 97932 30 8 1990 2023 1.3 34.2 20.2367 O+ . 
 6 s s s 2 3 4 3 2 2024 1 3 3 A+ j 
 7 Prueba soy leyenda 1234 345 2 3 4 -1804332248 3.4 4.5 0.389273 O- Sida 
+8 juanchi joh hernandez 123-456-7 1234 -5678 3 4 2098548344 4.5 3.4 0.167901 AB- Rinitis 
