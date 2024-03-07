@@ -31,7 +31,7 @@ using std::fstream;
 string vrs = "3.0.2 - Dr.Meow "; //Current Patch/Version
 
 
-string Prompt;
+string UserInput;
 int IDPacientes;
 string GruposSanguineos[8] = {"A+"," A-", "B+", "B-", "AB+", "AB-", "O+" ,"O-"};
 
@@ -377,9 +377,9 @@ void DisplayHelp(){
     system("cls"); std::cout << "\n";
     
     std::cout << "VERSION \t\t -version  --version (Ultima version)." << std::endl;
-    std::cout << "NUEVO PACIENTE \t\t -new (Crear un nuevo usuario)." << std::endl;
-    std::cout << "LISTA PACIENTES \t -list (Lista de todos los pacientes)." << std::endl;
-    std::cout << "EXIT \t\t\t -exit (Salir del programa)." << std::endl;
+    std::cout << "NUEVO PACIENTE \t\t -new, -nuevo, -new patient, -nuevo paciente (Crear un nuevo usuario)." << std::endl;
+    std::cout << "ALL/TODOS \t -all, -todos  (Muestra una lista de todos los pacientes)." << std::endl;
+    std::cout << "EXIT \t\t\t -exit, -salir, exit(), exit, salir (Salir del programa)." << std::endl;
 }
 
 //Trae un archivo de decoracion de un gato como presentacion.
@@ -556,147 +556,76 @@ void CrearUsuario(){
 }
 
 //Recorre 
-void LeerUsuario(){
+void LeerUsuario() {
+    fstream file;
+    string address = "Datos_Pacientes.txt";
+    file.open(address, fstream::in);
 
-}
+    int ID;
+    string Nombre, ApellidoA, ApellidoB, Identidad;
+    double Altura, Peso;
+    int Edad, HoraCita, MinutoCita;
+    char GrupoSanguineo;
+    // file >> ID >> Nombre >> ApellidoA >> ApellidoB >> Identidad >> 
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+        std::cout << line << '\n';
+        file >> ID >> Nombre;
+        std::cout << "El nombre es: "<< Nombre << '\n';
+        }
+
+    file.close();
+    
+    } 
+}  
 
 
 
 int main() {
     DisplayWelcome();
+    LeerUsuario();
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
    
     ////------------------/////
     
 
+    //--Menu--
+    int m = -1;
+    while (m < 0){
+        std::cout << " - $ ";
+        cin >> UserInput;
+        if(UserInput == "-new" || UserInput=="-nuevo" || UserInput == "-new patient" || UserInput=="-nuevo paciente" || UserInput == "new" || UserInput == "nuevo"){
+            CrearUsuario();
+            m = -1; //Mantenerse en el menu.
+        }
+        //Leer todos los pacientes
+        else if(UserInput == "-all" || UserInput=="-todos" || UserInput == "all" || UserInput == "todos"){
+            LeerUsuario();
+            m = -1; //Mantenerse en el menu.
+        }
 
+        else if(UserInput=="-help" || UserInput=="--help" || UserInput=="help"){
+            DisplayHelp();
+            m = -1; //Mantenerse en el menu.
+        }
+        else if(UserInput=="-exit" || UserInput=="-salir" || UserInput=="exit()" || UserInput=="exit" || UserInput=="salir"){   
+            m = 1; //Salir del menu.
+        }
+        else if(UserInput=="-version" || UserInput=="--version"){   
+            m = 1; //Salir del menu.
+        }
 
-    
-    //--------- MENU ---------
-    //Inspirado en los LLM Ref. Andrej Karpathy -> https://www.youtube.com/watch?v=zduSFxRajkE
-    //Bag of words:
-    string Nuevo[] = {"n","e","w" };    //  -new new, New
-    string Help[] = {"h","e", "l"};     //  -Help Command
-    string Salir[] = {"x","i","t"};     //Exit
-    string Version[] = {"v","e","r"};   //Version
-    string List[] = {"l","i","s","t"};  //List
-    
-    
-    int m = 0; //m = -1 (mantenerse en while, respuestas negativas) | m = 1 (romper/salir de menu while) 
-    
-    //Existing Layers:
-    int N, n1, n2, n3;
-    int S, s1, s2, s3;
-    int H, h1, h2, h3;
-    int V, v1, v2, v3;
-    int L, l1, l2, l3, l4;
-    int ELSE;
+        else{
+            std::cout << "El comando " << UserInput << "no es un comando reconocido. \nUtilice -help o --help para mostrar todos los comandos disponibles." << '\n';
+            m = -1; //Mantenerse en el menu.
 
-    while(m<1){
-        std::cout << "   - $ ";
-        cin >> Prompt;
+        }
 
-        
-        //Reset Everything
-        N = 0; n1 = 0; n2 = 0; n3 = 0;
-        S = 0; s1 = 0; s2 = 0; s3 = 0;
-        H = 0; h1 = 0; h2 = 0; h3 = 0;
-        V = 0; v1 = 0; v2 = 0; v3 = 0;
-        L = 0; l1 = 0; l2 = 0; l3 = 0; l4 = 0;
-        ELSE = 1;
-
-        // Pre-Process:
-        //Layer N:
-        for(int i = 0; i < Nuevo[0].size(); i++){n1 = Prompt.find(Nuevo[0].at(i));}
-        for(int i = 0; i < Nuevo[1].size(); i++){n2 = Prompt.find(Nuevo[1].at(i));}
-        for(int i = 0; i < Nuevo[2].size(); i++){n3 = Prompt.find(Nuevo[2].at(i));}
-
-        //Layer S:
-        for(int i = 0; i < Salir[0].size(); i++){s1 = Prompt.find(Salir[0].at(i));}
-        for(int i = 0; i < Salir[1].size(); i++){s2 = Prompt.find(Salir[1].at(i));}
-        for(int i = 0; i < Salir[2].size(); i++){s3 = Prompt.find(Salir[2].at(i));}
-
-        //Layer H:
-        for(int i = 0; i < Help[0].size(); i++){h1 = Prompt.find(Help[0].at(i));}
-        for(int i = 0; i < Help[1].size(); i++){h2 = Prompt.find(Help[1].at(i));}
-        for(int i = 0; i < Help[2].size(); i++){h3 = Prompt.find(Help[2].at(i));}
-
-        //Layer V:
-        for(int i = 0; i < Version[0].size(); i++){v1 = Prompt.find(Version[0].at(i));}
-        for(int i = 0; i < Version[1].size(); i++){v2 = Prompt.find(Version[1].at(i));}
-        for(int i = 0; i < Version[2].size(); i++){v3 = Prompt.find(Version[2].at(i));}
-
-        //Layer L:
-        for(int i = 0; i < List[0].size(); i++){l1 = Prompt.find(List[0].at(i));}
-        for(int i = 0; i < List[1].size(); i++){l2 = Prompt.find(List[1].at(i));}
-        for(int i = 0; i < List[2].size(); i++){l3 = Prompt.find(List[2].at(i));}
-        for(int i = 0; i < List[3].size(); i++){l4 = Prompt.find(List[3].at(i));}
-
-        //Process:
-            N = n1 + n2 + n3; 
-            S = s1 + s2 + s3; 
-            H = h1 + h2 + h3;
-            V = v1 + v2 + v3;
-            L = l1 + l2 + l3 + l4;
-
-        //Bubble Sort me dira es la mas grande del arreglo, osea cual es la respuesta que acumulo mas puntos.
-        //En una red neuronal, la que activo mas neuronas.
-            int Response[] = {N, S, H, V, L, ELSE};
-            int size_Response = sizeof(Response) / sizeof(Response[0]);
-            BubbleSort(Response, size_Response);
-
-        // Responses: (Comparamos la respuesta con cada posibilidad)
-            // Layer N:
-            if(N == Response[0]){
-                std::cout << "\t > Crear un usuario." << '\n';
-                m = -1;
-                CrearUsuario();
-            }
-            //Layer S:
-            else if(S == Response[0]){
-                std::cout << "\t > Seleccionaste Salir." << '\n';
-                m = 1;
-            }
-            //Layer H:
-            else if(H == Response[0]){
-                
-                system("cls"); //system sirve para usar comandos del cmd. cls es lo mismo que clear en unix/ubuntu (clear screen).
-                DisplayHelp();
-                
-                m = -1;
-            }
-            //Layer V:
-            else if(V == Response[0]){
-                std::cout << "\t > Version actual: "<< vrs << '\n';
-                m = -1;
-            }
-
-            //Layer L:
-            else if(L == Response[0]){
-                std::cout << "\t > Seleccionaste List: " << '\n';
-                m = -1;
-            }
-
-            else if(ELSE == Response[0]){
-                std::cout << "\t > No entendi lo que dijiste..."<< '\n';
-                m = -1;
-            }
-
-            //Error Message:
-            else{
-                std::cout << "\t > No entendi lo que dijiste..." << '\n';
-                m = -1;
-            }
     }
-
-
-    
-
-    
-    
     
     
 
-
+    //Fin del Codigo
     return 0;
 }

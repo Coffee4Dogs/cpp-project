@@ -1,1 +1,2 @@
-1 Jack Lagos Mejia 1234-5678-1546 2.4 34.5 5.98958 7 0 A+ 
+1 Jack lagos mejia 1234 1.2 34.5 23.9583 3 55 A+ 
+2 Bob Esponja Pantalones 123-45-6765 4.4 5.5 0.284091 34 3 34 A+ 
