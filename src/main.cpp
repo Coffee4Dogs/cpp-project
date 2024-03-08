@@ -16,8 +16,9 @@
     #include <cmath> 
 //Manipular archivos
     #include <fstream>
-//Crear Vectores
+//Crear Vectores y algoritmos
     #include <vector>
+    #include <algorithm>
 //INVESTIGAR UNA LIBRERIA.
     #include <cstdlib> 
 // Nos permite usar comandos de la consola de windows. 
@@ -55,9 +56,11 @@ vector<double> VPeso;
 vector<double> VIMS;
 vector<string> VGrupoSanguineo;
 vector<string> VAntecedentes;
+int index = -1;
 
 //Entrada de tipo string usada input de usuario.
 string UserInput;
+string BuscarIdentidad;
 
 //Variables de Registro (como el ID en una base de datos):
 int IDPacientes;
@@ -201,11 +204,11 @@ class PACIENTE : public PERSONA{
         }
 
         // Metodos Set:
-        void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento; CalcularEdad();}
-        void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;CalcularEdad();}
-        void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;CalcularEdad();}
+        void setNacimiento(string Nacimiento){this-> Nacimiento = Nacimiento;}
+        void setDiaNacimiento(int DiaNacimiento){this-> DiaNacimiento = DiaNacimiento;}
+        void setMesNacimiento(int MesNacimiento){this-> MesNacimiento = MesNacimiento;}
         void setAñoNacimiento(int AñoNacimiento){this->AñoNacimiento = AñoNacimiento;}
-        void setEdad(int Edad){this-> Edad = Edad;}
+        void setEdad(int Edad){this->Edad = Edad;}
         void setAltura(double Altura){
             this->Altura = Altura;
             CalcularIMS(); //Al establecer una Altura (Metros) luego se calcula el IMS.
@@ -266,7 +269,7 @@ class PACIENTE : public PERSONA{
             int getMesNacimiento(){return this->MesNacimiento;}
             int getAñoNacimiento(){return this->AñoNacimiento;}
             double getIMS(){return this->IMS;}
-            int getEdad(){return Edad;}
+            int getEdad(){return this->Edad;}
             double getAltura(){return this->Altura;}
             double getPeso(){return this->Peso;}
             string getTipoSangre(){return this->TipoSangre;}
@@ -325,13 +328,34 @@ class EXPEDIENTE : public PACIENTE{
         return this->NumeroExpediente;
     }
 
-
     //Metodo sin nada.
     EXPEDIENTE(){}
 
     //Destructor
     ~EXPEDIENTE(){}
 };
+
+void buscarExpediente(){
+    fstream file;
+    string address = "Datos_Expedientes.txt";
+    file.open(address, fstream::in);
+    string Nombre, Apellido, Identidad, gruposanguieno, Antencedentes;
+   int Numerobuscar;
+   std::cout << "Numero:" << '\n';
+   std::cin >> Numerobuscar ;
+    int numero, Altura, Peso, IMS;
+    file >>numero>> Nombre >> Apellido >> Identidad >> Altura >> Peso >> IMS >> gruposanguieno >>  Antencedentes;
+    while (!file.eof()) {
+        if (Numerobuscar == numero) {
+            
+            std::cout << "encontrado" << '\n';
+        } else {
+            std::cout << "no encontrado" << '\n';
+        }
+        file >>numero>> Nombre >> Apellido >> Identidad >> Altura >> Peso >> IMS >> gruposanguieno >>  Antencedentes;
+    } 
+
+}
 
 class MEDICO : public PERSONA{
     protected:
@@ -351,9 +375,7 @@ class MEDICO : public PERSONA{
     
     //Metodos Set: 
     void setEspecialidad(string Especialidad){
-         this-> Especialidad = Especialidad;
-
-
+        this-> Especialidad = Especialidad;
     }
 
     void setNumeroColegiado (string NumeroColegiado){
@@ -375,14 +397,87 @@ class MEDICO : public PERSONA{
         return this->Tarifa;
     }
 
-
-
-
     //Metodo sin nada.
     MEDICO(){}
     
     //Destructor
     ~MEDICO(){}
+
+     void ListaMedicos(){
+         fstream file; 
+         string address = "ListaMedicos.txt"; 
+       
+        MEDICO doctor1("Endocrinologo", "41048-4", 600.0);
+        doctor1.setNombre("Monica");
+        doctor1.setTelefono(1234567);
+        doctor1.setApellidoA("Lopez");
+        doctor1.setIdentidad("0801-1972-9897");
+        doctor1.setTarifa(600);
+    
+
+        MEDICO doctor2("Gastroenterologo", "56945-6", 1500.0);
+        doctor2.setNombre("Arturo");
+        doctor2.setTelefono(1234567);
+        doctor2.setApellidoA("Diaz");
+        doctor2.setIdentidad("0801-1989-5697");
+        doctor2.setNumeroColegiado("56945-6");
+        doctor2.setTarifa(1500);
+        doctor2.setEspecialidad("Gastroenterologo");
+
+        file.open(address, fstream::app);
+        if(file.is_open()){
+
+        //APERTURA
+
+        file << "Nombre    Apellido   Identidad         Telefono    NumeroColegiado   Tarifa   Especialidad" << std::endl;
+
+        //Nombre
+            file << doctor1.getNombre() << '\t'<< "  ";
+        //ApellidoA
+            file << doctor1.getApellidoA() << '\t'<< "     ";
+        //IDENTIDAD
+            file <<  doctor1.getIdentidad() << '\t'<< "";
+        //TELEFONO
+            file <<  doctor1.getTelefono() << '\t'<< "      ";
+        //NumeroColegiado
+            file <<  doctor1.getNumeroColegiado() << '\t'<< "      ";
+        //Tarifa  
+            file <<  doctor1.getTarifa() << "     ";
+        //Especialidad
+            file <<  doctor1.getEspecialidad() << '\t'<< endl;  
+        //DOCTOR 2  
+        //Nombre 
+           file << doctor2.getNombre() << '\t'<< "  ";
+        //ApellidoA
+           file << doctor2.getApellidoA() << '\t'<< "     ";
+        //IDENTIDAD
+            file <<  doctor2.getIdentidad() << '\t'<< ""; 
+        //TELEFONO
+           file <<  doctor2.getTelefono() << '\t'<< "      ";
+        //NumeroColegiado
+          file <<  doctor2.getNumeroColegiado() << '\t'<< "      ";
+        //Tarifa 
+          file <<  doctor2.getTarifa() << "    ";
+        //Especialidad
+         file <<  doctor2.getEspecialidad() << '\t'<< endl;
+            file.close();  
+        }    
+}
+
+
+    void displayListMedicos() {
+        fstream file;
+        string address = "ListaMedicos.txt";
+
+        file.open(address, fstream::in);
+        if (file.is_open()) {
+            string line;
+            while (getline(file, line)) {
+                std::cout << line << std::endl;
+            }
+            file.close();
+        } 
+    }
 
 };
 
@@ -408,6 +503,7 @@ void DisplayHelp(){
     std::cout << "CLEAR SCREEN \n\t cls, clear" << std::endl;
     std::cout << "NUEVO PACIENTE \n\t -new, -nuevo, -new patient, -nuevo paciente (Crear un nuevo usuario)." << std::endl;
     std::cout << "TODOS LOS PACIENTES \n\t -all, -todos (Muestra la lista de todos los pacientes)." << std::endl;
+    std::cout << "LISTA DE MEDICOS \n\t -Listmedicos, -listmedicos (Muestra la lista de medicos)." << std::endl;
     std::cout << "SALIR/EXIT \n\t -exit, -salir, exit(), exit, salir" << std::endl;
 }
 
@@ -490,7 +586,6 @@ void CrearUsuario(){
     
     //Instancias
     PACIENTE P1;
-    
 
     file.open(address, fstream::app);
     if(file.is_open()){
@@ -539,6 +634,7 @@ void CrearUsuario(){
             file << P1.getAñoNacimiento() << ' ';
         
         //Edad
+            P1.CalcularEdad();
             std::cout << "Se genero la edad del paciente: " << P1.getEdad() << '\n';
             file << P1.getEdad() << ' ';
             
@@ -611,23 +707,12 @@ void CrearUsuario(){
         //     }
 
         //Direccion ha sido eliminado.
-
-
             //Fin de Crear Usuario.
             file << '\n';
         file.close();
     }
-   
-   
-   
+
 }
-
-// int size = ContarRegistros("Datos_Pacientes.txt")
-// for(int i = 0; i < size; i++){
-//     file >> ID >> Identidad >> Telefono >> Nombre >> ApellidoA >> ApellidoB >> Identidad >> Altura >> Peso >> HoraCita >> MinutoCita >> GrupoSanguineo;
-//     std::cout << "El usuario es: " << Nombre << "y su edad es: " <<  << '\n';
-
-// }
 
 //Recorre 
 void LeerUsuario() {
@@ -641,24 +726,11 @@ void LeerUsuario() {
     }
 }  
 
-//Vectores:
-// vector<int> VRegistro;
-// vector<string> VNombre;
-// vector<string> VApellidoA; 
-// vector<string> VApellidoB;
-// vector<string> VIDENTIDAD;
-// vector<int> VTelefono;
-// vector<int> VDiaNacimiento;
-// vector<int> VMesNacimiento;
-// vector<int> VAñoNacimiento;
-// vector<int> VEdad;
-// vector<double> VAltura;
-// vector<double> VPeso;
-// vector<double> VIMS;
-// vector<string> VGrupoSanguineo;
-// vector<string> VAntecedentes;
-
 void EscanearPaciente(){
+
+    //Vaciar Vectores
+    VRegistro.clear(); VNombre.clear(); VApellidoA.clear(); VApellidoB.clear(); VIdentidad.clear(); VTelefono.clear(); VDiaNacimiento.clear(); VMesNacimiento.clear(); VAñoNacimiento.clear(); VEdad.clear(); VAltura.clear(); VPeso.clear(); VIMS.clear(); VGrupoSanguineo.clear(); VAntecedentes.clear();
+
     fstream file; string address;
     address = "Datos_Pacientes.txt";
     file.open(address, fstream::in);
@@ -666,8 +738,6 @@ void EscanearPaciente(){
         int Registro; string Nombre; string ApellidoA; string ApellidoB; string Identidad; int Telefono; 
         int DiaNacimiento; int MesNacimiento; int AñoNacimiento; int Edad; double Altura; double Peso; double IMS; string GrupoSanguineo; string Antecedentes;
         
-        //1 Bob Esponja Pantalones 1234-5678 7777777 23 6 1999 2023 3.3 4.4 0.40404 A+ .
-
         while(file >> Registro >> Nombre >> ApellidoA >> ApellidoB >> Identidad >> Telefono >> DiaNacimiento >> MesNacimiento >> AñoNacimiento >> Edad >> Altura >> Peso >> IMS >> GrupoSanguineo >> Antecedentes){
             VRegistro.push_back(Registro);
             VNombre.push_back(Nombre);
@@ -687,22 +757,39 @@ void EscanearPaciente(){
 
         }
         std::cout << "Archivo pacientes escaneado." << '\n';
+ 
+        file.close();
+    }
+}
 
-        
+void CopiarDatos_Pacientes(){
+    EscanearPaciente();
+    int size = VNombre.size();
+    std::cout << size << '\n';
+
+    fstream file; string address = "Datos_Expedientes.txt";
+
+    file.open(address, fstream::out);
+    if(file.is_open()){
+        for(int i = 0; i < size; i++){
+            file << VRegistro[i] << ' ' << VNombre[i] << ' ' << VApellidoA[i] << ' ' << VApellidoB[i] << ' ' << VIdentidad[i] << ' ' << VTelefono[i] << ' ' << VDiaNacimiento[i] << ' ' << VMesNacimiento[i] << ' ' << VAñoNacimiento[i] << ' ' << VEdad[i] << ' ' << VAltura[i] << ' ' << VPeso[i] << ' ' << VIMS[i] << ' ' << VGrupoSanguineo[i] << ' ' << VAntecedentes[i] << std::endl;
+        }
         file.close();
     }
 }
 
 int main() {
+    MEDICO Instancia;
+    Instancia.ListaMedicos();
     int itemp; string stemp;
     DisplayWelcome();
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
    
     ////------------------/////
-    
+    string buscar;
+    int index;
 
-    //--Menu--
-    
+    //-----Menu-----
     bool MantenerBucle = true; 
     while (MantenerBucle == true){
         std::cout << " - $ ";
@@ -729,37 +816,60 @@ int main() {
             std::cout << "Version " << vrs << '\n';
             MantenerBucle = true;
         }
-
-        else if(UserInput=="-search"){
-            std::cout << "Leyendo el archivo... " << '\n';
-            EscanearPaciente();
-            std::cout << "ID:" << VRegistro[2] << " con nombre " << VNombre[2] << " y numero de telefono: " << VTelefono [2] << '\n';
+        else if(UserInput=="-listmedico" || UserInput=="-Listmedico"){
+            Instancia.displayListMedicos();
             MantenerBucle = true;
         }
 
-        else if(UserInput=="-search"){ 
-            
+        // else if(UserInput=="-search"){
+        //     std::cout << "Leyendo el archivo... " << '\n';
+        //     EscanearPaciente();
+        //     std::cout << "ID:" << VRegistro[2] << " con nombre " << VNombre[2] << " y numero de telefono: " << VTelefono [2] << '\n';
+        //     MantenerBucle = true;
+        // }
+
+        else if(UserInput=="-search"){     
             std::cout << "Seleccione una opcion de busqueda:" << '\n';
             std::cout << "1. Identidad" << '\n';
             std::cout << "2. Numero de Telefono" << '\n';
-            itemp == 0; cin >> itemp;
-            if(itemp == 1){
-                std::cout << "Buscar por Identidad. Ingrese la identidad:" << '\n';
-                cin >> stemp;
-                std::cout << "Buscando: " << stemp << '\n';
+            itemp = 0; cin >> itemp;
+            
+
+            if(itemp==1){
+                
+                std::cout << "Buscando por numero de Identidad..." << '\n';
+                EscanearPaciente();
+                cin>>buscar;
+                for(int i = 0; i < VIdentidad.size(); i ++){
+                    if(buscar == VIdentidad[i]){
+                        index = i;
+                        break;
+                    }
+                   
+                }
+                if(index != -1){
+                    std::cout << "Has escrito: " << VIdentidad[index] << '\n';
+                    std::cout << "Su nombre es: " << VNombre[index] << '\n';
+                } else{
+                    std::cout << "No se encontro" << buscar << '\n';
+                }
 
             }
-            if(itemp == 2){
-                std::cout << "Buscar por Telefono" << '\n';
-                cin >> itemp;
-                std::cout << "Buscando: " << itemp << '\n';
+            else if(itemp==2){
+                std::cout << "Buscando por numero de Telefono..." << '\n';
             }
+
             MantenerBucle = true;
         }
         
         else if(UserInput=="clear" || UserInput=="cls"){
             system("cls");
             MantenerBucle = true;
+        }
+
+        else if(UserInput=="-y"){
+            CopiarDatos_Pacientes();
+            
         }
 
         else{
@@ -771,7 +881,6 @@ int main() {
     }
     
     
-
     //Fin del Codigo
     return 0;
 }
