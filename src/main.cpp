@@ -424,7 +424,7 @@ class MEDICO : public PERSONA{
         doctor2.setTarifa(1500);
         doctor2.setEspecialidad("Gastroenterologo");
 
-        file.open(address, fstream::app);
+        file.open(address, fstream::out);
         if(file.is_open()){
 
         //APERTURA
@@ -503,7 +503,9 @@ void DisplayHelp(){
     std::cout << "CLEAR SCREEN \n\t cls, clear" << std::endl;
     std::cout << "NUEVO PACIENTE \n\t -new, -nuevo, -new patient, -nuevo paciente (Crear un nuevo usuario)." << std::endl;
     std::cout << "TODOS LOS PACIENTES \n\t -all, -todos (Muestra la lista de todos los pacientes)." << std::endl;
-    std::cout << "LISTA DE MEDICOS \n\t -Listmedicos, -listmedicos (Muestra la lista de medicos)." << std::endl;
+    std::cout << "SELECCIONAR PACIENTE \n\t -select (Selecciona un paciente)." << std::endl;
+    std::cout << "\t Puede buscar pacientes por: Identidad, Nombre y Apellido(s), Telefono." << std::endl;
+    std::cout << "LISTA DE MEDICOS \n\t -Listmedico, -listmedico (Muestra la lista de medicos)." << std::endl;
     std::cout << "SALIR/EXIT \n\t -exit, -salir, exit(), exit, salir" << std::endl;
 }
 
@@ -787,10 +789,14 @@ void Buscar_Por_Identidad(string buscar){
         }   
     }
     if(index != -1){
-        std::cout << "Su nombre es: " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << '\n';
+        //Found User! :)
+            std::cout << " - $ Se encontro al paciente: ";
+            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << "Tel. "  << VTelefono[index] << '\n';
+    
     }
     else{
-        std::cout << "No se encontro: " << buscar << '\n';
+        //Not Found :(
+            std::cout << "- $ No se encontro a: " << buscar << '\n';
     }
 }
 
@@ -802,10 +808,14 @@ void Buscar_Por_Nombre(string buscar, string buscarA, string buscarB){
         }   
     }
     if(index != -1){
-        std::cout << "Su nombre es: " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << '\n';
+        //Found User! :)
+            std::cout << " - $ Se encontro al paciente: ";
+            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << "Tel. "  << VTelefono[index] << '\n';
+        
     }
     else{
-        std::cout << "No se encontro: " << buscar << ' ' << buscarA <<  ' ' << buscarB << '\n';
+        //Not Found :(
+            std::cout << "- $ No se encontro a: " << buscar << ' ' << buscarA <<  ' ' << buscarB << '\n';
     }
 }
 
@@ -817,10 +827,14 @@ void Buscar_Por_Nombre(string buscar, string buscarA){
         }   
     }
     if(index != -1){
-        std::cout << "Su nombre es: " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << '\n';
+        //Found User! :)
+            std::cout << " - $ Se encontro al paciente: ";
+            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << "Tel. " << VTelefono[index] << '\n';
+    
     }
     else{
-        std::cout << "No se encontro: " << buscar << ' ' << buscarA <<  ' ' << '\n';
+        //Not Found :(
+            std::cout << "- $ No se encontro a: " << buscar << ' ' << buscarA <<  ' ' << '\n';
     }
 }
 
@@ -833,12 +847,26 @@ void Buscar_Por_Telefono(int ibuscar){
         }   
     }
     if(index != -1){
-        std::cout << "Su nombre es: " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << '\n';
+        //Found User! :)
+            std::cout << " - $ Se encontro al paciente: ";
+            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << "Tel. " << VTelefono[index] << '\n';
+    
     }
     else{
-        std::cout << "No se encontro: " << ibuscar << '\n';
+        //Not Found :(
+            std::cout << "- $ No se encontro a: " << ibuscar << '\n';
     }
 }
+
+void CrearHistoriaClinica(){
+    fstream file;
+    string address = "Datos_Expediente.txt";
+    
+
+
+}
+
+
 
 int main() {
     MEDICO Instancia;
@@ -902,7 +930,7 @@ int main() {
             //Opcion 1. Identidad:
             if(itemp==1){
                 EscanearPaciente();
-                std::cout << "Ingrese la  identidad del paciente: " << std::endl;
+                std::cout << "Ingrese la identidad del paciente: " << std::endl;
                 cin>>buscar;
                 Buscar_Por_Identidad(buscar);
             }
@@ -928,10 +956,27 @@ int main() {
                 Buscar_Por_Telefono(ibuscar);
             }
 
+
+            std::cout << "Ahora puede hacer lo siguiente con este paciente:"<< '\n'; 
+            std::cout << "\t -crear historia" <<std::endl;
+            std::cout << "\t -ver historia" <<std::endl;
+                            
+            MantenerBucle = true;
+        }
+
+
+        else if(UserInput=="-crear historia" || UserInput=="-create history"){
+            CrearHistoriaClinica();
+
             MantenerBucle = true;
         }
         
         else if(UserInput=="clear" || UserInput=="cls"){
+            system("cls");
+            MantenerBucle = true;
+        }
+
+        else if(UserInput=="-crear historial" || UserInput=="-create history"){
             system("cls");
             MantenerBucle = true;
         }
