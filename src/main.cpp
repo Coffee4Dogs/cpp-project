@@ -778,6 +778,68 @@ void CopiarDatos_Pacientes(){
     }
 }
 
+//Opcion -select:
+void Buscar_Por_Identidad(string buscar){
+    for(int i = 0; i < VIdentidad.size(); i ++){
+        if(buscar == VIdentidad[i]){
+            index = i;
+            break;
+        }   
+    }
+    if(index != -1){
+        std::cout << "Su nombre es: " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << '\n';
+    }
+    else{
+        std::cout << "No se encontro: " << buscar << '\n';
+    }
+}
+
+void Buscar_Por_Nombre(string buscar, string buscarA, string buscarB){
+    for(int i = 0; i < VNombre.size(); i ++){
+        if((buscar == VNombre[i]) && (buscarA == VApellidoA[i]) && (buscarB == VApellidoB[i])){
+            index = i;
+            break;
+        }   
+    }
+    if(index != -1){
+        std::cout << "Su nombre es: " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << '\n';
+    }
+    else{
+        std::cout << "No se encontro: " << buscar << ' ' << buscarA <<  ' ' << buscarB << '\n';
+    }
+}
+
+void Buscar_Por_Nombre(string buscar, string buscarA){
+    for(int i = 0; i < VNombre.size(); i ++){
+        if((buscar == VNombre[i]) && (buscarA == VApellidoA[i])){
+            index = i;
+            break;
+        }   
+    }
+    if(index != -1){
+        std::cout << "Su nombre es: " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << '\n';
+    }
+    else{
+        std::cout << "No se encontro: " << buscar << ' ' << buscarA <<  ' ' << '\n';
+    }
+}
+
+//Opcion 4. Nombre, Telefono:
+void Buscar_Por_Telefono(int ibuscar){
+    for(int i = 0; i < VTelefono.size(); i ++){
+        if((ibuscar == VTelefono[i])){
+            index = i;
+            break;
+        }   
+    }
+    if(index != -1){
+        std::cout << "Su nombre es: " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << '\n';
+    }
+    else{
+        std::cout << "No se encontro: " << ibuscar << '\n';
+    }
+}
+
 int main() {
     MEDICO Instancia;
     Instancia.ListaMedicos();
@@ -786,8 +848,8 @@ int main() {
     cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
    
     ////------------------/////
-    string buscar;
-    int index;
+    string buscar, buscarA, buscarB; int ibuscar;//Lo que el usuario quiere buscar
+     //El indice en el vector de lo que el usuario quiere buscar.
 
     //-----Menu-----
     bool MantenerBucle = true; 
@@ -828,35 +890,42 @@ int main() {
         //     MantenerBucle = true;
         // }
 
-        else if(UserInput=="-search"){     
-            std::cout << "Seleccione una opcion de busqueda:" << '\n';
+        else if(UserInput=="-select" || UserInput=="-seleccionar"){     
+            std::cout << "Seleccione un metodo de busqueda:" << '\n';
             std::cout << "1. Identidad" << '\n';
-            std::cout << "2. Numero de Telefono" << '\n';
+            std::cout << "2. Nombre ApellidoA ApellidoB" << '\n';
+            std::cout << "3. Nombre ApellidoA" << '\n';
+            std::cout << "4. Telefono" << '\n';
             itemp = 0; cin >> itemp;
             
 
+            //Opcion 1. Identidad:
             if(itemp==1){
-                
-                std::cout << "Buscando por numero de Identidad..." << '\n';
                 EscanearPaciente();
+                std::cout << "Ingrese la  identidad del paciente: " << std::endl;
                 cin>>buscar;
-                for(int i = 0; i < VIdentidad.size(); i ++){
-                    if(buscar == VIdentidad[i]){
-                        index = i;
-                        break;
-                    }
-                   
-                }
-                if(index != -1){
-                    std::cout << "Has escrito: " << VIdentidad[index] << '\n';
-                    std::cout << "Su nombre es: " << VNombre[index] << '\n';
-                } else{
-                    std::cout << "No se encontro" << buscar << '\n';
-                }
-
+                Buscar_Por_Identidad(buscar);
             }
+            //Opcion 2. Nombre ApellidoA ApellidoB:
             else if(itemp==2){
-                std::cout << "Buscando por numero de Telefono..." << '\n';
+                EscanearPaciente();
+                std::cout << "Ingrese el Nombre ApellidoA ApellidoB del paciente a buscar (separado de un espacio): " << std::endl;
+                cin>>buscar >> buscarA >> buscarB;
+                Buscar_Por_Nombre(buscar, buscarA, buscarB);
+            }
+            //Opcion 3. Nombre ApellidoA:
+            else if(itemp==3){
+                EscanearPaciente();
+                std::cout << "Ingrese el Nombre ApellidoA del paciente a buscar (separado de un espacio): " << std::endl;
+                cin>>buscar >> buscarA >> buscarB;
+                Buscar_Por_Nombre(buscar, buscarA);
+            }
+            //Opcion 4. Telefono:
+            else if(itemp==4){
+                EscanearPaciente();
+                std::cout << "Ingrese el Telefono: " << std::endl;
+                cin>> ibuscar;
+                Buscar_Por_Telefono(ibuscar);
             }
 
             MantenerBucle = true;
@@ -867,10 +936,7 @@ int main() {
             MantenerBucle = true;
         }
 
-        else if(UserInput=="-y"){
-            CopiarDatos_Pacientes();
-            
-        }
+        
 
         else{
             std::cout << "El comando " << UserInput << "no es un comando reconocido. \nUtilice -help o --help para mostrar todos los comandos disponibles." << '\n';
