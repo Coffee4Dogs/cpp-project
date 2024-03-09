@@ -965,6 +965,7 @@ int main() {
         }
 
 
+
         else if(UserInput=="-crear historia" || UserInput=="-create history"){
             CrearHistoriaClinica();
 
