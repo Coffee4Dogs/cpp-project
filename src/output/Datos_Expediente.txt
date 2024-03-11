@@ -3,3 +3,4 @@
 1 bob esponja pantalones 4444 4444 23 6 1997 1482101575 4.4 4.4 0.227273 O- . 
 1 bob esponja pantalones 4444 4444 23 6 1997 1482101575 4.4 4.4 0.227273 O- . 
 1 bob esponja pantalones 4444 4444 23 6 1997 1482101575 4.4 4.4 0.227273 O- . 
+2 8 patricio estrella piedrita 5555 5555 8 9 2004 26 4.4 4.4 0.227273 A+ Gripe 

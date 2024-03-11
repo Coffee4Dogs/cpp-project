@@ -274,22 +274,25 @@ class EXPEDIENTE : public PACIENTE{
     protected:
     int NumeroHistoria;
     string MotivoConsulta;
+    string EnfermedadActual;
 
     public:
     //Constructor:
-    EXPEDIENTE(int NumeroHistoria, string MotivoConsulta){
+    EXPEDIENTE(int NumeroHistoria, string MotivoConsulta, string EnfermedadActual){
         this->NumeroHistoria = NumeroHistoria;
         this->MotivoConsulta = MotivoConsulta;
+        this->EnfermedadActual = EnfermedadActual;
     }
 
     //Metodos Set:
     void setNumeroHistoria(int NumeroHistoria){this-> NumeroHistoria = NumeroHistoria;}
     void setMotivoConsulta(string MotivoConsulta){this-> MotivoConsulta = MotivoConsulta;}
+    void setEnfermedadActual(string EnfermedadActual){this->EnfermedadActual = EnfermedadActual;}
 
     //Metodos Get:
     int getNumeroHistoria(){return this->NumeroHistoria;}
     string getMotivoConsulta(){return this->MotivoConsulta;}
-
+    string getEnfermedadActual(){return this->EnfermedadActual;}
 
     //Metodo sin nada.
     EXPEDIENTE(){}
@@ -823,24 +826,37 @@ void Buscar_Por_Telefono(int ibuscar){
 }
 
 void CrearHistoriaClinica(){
-    EXPEDIENTE H1;
-    fstream file;
-    string address = "Datos_Expediente.txt";
+
+    //Variables/Instancias/Objetos
+    EXPEDIENTE Historia; int NumeroHistoria = 8; string stemp;
+    fstream file; string address = "Datos_Expediente.txt";
     
-    string temp;
+    Historia.setNumeroHistoria(NumeroHistoria);
     
+
+    //flag
     file.open(address, fstream::app);
-
-    
-    std::cout << " - $ Cual es el motivo de la consulta? ";
-    std::getline(std::cin, temp);
-    H1.setMotivoConsulta(temp);
-
     if(file.is_open()){
-        file << VRegistro[index] << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << H1.getMotivoConsulta() << '\n';
-        system("cls");//Limpiar pantalla
+        
+        
+
+        //Motivo Consulta:
+        std::cout << " - $ Cual es el motivo de la consulta? " <<  '\n';
+        std::getline(std::cin, stemp); Historia.setMotivoConsulta(stemp);
+
+        //Enfermedad Actual:
+        std::cout << " - $ Enfermedad Actual: " <<  '\n';
+        cin >> stemp; Historia.setEnfermedadActual(stemp);
+        
+
+
+        //Guardar todo en el archivo.
+        file << VRegistro[index] << ' ' << Historia.getNumeroHistoria() << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << Historia.getMotivoConsulta() << '\n';
+        
+        //Cerrar archivo
+        system("cls"); //(Limpiar pantalla)
         std::cout << " > Expediente agregado exitosamente!" << '\n';
-        file.close();
+        file.close(); 
     }
 }
 
