@@ -768,14 +768,13 @@ void Buscar_Por_Nombre(string buscar, string buscarA, string buscarB){
     for(int i = 0; i < VNombre.size(); i ++){
         if((buscar == VNombre[i]) && (buscarA == VApellidoA[i]) && (buscarB == VApellidoB[i])){
             index = i;
-            break;
+            
         }   
     }
     if(index != -1){
         //Found User! :)
             std::cout << " - $ Se encontro al paciente: ";
             std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << " Tel. "  << VTelefono[index] << '\n';
-        
     }
     else{
         //Not Found :(
@@ -788,7 +787,7 @@ void Buscar_Por_Nombre(string buscar, string buscarA){
     for(int i = 0; i < VNombre.size(); i ++){
         if((buscar == VNombre[i]) && (buscarA == VApellidoA[i])){
             index = i;
-            break;
+            
         }   
     }
     if(index != -1){
@@ -926,7 +925,7 @@ int main() {
             else if(itemp==3){
                 EscanearPaciente();
                 std::cout << "Ingrese el Nombre ApellidoA del paciente a buscar (separado de un espacio): " << std::endl;
-                cin>>buscar >> buscarA >> buscarB;
+                cin>>buscar >> buscarA;
                 Buscar_Por_Nombre(buscar, buscarA);
             }
             //Opcion 4. Telefono:
