@@ -839,7 +839,6 @@ void CrearHistoriaClinica(){
     if(file.is_open()){
         
         
-
         //Motivo Consulta:
         std::cout << " - $ Cual es el motivo de la consulta? " <<  '\n';
         std::getline(std::cin, stemp); Historia.setMotivoConsulta(stemp);
