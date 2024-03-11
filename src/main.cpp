@@ -77,6 +77,7 @@ class PERSONA{
         string Nombre = "-1";
         string ApellidoA = "-1";
         string ApellidoB = "-1";
+        
 
     public:
     // Constructor
@@ -243,26 +244,6 @@ class PACIENTE : public PERSONA{
             this->IMS = this->Peso / (pow(this->Altura, 2));
         }
 
-        //Otros metodos set no necesarios (solo para depurar)
-        void setPaciente(string Nacimiento, int DiaNacimiento, int MesNacimiento, int AñoNacimiento, int Edad, double IMS, double Altura, double Peso, string TipoSangre, string Cita, int DiaCita, int HoraCita, int MinutoCita, string Antecedentes, string EnfermedadActual, string Direccion){
-            this-> Nacimiento = Nacimiento;
-            this-> DiaNacimiento = DiaNacimiento;
-            this-> MesNacimiento = MesNacimiento;
-            this-> AñoNacimiento = AñoNacimiento;
-            this-> Edad = Edad;
-            this-> IMS = IMS;
-            this-> Altura = Altura;
-            this-> Peso = Peso;
-            this-> TipoSangre = TipoSangre;
-            this-> Cita = Cita;
-            this-> DiaCita = DiaCita;
-            this-> HoraCita = HoraCita;
-            this-> MinutoCita = MinutoCita;
-            this-> Antecedentes = Antecedentes;
-            this-> EnfermedadActual = EnfermedadActual;
-            this-> Direccion = Direccion;
-        }
-
         // Metodos Get:
             string getNacimiento(){return this->Nacimiento;}
             int getDiaNacimiento(){return this->DiaNacimiento;}
@@ -281,25 +262,6 @@ class PACIENTE : public PERSONA{
             string getEnfermedadActual(){return this-> EnfermedadActual;}
             string getDireccion(){return this-> Direccion;}
 
-            //PrintPaciente - (solo para depurar)
-            void PrintPaciente(){
-                std::cout << "Nacimiento: " <<Nacimiento << '\n';
-                std::cout << "DiaNacimiento: " <<DiaNacimiento << '\n';
-                std::cout << "MesNacimiento: " <<MesNacimiento << '\n';
-                std::cout << "AnoNacimiento: " <<AñoNacimiento << '\n';
-                std::cout << "Edad: " <<Edad << '\n';
-                std::cout << "IMS: " <<IMS << '\n';
-                std::cout << "Altura: " <<Altura << '\n';
-                std::cout << "Peso: " <<Peso << '\n';
-                std::cout << "TipoSangre: " <<TipoSangre << '\n';
-                std::cout << "Cita: " <<Cita << '\n';
-                std::cout << "DiaCita: " <<DiaCita << '\n';
-                std::cout << "HoraCita: " <<HoraCita << '\n';
-                std::cout << "MinutoCita: " <<MinutoCita << '\n';
-                std::cout << "Antecedentes: " <<Antecedentes << '\n';
-                std::cout << "EnfermedadActual: " <<EnfermedadActual << '\n';
-                std::cout << "Direccion: " <<Direccion << std::endl;
-            }
 
         // Metodo Vacio
         PACIENTE(){}
@@ -310,23 +272,24 @@ class PACIENTE : public PERSONA{
 
 class EXPEDIENTE : public PACIENTE{
     protected:
-    int NumeroExpediente;
+    int NumeroHistoria;
+    string MotivoConsulta;
 
     public:
     //Constructor:
-    EXPEDIENTE(int NumeroExpediente){
-        this->NumeroExpediente = NumeroExpediente;
+    EXPEDIENTE(int NumeroHistoria, string MotivoConsulta){
+        this->NumeroHistoria = NumeroHistoria;
+        this->MotivoConsulta = MotivoConsulta;
     }
 
-    //Metodo Set:
-    void setNumeroExpediente(int NumeroExpediente){
-        this-> NumeroExpediente = NumeroExpediente;
-    }
+    //Metodos Set:
+    void setNumeroHistoria(int NumeroHistoria){this-> NumeroHistoria = NumeroHistoria;}
+    void setMotivoConsulta(string MotivoConsulta){this-> MotivoConsulta = MotivoConsulta;}
 
     //Metodos Get:
-    int getNumeroExpediente(){
-        return this->NumeroExpediente;
-    }
+    int getNumeroHistoria(){return this->NumeroHistoria;}
+    string getMotivoConsulta(){return this->MotivoConsulta;}
+
 
     //Metodo sin nada.
     EXPEDIENTE(){}
@@ -501,8 +464,8 @@ void DisplayHelp(){
     
     std::cout << "VERSION \n\t -version  --version" << std::endl;
     std::cout << "CLEAR SCREEN \n\t cls, clear" << std::endl;
-    std::cout << "NUEVO PACIENTE \n\t -new, -nuevo, -new patient, -nuevo paciente (Crear un nuevo usuario)." << std::endl;
-    std::cout << "TODOS LOS PACIENTES \n\t -all, -todos (Muestra la lista de todos los pacientes)." << std::endl;
+    std::cout << "NUEVO PACIENTE \n\t -new, -nuevo, -new patient, -nuevo paciente" << std::endl;
+    std::cout << "VER TODOS LOS PACIENTES \n\t -all, -todos" << std::endl;
     std::cout << "SELECCIONAR PACIENTE \n\t -select (Selecciona un paciente)." << std::endl;
     std::cout << "\t Puede buscar pacientes por: Identidad, Nombre y Apellido(s), Telefono." << std::endl;
     std::cout << "LISTA DE MEDICOS \n\t -Listmedico, -listmedico (Muestra la lista de medicos)." << std::endl;
@@ -716,8 +679,8 @@ void CrearUsuario(){
 
 }
 
-//Recorre 
-void LeerUsuario() {
+//Leer el archivo, Y luego Imprimir en Pantalla
+void ImprimirPaciente() {  
     fstream file; string address = "Datos_Pacientes.txt"; string line;
     file.open(address, fstream::in);
     if(file.is_open()){
@@ -728,8 +691,8 @@ void LeerUsuario() {
     }
 }  
 
+//1.Vacia los Vectores. 2. Mete datos de Datos_Paciente.txt a los Vectores correspondientes.
 void EscanearPaciente(){
-
     //Vaciar Vectores
     VRegistro.clear(); VNombre.clear(); VApellidoA.clear(); VApellidoB.clear(); VIdentidad.clear(); VTelefono.clear(); VDiaNacimiento.clear(); VMesNacimiento.clear(); VAñoNacimiento.clear(); VEdad.clear(); VAltura.clear(); VPeso.clear(); VIMS.clear(); VGrupoSanguineo.clear(); VAntecedentes.clear();
 
@@ -780,7 +743,7 @@ void CopiarDatos_Pacientes(){
     }
 }
 
-//Opcion -select:
+//Opcion 1 de -select:
 void Buscar_Por_Identidad(string buscar){
     for(int i = 0; i < VIdentidad.size(); i ++){
         if(buscar == VIdentidad[i]){
@@ -791,7 +754,7 @@ void Buscar_Por_Identidad(string buscar){
     if(index != -1){
         //Found User! :)
             std::cout << " - $ Se encontro al paciente: ";
-            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << "Tel. "  << VTelefono[index] << '\n';
+            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << " Tel. "  << VTelefono[index] << '\n';
     
     }
     else{
@@ -800,6 +763,7 @@ void Buscar_Por_Identidad(string buscar){
     }
 }
 
+//Opcion 2 de -select:
 void Buscar_Por_Nombre(string buscar, string buscarA, string buscarB){
     for(int i = 0; i < VNombre.size(); i ++){
         if((buscar == VNombre[i]) && (buscarA == VApellidoA[i]) && (buscarB == VApellidoB[i])){
@@ -810,7 +774,7 @@ void Buscar_Por_Nombre(string buscar, string buscarA, string buscarB){
     if(index != -1){
         //Found User! :)
             std::cout << " - $ Se encontro al paciente: ";
-            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << "Tel. "  << VTelefono[index] << '\n';
+            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << " Tel. "  << VTelefono[index] << '\n';
         
     }
     else{
@@ -819,6 +783,7 @@ void Buscar_Por_Nombre(string buscar, string buscarA, string buscarB){
     }
 }
 
+//Opcion 3 de -select:
 void Buscar_Por_Nombre(string buscar, string buscarA){
     for(int i = 0; i < VNombre.size(); i ++){
         if((buscar == VNombre[i]) && (buscarA == VApellidoA[i])){
@@ -829,7 +794,7 @@ void Buscar_Por_Nombre(string buscar, string buscarA){
     if(index != -1){
         //Found User! :)
             std::cout << " - $ Se encontro al paciente: ";
-            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << "Tel. " << VTelefono[index] << '\n';
+            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << " Tel. " << VTelefono[index] << '\n';
     
     }
     else{
@@ -838,7 +803,7 @@ void Buscar_Por_Nombre(string buscar, string buscarA){
     }
 }
 
-//Opcion 4. Nombre, Telefono:
+//Opcion 4 de -select:
 void Buscar_Por_Telefono(int ibuscar){
     for(int i = 0; i < VTelefono.size(); i ++){
         if((ibuscar == VTelefono[i])){
@@ -849,7 +814,7 @@ void Buscar_Por_Telefono(int ibuscar){
     if(index != -1){
         //Found User! :)
             std::cout << " - $ Se encontro al paciente: ";
-            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << "Tel. " << VTelefono[index] << '\n';
+            std::cout << VIdentidad[index] << " -> " << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << " Tel. " << VTelefono[index] << '\n';
     
     }
     else{
@@ -859,14 +824,29 @@ void Buscar_Por_Telefono(int ibuscar){
 }
 
 void CrearHistoriaClinica(){
+    EXPEDIENTE H1;
     fstream file;
     string address = "Datos_Expediente.txt";
     
+    string temp;
+    
+    file.open(address, fstream::app);
 
+    
+    std::cout << " - $ Cual es el motivo de la consulta? ";
+    std::getline(std::cin, temp);
+    H1.setMotivoConsulta(temp);
 
+    if(file.is_open()){
+        file << VRegistro[index] << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << H1.getMotivoConsulta() << '\n';
+        system('cls');
+        file.close();
+    }
 }
 
-
+void VerHistoriaClinica(){
+    std::cout << "Esta funcion esta vacia." << '\n';
+}
 
 int main() {
     MEDICO Instancia;
@@ -891,7 +871,7 @@ int main() {
         //Leer todos los pacientes
         else if(UserInput == "-all" || UserInput=="-todos" || UserInput == "all" || UserInput == "todos"){
             std::cout << "Mostrando todos los pacientes:" << '\n';
-            LeerUsuario();
+            ImprimirPaciente();
             MantenerBucle = true;
         }
 
@@ -918,7 +898,7 @@ int main() {
         //     MantenerBucle = true;
         // }
 
-        else if(UserInput=="-select" || UserInput=="-seleccionar"){     
+        else if(UserInput=="-select" || UserInput=="-seleccionar" || UserInput=="-search" || UserInput=="-buscar"){     
             std::cout << "Seleccione un metodo de busqueda:" << '\n';
             std::cout << "1. Identidad" << '\n';
             std::cout << "2. Nombre ApellidoA ApellidoB" << '\n';
@@ -957,28 +937,30 @@ int main() {
             }
 
 
-            std::cout << "Ahora puede hacer lo siguiente con este paciente:"<< '\n'; 
-            std::cout << "\t -crear historia" <<std::endl;
-            std::cout << "\t -ver historia" <<std::endl;
+            std::cout << "Ahora puede hacer lo siguiente:"<< '\n'; 
+            std::cout << "\t -newh (Nueva historia clinica.)" <<std::endl;
+            std::cout << "\t -verh (Ver historias clinicas de un paciente.)" <<std::endl;
                             
             MantenerBucle = true;
         }
 
 
 
-        else if(UserInput=="-crear historia" || UserInput=="-create history"){
-            CrearHistoriaClinica();
-
-            MantenerBucle = true;
-        }
+        
         
         else if(UserInput=="clear" || UserInput=="cls"){
             system("cls");
             MantenerBucle = true;
         }
 
-        else if(UserInput=="-crear historial" || UserInput=="-create history"){
-            system("cls");
+        else if(UserInput=="-newh"){
+            std::cout << " - $ Crear Historia clinica." << '\n';
+            CrearHistoriaClinica();
+            MantenerBucle = true;
+        }
+        else if(UserInput=="-verh"){
+            std::cout << " - $ Ver Historia Clinica" << '\n';
+            VerHistoriaClinica();
             MantenerBucle = true;
         }
 

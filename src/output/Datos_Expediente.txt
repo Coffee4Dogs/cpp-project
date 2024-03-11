@@ -1,0 +1,4 @@
+4 Jack Lagos Mejia 1111 1111 23 6 1997 26 1.3 73.9 43.7278 A+ Epilepsia/Gripe/Rinitis 
+2 patricio estrella piedrita 5555 5555 8 9 2004 26 4.4 4.4 0.227273 A+ Gripe 
+1 bob esponja pantalones 4444 4444 23 6 1997 1482101575 4.4 4.4 0.227273 O- . 
+1 bob esponja pantalones 4444 4444 23 6 1997 1482101575 4.4 4.4 0.227273 O- . 
