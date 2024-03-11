@@ -839,7 +839,8 @@ void CrearHistoriaClinica(){
 
     if(file.is_open()){
         file << VRegistro[index] << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << H1.getMotivoConsulta() << '\n';
-        system('cls');
+        system("cls");//Limpiar pantalla
+        std::cout << " > Expediente agregado exitosamente!" << '\n';
         file.close();
     }
 }
