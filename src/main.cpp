@@ -27,7 +27,7 @@
     
 
 //Version Actual:
-std::string vrs = "3.0.2";
+std::string vrs = "3.2.0";
 
 using std::string; 
 using std::cout; 
