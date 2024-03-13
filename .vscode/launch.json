@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/jackl/Documents/GitHub/cpp-project/src",
-      "program": "c:/Users/jackl/Documents/GitHub/cpp-project/src/build/Debug/outDebug",
+      "cwd": "c:/Users/jackl/Documents/GitHub/cpp-project",
+      "program": "c:/Users/jackl/Documents/GitHub/cpp-project/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
