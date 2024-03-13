@@ -934,7 +934,7 @@ void EliminarPaciente(){
                     archivoTemp<<AsignarIDNuevos()<< ' '<< VNombre[i] << ' ' << VApellidoA[i] << ' ' << VApellidoB[i] << ' ' << VIdentidad[i] << ' ' << VTelefono[i] << ' ' << VDiaNacimiento[i] << ' ' << VMesNacimiento[i] << ' ' << VAñoNacimiento[i] << ' ' << VEdad[i] << ' ' << VAltura[i] << ' ' << VPeso[i] << ' ' << VIMS[i] << ' ' << VGrupoSanguineo[i] << ' ' << VAntecedentes[i] << endl;
                 }
             }
-            index = -1
+          
         } 
         else {
             cout << "El usuario no se eliminara." << endl;
@@ -947,14 +947,11 @@ void EliminarPaciente(){
 
              file.close();
              archivoTemp.close();
-            //  remove("Datos_Pacientes.txt")
-            //  rename ("Datos_Pacientestemp.txt", "Datos_Pacientes.txt");       
+            remove("Datos_Pacientes.txt");
+            rename ("Datos_Pacientestemp.txt", "Datos_Pacientes.txt");       
 }
 
-    file.open("Datos_Pacientestemp.txt", fstream::in);
-    if(file.){
 
-    }
 
              
                             
