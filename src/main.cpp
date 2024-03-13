@@ -56,7 +56,10 @@ vector<double> VPeso;
 vector<double> VIMS;
 vector<string> VGrupoSanguineo;
 vector<string> VAntecedentes;
+
 int index = -1;
+
+
 
 //Entrada de tipo string usada input de usuario.
 string UserInput;
@@ -273,26 +276,34 @@ class PACIENTE : public PERSONA{
 class EXPEDIENTE : public PACIENTE{
     protected:
     int NumeroHistoria;
-    string MotivoConsulta;
+    string Tratamiento;
     string EnfermedadActual;
 
     public:
     //Constructor:
-    EXPEDIENTE(int NumeroHistoria, string MotivoConsulta, string EnfermedadActual){
+    EXPEDIENTE(int NumeroHistoria, string Tratamiento, string EnfermedadActual){
         this->NumeroHistoria = NumeroHistoria;
-        this->MotivoConsulta = MotivoConsulta;
-        this->EnfermedadActual = EnfermedadActual;
+        this->Tratamiento = Tratamiento;
+   //     this->EnfermedadActual = EnfermedadActual;
     }
 
     //Metodos Set:
     void setNumeroHistoria(int NumeroHistoria){this-> NumeroHistoria = NumeroHistoria;}
-    void setMotivoConsulta(string MotivoConsulta){this-> MotivoConsulta = MotivoConsulta;}
-    void setEnfermedadActual(string EnfermedadActual){this->EnfermedadActual = EnfermedadActual;}
+    void setTratamiento(string Tratamiento){this-> Tratamiento = Tratamiento;}
+  //  void setEnfermedadActual(string EnfermedadActual){this->EnfermedadActual = EnfermedadActual;}
 
     //Metodos Get:
     int getNumeroHistoria(){return this->NumeroHistoria;}
-    string getMotivoConsulta(){return this->MotivoConsulta;}
-    string getEnfermedadActual(){return this->EnfermedadActual;}
+  
+
+    std::string getTratamientoCompleto() {
+       return this->Tratamiento;
+    }
+
+        std::string getTratamiento() const {
+        return Tratamiento;
+    }
+   // string getEnfermedadActual(){return this->EnfermedadActual;}
 
     //Metodo sin nada.
     EXPEDIENTE(){}
@@ -431,19 +442,19 @@ class MEDICO : public PERSONA{
 }
 
 
-    void displayListMedicos() {
-        fstream file;
-        string address = "ListaMedicos.txt";
+void displayListMedicos() {
+    fstream file;
+    string address = "ListaMedicos.txt";
 
-        file.open(address, fstream::in);
-        if (file.is_open()) {
-            string line;
-            while (getline(file, line)) {
-                std::cout << line << std::endl;
-            }
-            file.close();
-        } 
-    }
+    file.open(address, fstream::in);
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            std::cout << line << std::endl;
+        }
+        file.close();
+    } 
+}
 
 };
 
@@ -524,11 +535,42 @@ int ContarRegistros(string address){
         return -1;
     }
 }
+int ContarRegistrosNuevos(string address){
+    fstream file;
+    file.open(address, fstream::in);
+    string line;
+    int TotalRegistros=0;
+    if(file.is_open()){
+        while(getline(file, line)){
+            TotalRegistros++;    
+        }
+        file.close();
+    }
+    if(TotalRegistros >= 1){
+        return TotalRegistros;
+    }
+    else{
+        return -1;
+    }
+}
 
 //Asignar ID cuando esta en modo escritura.
 int AsignarID(){
     int totalregistros;
-    totalregistros = ContarRegistros("Datos_Pacientes.txt");
+    totalregistros = ContarRegistrosNuevos("Datos_Pacientes.txt");
+    if(totalregistros > 0){
+        totalregistros ++;
+    }
+    else{
+        totalregistros = 1;
+        // totalregistros ++;
+    }
+    return totalregistros; 
+}
+
+int AsignarIDNuevos(){
+    int totalregistros;
+    totalregistros = ContarRegistros("Datos_Pacientestemp.txt");
     if(totalregistros > 0){
         totalregistros ++;
     }
@@ -722,7 +764,6 @@ void EscanearPaciente(){
             VIMS.push_back(IMS);
             VGrupoSanguineo.push_back(GrupoSanguineo);
             VAntecedentes.push_back(Antecedentes);
-
         }
         std::cout << "Archivo pacientes escaneado." << '\n';
  
@@ -839,18 +880,20 @@ void CrearHistoriaClinica(){
     if(file.is_open()){
         
         
-        //Motivo Consulta:
-        std::cout << " - $ Cual es el motivo de la consulta? " <<  '\n';
-        std::getline(std::cin, stemp); Historia.setMotivoConsulta(stemp);
+       // Motivo Consulta:
+        std::cout << " - $ Cual es el motivo de la consulta? " << '\n';
+        std::getline(std::cin, stemp);
+        Historia.setTratamiento(stemp);
 
         //Enfermedad Actual:
         std::cout << " - $ Enfermedad Actual: " <<  '\n';
+        std::getline(std::cin, stemp);
         cin >> stemp; Historia.setEnfermedadActual(stemp);
         
 
 
         //Guardar todo en el archivo.
-        file << VRegistro[index] << ' ' << Historia.getNumeroHistoria() << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << Historia.getMotivoConsulta() << '\n';
+        file << VRegistro[index] << ' ' << Historia.getNumeroHistoria() << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << Historia.getTratamiento() << '\n';
         
         //Cerrar archivo
         system("cls"); //(Limpiar pantalla)
@@ -863,56 +906,132 @@ void VerHistoriaClinica(){
     std::cout << "Esta funcion esta vacia." << '\n';
 }
 
+
+
+
+void EliminarPaciente(){
+     
+     EscanearPaciente();
+    // int itemp;
+    // string buscar, buscarA, buscarB; int ibuscar;
+    std::ofstream archivoTemp("Datos_Pacientestemp.txt", std::ios::out);
+    fstream file("Datos_Pacientes.txt"); 
+    
+    if (index >=
+     0 && index < VRegistro.size()) {
+        cout << "Usuario a eliminar: " << VNombre[index] << ' ' << VApellidoA[index] << endl;
+
+        // Muestra el mensaje de confirmación y realiza la eliminación
+        
+         //Esta seguro de eliminar al paciente
+        char respuesta;
+        cout << "Esta seguro de que desea eliminar este usuario? (S/N): " << endl; cin >> respuesta;
+        if (respuesta == 'S' || respuesta == 's') {
+            cout << "Usuario eliminado exitosamente." << endl;
+            // Recorre los vectores excepto el index (lo que se quiere eliminar).
+            for (int i = 0; i < VRegistro.size(); i++) {
+                if (i != index) {  // No incluir el elemento en el índice "index"
+                    archivoTemp<<AsignarIDNuevos()<< ' '<< VNombre[i] << ' ' << VApellidoA[i] << ' ' << VApellidoB[i] << ' ' << VIdentidad[i] << ' ' << VTelefono[i] << ' ' << VDiaNacimiento[i] << ' ' << VMesNacimiento[i] << ' ' << VAñoNacimiento[i] << ' ' << VEdad[i] << ' ' << VAltura[i] << ' ' << VPeso[i] << ' ' << VIMS[i] << ' ' << VGrupoSanguineo[i] << ' ' << VAntecedentes[i] << endl;
+                }
+            }
+            index = -1
+        } 
+        else {
+            cout << "El usuario no se eliminara." << endl;
+        }
+    }
+
+    else {
+        cout << "Selecione un paciente usando -search/" << endl;
+    }
+
+             file.close();
+             archivoTemp.close();
+            //  remove("Datos_Pacientes.txt")
+            //  rename ("Datos_Pacientestemp.txt", "Datos_Pacientes.txt");       
+}
+
+    file.open("Datos_Pacientestemp.txt", fstream::in);
+    if(file.){
+
+    }
+
+             
+                            
+           
+        
+
 int main() {
+    
     MEDICO Instancia;
     Instancia.ListaMedicos();
+     
+    // Variables temporales reutilizables: itemp->var temporales de tipo int | stemp -> var temporales tipo string.
     int itemp; string stemp;
-    DisplayWelcome();
-    cout << fixed << setprecision(2) << setw(10); // -Ajustar la precision de la salida que se muestra en pantalla.
-   
-    ////------------------/////
-    string buscar, buscarA, buscarB; int ibuscar;//Lo que el usuario quiere buscar
-     //El indice en el vector de lo que el usuario quiere buscar.
 
-    //-----Menu-----
+    //Despliega una pantalla de bienvenida de un medicamento y un gatito.
+    DisplayWelcome();
+    
+    //Ajustar la precision de la salida que se muestra en las variables double.
+    cout << fixed << setprecision(2) << setw(10); 
+   
+    //El usuario puede buscar por identidad, nombre, apellido y telefono. Aqui se guarda ese valor.
+    string buscar, buscarA, buscarB; int ibuscar;
+
+    //DEV!
+    // EliminarPaciente();
+
+    
+    //Menu Principal:
+    //Mantenerse en el menu:
     bool MantenerBucle = true; 
     while (MantenerBucle == true){
         std::cout << " - $ ";
         cin >> UserInput;
+        
+        //-new -> Crear un nuevo Paciente 
         if(UserInput == "-new" || UserInput=="-nuevo" || UserInput == "-new patient" || UserInput=="-nuevo paciente" || UserInput == "new" || UserInput == "nuevo"){
             CrearUsuario();
             MantenerBucle = true;
         }
-        //Leer todos los pacientes
+        
+        //-all -> Desplegar todos los pacientes 
         else if(UserInput == "-all" || UserInput=="-todos" || UserInput == "all" || UserInput == "todos"){
             std::cout << "Mostrando todos los pacientes:" << '\n';
             ImprimirPaciente();
             MantenerBucle = true;
         }
 
+        //-help -> Desplegar ayuda 
         else if(UserInput=="-help" || UserInput=="--help" || UserInput=="help"){
             DisplayHelp();
             MantenerBucle = true;
         }
+
+        //-exit -> Salir del programa
         else if(UserInput=="-exit" || UserInput=="-salir" || UserInput=="exit()" || UserInput=="exit" || UserInput=="salir"){   
             MantenerBucle = false;
         }
+
+        // -version -> Mostrar Version
         else if(UserInput=="-version" || UserInput=="--version"){
             std::cout << "Version " << vrs << '\n';
             MantenerBucle = true;
         }
+
+        // -listmedico -> Mostrar lista de medicos
         else if(UserInput=="-listmedico" || UserInput=="-Listmedico"){
             Instancia.displayListMedicos();
             MantenerBucle = true;
         }
 
-        // else if(UserInput=="-search"){
-        //     std::cout << "Leyendo el archivo... " << '\n';
-        //     EscanearPaciente();
-        //     std::cout << "ID:" << VRegistro[2] << " con nombre " << VNombre[2] << " y numero de telefono: " << VTelefono [2] << '\n';
-        //     MantenerBucle = true;
-        // }
+        //-clear -> Limpiar la pantalla
+        else if(UserInput=="clear" || UserInput=="cls"){
+            system("cls");
+            MantenerBucle = true;
+        }
 
+        // -select -> Buscar un paciente
         else if(UserInput=="-select" || UserInput=="-seleccionar" || UserInput=="-search" || UserInput=="-buscar"){     
             std::cout << "Seleccione un metodo de busqueda:" << '\n';
             std::cout << "1. Identidad" << '\n';
@@ -921,7 +1040,7 @@ int main() {
             std::cout << "4. Telefono" << '\n';
             itemp = 0; cin >> itemp;
             
-
+            //Formas de buscar un paciente:
             //Opcion 1. Identidad:
             if(itemp==1){
                 EscanearPaciente();
@@ -951,42 +1070,46 @@ int main() {
                 Buscar_Por_Telefono(ibuscar);
             }
 
-
+            // Al encontrar el paciente se puede crear un historial
             std::cout << "Ahora puede hacer lo siguiente:"<< '\n'; 
             std::cout << "\t -newh (Nueva historia clinica.)" <<std::endl;
             std::cout << "\t -verh (Ver historias clinicas de un paciente.)" <<std::endl;
-                            
-            MantenerBucle = true;
-        }
-
-
-
-        
-        
-        else if(UserInput=="clear" || UserInput=="cls"){
-            system("cls");
-            MantenerBucle = true;
-        }
-
-        else if(UserInput=="-newh"){
-            std::cout << " - $ Crear Historia clinica." << '\n';
-            CrearHistoriaClinica();
-            MantenerBucle = true;
-        }
-        else if(UserInput=="-verh"){
-            std::cout << " - $ Ver Historia Clinica" << '\n';
-            VerHistoriaClinica();
+            std::cout << "\t -delete (Eliminar paciente seleccionado)" <<std::endl;                          
             MantenerBucle = true;
         }
 
         
 
-        else{
-            std::cout << "El comando " << UserInput << "no es un comando reconocido. \nUtilice -help o --help para mostrar todos los comandos disponibles." << '\n';
-            MantenerBucle = true;
+                // Una vez seleccionado el paciente:
+                //-newh -> Nueva historia clinica
+                else if(UserInput=="-newh"){
+                    std::cout << " - $ Crear Historia clinica." << '\n';
+                    CrearHistoriaClinica();
+                    MantenerBucle = true;
+                }
 
-        }
+                //-verh -> Ver Historias Clinicas del paciente
+                else if(UserInput=="-verh"){
+                    std::cout << " - $ Ver Historia Clinica" << '\n';
+                    VerHistoriaClinica();
+                    MantenerBucle = true;
+                }
 
+                else if(UserInput=="-delete"){
+                    std::cout << " - $ Eliminar Paciente" << '\n';
+                    EliminarPaciente();
+                    MantenerBucle = true;
+                }
+
+
+        
+        
+        
+            //Error, comando no reconocido.
+            else{
+                std::cout << "El comando " << UserInput << "no es un comando reconocido. \nUtilice -help o --help para mostrar todos los comandos disponibles." << '\n';
+                MantenerBucle = true;
+            }
     }
     
     
