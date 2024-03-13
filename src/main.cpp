@@ -60,7 +60,6 @@ vector<string> VAntecedentes;
 int index = -1;
 
 
-
 //Entrada de tipo string usada input de usuario.
 string UserInput;
 string BuscarIdentidad;
@@ -122,8 +121,6 @@ class PERSONA{
         this->ApellidoB = ApellidoB;
     }
 
-
-
     // Metodos Get
     string getIdentidad(){
         return this->Identidad;
@@ -152,12 +149,7 @@ class PERSONA{
         std::cout <<"Nombre: " <<this->Nombre << '\n';
         std::cout <<"ApellidoA: " <<this->ApellidoA << '\n';
         std::cout <<"ApellidoB: " <<this->ApellidoB << std::endl;
-
-
     }
-
-
-
     // Metodo vacio
     PERSONA(){}
     
@@ -447,14 +439,14 @@ void displayListMedicos() {
     string address = "ListaMedicos.txt";
 
     file.open(address, fstream::in);
-    if (file.is_open()) {
-        string line;
-        while (getline(file, line)) {
-            std::cout << line << std::endl;
-        }
-        file.close();
-    } 
-}
+        if (file.is_open()) {
+            string line;
+            while (getline(file, line)) {
+                std::cout << line << std::endl;
+            }
+            file.close();
+        } 
+    }
 
 };
 
@@ -535,6 +527,7 @@ int ContarRegistros(string address){
         return -1;
     }
 }
+
 int ContarRegistrosNuevos(string address){
     fstream file;
     file.open(address, fstream::in);
@@ -690,38 +683,9 @@ void CrearUsuario(){
             P1.setAntecedentes(stemp);
             file << P1.getAntecedentes() << ' ';
 
-        //Quizas esto deberia de ir en expediente...
-        // //HoraCita
-        //     count = 0;
-        //     while(count < 1){
-        //         std::cout << "Ingrese la hora de la Cita en formato de 24 hrs." << '\n';    
-        //         std::cin >> itemp; 
-        //         ((itemp >= 0) && (itemp <= 23)) ? count = 1 : count = -1;
-
-        //         P1.setHoraCita(itemp);
-                
-        //         file << P1.getHoraCita() << ' ';
-        //     }
-
-        // //MinutoCita
-        //     count = 0;
-        //     while(count < 1){
-        //         std::cout << "Ingrese los minutos de la cita (0 - 59)" << '\n';    
-        //         std::cin >> itemp;
-                  
-
-        //         (itemp >= 0) && (itemp <= 59) ? count = 1 : count = -1;
-        //         //El usuario puso una hora entre 0 a 59?
-        //         P1.setMinutoCita(itemp);
-        //         file << P1.getMinutoCita() << ' ';
-        //     }
-
-        //Direccion ha sido eliminado.
-            //Fin de Crear Usuario.
             file << '\n';
         file.close();
     }
-
 }
 
 //Leer el archivo, Y luego Imprimir en Pantalla
@@ -893,7 +857,7 @@ void CrearHistoriaClinica(){
 
 
         //Guardar todo en el archivo.
-        file << VRegistro[index] << ' ' << Historia.getNumeroHistoria() << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << Historia.getTratamiento() << '\n';
+        file << ' ' << Historia.getNumeroHistoria() << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << Historia.getTratamiento() << '\n';
         
         //Cerrar archivo
         system("cls"); //(Limpiar pantalla)
@@ -909,52 +873,145 @@ void VerHistoriaClinica(){
 
 
 
-void EliminarPaciente(){
-     
-     EscanearPaciente();
-    // int itemp;
-    // string buscar, buscarA, buscarB; int ibuscar;
-    std::ofstream archivoTemp("Datos_Pacientestemp.txt", std::ios::out);
-    fstream file("Datos_Pacientes.txt"); 
-    
-    if (index >=
-     0 && index < VRegistro.size()) {
-        cout << "Usuario a eliminar: " << VNombre[index] << ' ' << VApellidoA[index] << endl;
 
-        // Muestra el mensaje de confirmación y realiza la eliminación
-        
-         //Esta seguro de eliminar al paciente
-        char respuesta;
-        cout << "Esta seguro de que desea eliminar este usuario? (S/N): " << endl; cin >> respuesta;
-        if (respuesta == 'S' || respuesta == 's') {
-            cout << "Usuario eliminado exitosamente." << endl;
-            // Recorre los vectores excepto el index (lo que se quiere eliminar).
-            for (int i = 0; i < VRegistro.size(); i++) {
-                if (i != index) {  // No incluir el elemento en el índice "index"
-                    archivoTemp<<AsignarIDNuevos()<< ' '<< VNombre[i] << ' ' << VApellidoA[i] << ' ' << VApellidoB[i] << ' ' << VIdentidad[i] << ' ' << VTelefono[i] << ' ' << VDiaNacimiento[i] << ' ' << VMesNacimiento[i] << ' ' << VAñoNacimiento[i] << ' ' << VEdad[i] << ' ' << VAltura[i] << ' ' << VPeso[i] << ' ' << VIMS[i] << ' ' << VGrupoSanguineo[i] << ' ' << VAntecedentes[i] << endl;
-                }
+
+//Eliminar Pacientes
+void ElimPacient(){
+    fstream file; fstream ftemp;
+    string address = "Datos_Pacientes.txt";
+    string address_temp = "Datos_Pacientestemp.txt";
+
+    char respuesta; bool del=false;
+    cout << "Esta seguro de que desea eliminar este usuario? (S/N): " << endl; cin >> respuesta;
+    (respuesta == 'S' || respuesta == 's') ? del=true: del=false;
+
+    //Sacar de los vectores.
+    if(del==true){
+        VRegistro.erase(VRegistro.begin()+index);
+        VNombre.erase(VNombre.begin()+index);
+        VApellidoA.erase(VApellidoA.begin()+index);
+        VApellidoB.erase(VApellidoB.begin()+index);
+        VIdentidad.erase(VIdentidad.begin()+index);
+        VTelefono.erase(VTelefono.begin()+index);
+        VDiaNacimiento.erase(VDiaNacimiento.begin()+index);
+        VMesNacimiento.erase(VMesNacimiento.begin()+index);
+        VAñoNacimiento.erase(VAñoNacimiento.begin()+index);
+        VEdad.erase(VEdad.begin()+index);
+        VAltura.erase(VAltura.begin()+index);
+        VPeso.erase(VPeso.begin()+index);
+        VIMS.erase(VIMS.begin()+index);
+        VGrupoSanguineo.erase(VGrupoSanguineo.begin()+index);
+        VAntecedentes.erase(VAntecedentes.begin()+index);
+
+        //Guardar en archivo temporal.
+        ftemp.open(address_temp, fstream::out);
+        if(ftemp.is_open()){  
+            for (int i = 0; i < VRegistro.size(); ++i) {
+                ftemp << VRegistro[i] << ' ';
+                ftemp << VNombre[i] << ' ';
+                ftemp << VApellidoA[i] << ' ';
+                ftemp << VApellidoB[i] << ' ';
+                ftemp << VIdentidad[i] << ' ';
+                ftemp << VTelefono[i] << ' ';
+                ftemp << VDiaNacimiento[i] << ' ';
+                ftemp << VMesNacimiento[i] << ' ';
+                ftemp << VAñoNacimiento[i] << ' ';
+                ftemp << VEdad[i] << ' ';
+                ftemp << VAltura[i] << ' ';
+                ftemp << VPeso[i] << ' ';
+                ftemp << VIMS[i] << ' ';
+                ftemp << VGrupoSanguineo[i] << ' ';
+                ftemp << VAntecedentes[i] << std::endl;
             }
-          
-        } 
-        else {
-            cout << "El usuario no se eliminara." << endl;
+            Transfer("Datos_Pacientestemp.txt", "Datos_Pacientes.txt");
+            file.close();
         }
     }
-
-    else {
-        cout << "Selecione un paciente usando -search/" << endl;
+    else{
+        std::cout << "No se eliminaron pacientes." << '\n';
     }
 
-             file.close();
-             archivoTemp.close();
-            remove("Datos_Pacientes.txt");
-            rename ("Datos_Pacientestemp.txt", "Datos_Pacientes.txt");       
+    
+                
+
 }
-
-
-
              
-                            
+// Transferir de un archivo a otro.
+void Transfer(string addressA, string addressB){
+    fstream fileA, fileB;
+    string line;
+    fileA.open(addressA, fstream::in);
+    fileB.open(addressB, fstream::out);
+    
+    if(fileA.is_open() && fileB.is_open()){
+        
+        while(std::getline(fileA, line)){
+            fileB << line << '\n';
+        }
+
+        fileA.close(); fileB.close();
+    }
+
+
+}
+                        
+void EditPacient(){
+    fstream file; fstream ftemp;
+    string address = "Datos_Pacientes.txt";
+    string address_temp = "Datos_Pacientestemp.txt";
+
+    char respuesta; bool del=false;
+    cout << "Esta seguro de que desea eliminar este usuario? (S/N): " << endl; cin >> respuesta;
+    (respuesta == 'S' || respuesta == 's') ? del=true: del=false;
+
+    //Sacar de los vectores.
+    if(del==true){
+        VRegistro.erase(VRegistro.begin()+index);
+        VNombre.erase(VNombre.begin()+index);
+        VApellidoA.erase(VApellidoA.begin()+index);
+        VApellidoB.erase(VApellidoB.begin()+index);
+        VIdentidad.erase(VIdentidad.begin()+index);
+        VTelefono.erase(VTelefono.begin()+index);
+        VDiaNacimiento.erase(VDiaNacimiento.begin()+index);
+        VMesNacimiento.erase(VMesNacimiento.begin()+index);
+        VAñoNacimiento.erase(VAñoNacimiento.begin()+index);
+        VEdad.erase(VEdad.begin()+index);
+        VAltura.erase(VAltura.begin()+index);
+        VPeso.erase(VPeso.begin()+index);
+        VIMS.erase(VIMS.begin()+index);
+        VGrupoSanguineo.erase(VGrupoSanguineo.begin()+index);
+        VAntecedentes.erase(VAntecedentes.begin()+index);
+
+        //Guardar en archivo temporal.
+        ftemp.open(address_temp, fstream::out);
+        if(ftemp.is_open()){  
+            for (int i = 0; i < VRegistro.size(); ++i) {
+                ftemp << VRegistro[i] << ' ';
+                ftemp << VNombre[i] << ' ';
+                ftemp << VApellidoA[i] << ' ';
+                ftemp << VApellidoB[i] << ' ';
+                ftemp << VIdentidad[i] << ' ';
+                ftemp << VTelefono[i] << ' ';
+                ftemp << VDiaNacimiento[i] << ' ';
+                ftemp << VMesNacimiento[i] << ' ';
+                ftemp << VAñoNacimiento[i] << ' ';
+                ftemp << VEdad[i] << ' ';
+                ftemp << VAltura[i] << ' ';
+                ftemp << VPeso[i] << ' ';
+                ftemp << VIMS[i] << ' ';
+                ftemp << VGrupoSanguineo[i] << ' ';
+                ftemp << VAntecedentes[i] << std::endl;
+            }
+            Transfer("Datos_Pacientestemp.txt", "Datos_Pacientes.txt");
+            file.close();
+        }
+    }
+    else{
+        std::cout << "No se eliminaron pacientes." << '\n';
+    }
+
+
+}
            
         
 
@@ -1094,7 +1151,8 @@ int main() {
 
                 else if(UserInput=="-delete"){
                     std::cout << " - $ Eliminar Paciente" << '\n';
-                    EliminarPaciente();
+                    // EliminarPaciente();
+                    ElimPacient();
                     MantenerBucle = true;
                 }
 
