@@ -1,0 +1,24 @@
+
+string Nacimiento;
+    int DiaNacimiento;
+    int MesNacimiento; 
+    int AñoNacimiento;
+
+int Edad;
+
+double IMS;         
+    double Altura;  
+    double Peso;    
+
+
+string TipoSangre; 
+
+string Cita;        
+    int DiaCita;
+    int HoraCita;
+    int MinutoCita;
+
+string Antecedentes;            
+    string EnfermedadActual;    
+
+string Direccion;   
