@@ -1,0 +1,3 @@
+1 arenita estrella texas 3333 3333 3 4 1990 33 3.3 4.5 0.413223 A- Gripita
+2 alfin alfin alfin 2222 444 3 3 3 2021 2 2 0.5 O- gripe
+3 calamardo narison rico 4343 3434 3 3 2 2022 2 2 0.5 A+ sdf

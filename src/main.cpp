@@ -27,7 +27,7 @@
     
 
 //Version Actual:
-std::string vrs = "3.2.2";
+std::string vrs = "4.0.0";
 
 using std::string; 
 using std::cout; 
@@ -873,7 +873,25 @@ void VerHistoriaClinica(){
 
 
 
+// Transferir de un archivo a otro.
+void Transfer(string addressA, string addressB){
+    fstream fileA, fileB;
+    string line;
+    fileA.open(addressA, fstream::in);
+    fileB.open(addressB, fstream::out);
+    
+    if(fileA.is_open() && fileB.is_open()){
+        
+        while(std::getline(fileA, line)){
+            fileB << line << '\n';
+        }
 
+        fileA.close(); fileB.close();
+    }
+
+
+}
+     
 
 //Eliminar Pacientes
 void ElimPacient(){
@@ -936,76 +954,66 @@ void ElimPacient(){
 
 }
              
-// Transferir de un archivo a otro.
-void Transfer(string addressA, string addressB){
-    fstream fileA, fileB;
-    string line;
-    fileA.open(addressA, fstream::in);
-    fileB.open(addressB, fstream::out);
-    
-    if(fileA.is_open() && fileB.is_open()){
-        
-        while(std::getline(fileA, line)){
-            fileB << line << '\n';
-        }
-
-        fileA.close(); fileB.close();
-    }
-
-
-}
-                        
-void EditPacient(){
+                   
+void EditarPacientes(){
     fstream file; fstream ftemp;
     string address = "Datos_Pacientes.txt";
     string address_temp = "Datos_Pacientestemp.txt";
+    PACIENTE P1;
+    
 
-    char respuesta; bool del=false;
-    cout << "Esta seguro de que desea eliminar este usuario? (S/N): " << endl; cin >> respuesta;
-    (respuesta == 'S' || respuesta == 's') ? del=true: del=false;
+    
+    //Editar Instancias/
+    int itemp; string stemp; double dtemp;
+    std::cout << "Editar Nombre de " << VNombre[index] << '\n';
+    cin >> stemp;   VNombre[index] = stemp;
+    std::cout << "Editar Primer Apellido " << VApellidoA[index] << '\n';
+    cin >> stemp;   VApellidoA[index] = stemp;
+    std::cout << "Editar Segundo Apellido " << VApellidoB[index] << '\n';
+    cin >> stemp;   VApellidoB[index] = stemp;
+    std::cout << "Editar Identidad: "<< VIdentidad[index] << '\n';
+    cin >> stemp;   VIdentidad[index] = stemp;
+    std::cout << "Editar Telefono: "<< VTelefono[index] << '\n';
+    cin >> itemp; VTelefono[index];
+    std::cout << "Editar Altura: "<< VAltura[index] << '\n';
+    cin >> dtemp;   P1.setAltura(dtemp);    VAltura[index] = dtemp;
+    std::cout << "Editar Peso: "<< VPeso[index] << '\n';
+    cin >> dtemp;   P1.setPeso(dtemp);  VPeso[index] = dtemp; 
+    dtemp = VIMS[index];
+    VIMS[index] = P1.getIMS();       
+    std::cout << "Se recalculo el indice de masa corporal. Paso de "<< dtemp << " a " << VIMS[index] << "."<< '\n';
+    std::cout << "Editar Grupo Sanguineo: "<< VGrupoSanguineo[index] << '\n';
+    cin >> stemp; VGrupoSanguineo[index] = stemp;
+    std::cout << "Editar Antecedentes: "<< VAntecedentes[index] << '\n';
+    cin >> stemp;   VAntecedentes[index] = stemp;
 
-    //Sacar de los vectores.
-    if(del==true){
-        VRegistro.erase(VRegistro.begin()+index);
-        VNombre.erase(VNombre.begin()+index);
-        VApellidoA.erase(VApellidoA.begin()+index);
-        VApellidoB.erase(VApellidoB.begin()+index);
-        VIdentidad.erase(VIdentidad.begin()+index);
-        VTelefono.erase(VTelefono.begin()+index);
-        VDiaNacimiento.erase(VDiaNacimiento.begin()+index);
-        VMesNacimiento.erase(VMesNacimiento.begin()+index);
-        VAñoNacimiento.erase(VAñoNacimiento.begin()+index);
-        VEdad.erase(VEdad.begin()+index);
-        VAltura.erase(VAltura.begin()+index);
-        VPeso.erase(VPeso.begin()+index);
-        VIMS.erase(VIMS.begin()+index);
-        VGrupoSanguineo.erase(VGrupoSanguineo.begin()+index);
-        VAntecedentes.erase(VAntecedentes.begin()+index);
 
-        //Guardar en archivo temporal.
-        ftemp.open(address_temp, fstream::out);
-        if(ftemp.is_open()){  
-            for (int i = 0; i < VRegistro.size(); ++i) {
-                ftemp << VRegistro[i] << ' ';
-                ftemp << VNombre[i] << ' ';
-                ftemp << VApellidoA[i] << ' ';
-                ftemp << VApellidoB[i] << ' ';
-                ftemp << VIdentidad[i] << ' ';
-                ftemp << VTelefono[i] << ' ';
-                ftemp << VDiaNacimiento[i] << ' ';
-                ftemp << VMesNacimiento[i] << ' ';
-                ftemp << VAñoNacimiento[i] << ' ';
-                ftemp << VEdad[i] << ' ';
-                ftemp << VAltura[i] << ' ';
-                ftemp << VPeso[i] << ' ';
-                ftemp << VIMS[i] << ' ';
-                ftemp << VGrupoSanguineo[i] << ' ';
-                ftemp << VAntecedentes[i] << std::endl;
-            }
-            Transfer("Datos_Pacientestemp.txt", "Datos_Pacientes.txt");
-            file.close();
+
+
+    //Guardar en archivo temporal.
+    ftemp.open(address_temp, fstream::out);
+    if(ftemp.is_open()){  
+        for (int i = 0; i < VRegistro.size(); ++i) {
+            ftemp << VRegistro[i] << ' ';
+            ftemp << VNombre[i] << ' ';
+            ftemp << VApellidoA[i] << ' ';
+            ftemp << VApellidoB[i] << ' ';
+            ftemp << VIdentidad[i] << ' ';
+            ftemp << VTelefono[i] << ' ';
+            ftemp << VDiaNacimiento[i] << ' ';
+            ftemp << VMesNacimiento[i] << ' ';
+            ftemp << VAñoNacimiento[i] << ' ';
+            ftemp << VEdad[i] << ' ';
+            ftemp << VAltura[i] << ' ';
+            ftemp << VPeso[i] << ' ';
+            ftemp << VIMS[i] << ' ';
+            ftemp << VGrupoSanguineo[i] << ' ';
+            ftemp << VAntecedentes[i] << std::endl;
         }
-    }
+        Transfer("Datos_Pacientestemp.txt", "Datos_Pacientes.txt");
+        file.close();
+        }
+    
     else{
         std::cout << "No se eliminaron pacientes." << '\n';
     }
@@ -1032,12 +1040,7 @@ int main() {
     //El usuario puede buscar por identidad, nombre, apellido y telefono. Aqui se guarda ese valor.
     string buscar, buscarA, buscarB; int ibuscar;
 
-    //DEV!
-    // EliminarPaciente();
-
     
-    //Menu Principal:
-    //Mantenerse en el menu:
     bool MantenerBucle = true; 
     while (MantenerBucle == true){
         std::cout << " - $ ";
@@ -1149,10 +1152,17 @@ int main() {
                     MantenerBucle = true;
                 }
 
+                // EliminarPacientes
                 else if(UserInput=="-delete"){
                     std::cout << " - $ Eliminar Paciente" << '\n';
-                    // EliminarPaciente();
                     ElimPacient();
+                    MantenerBucle = true;
+                }
+                
+                // Editar Pacientes
+                else if(UserInput=="-editar" || UserInput=="-edit"){
+                    std::cout << " - $ Editar Paciente" << '\n';
+                    EditarPacientes();
                     MantenerBucle = true;
                 }
 
