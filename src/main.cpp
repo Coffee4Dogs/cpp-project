@@ -896,7 +896,7 @@ void Transfer(string addressA, string addressB){
      
 
 //Eliminar Pacientes
-void AliminarPacientes(){
+void EliminarPacientes(){
     fstream file; fstream ftemp;
     string address = "Datos_Pacientes.txt";
     string address_temp = "Datos_Pacientestemp.txt";
@@ -1153,7 +1153,7 @@ int main() {
                 // EliminarPacientes
                 else if(UserInput=="-delete"){
                     std::cout << " - $ Eliminar Paciente" << '\n';
-                    AliminarPacientes();
+                    EliminarPacientes();
                     MantenerBucle = true;
                 }
                 
