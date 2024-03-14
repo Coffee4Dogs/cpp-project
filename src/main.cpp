@@ -473,6 +473,8 @@ void DisplayHelp(){
     std::cout << "NUEVO PACIENTE \n\t -new, -nuevo, -new patient, -nuevo paciente" << std::endl;
     std::cout << "VER TODOS LOS PACIENTES \n\t -all, -todos" << std::endl;
     std::cout << "SELECCIONAR PACIENTE \n\t -select (Selecciona un paciente)." << std::endl;
+    std::cout << "DELETE \n\t -delete Elimina un paciente. (primero seleccione un paciente)." << '\n';
+    std::cout << "EDIT \n\t -edit Edita un paciente. (primero seleccione un paciente)." << '\n';
     std::cout << "\t Puede buscar pacientes por: Identidad, Nombre y Apellido(s), Telefono." << std::endl;
     std::cout << "LISTA DE MEDICOS \n\t -Listmedico, -listmedico (Muestra la lista de medicos)." << std::endl;
     std::cout << "SALIR/EXIT \n\t -exit, -salir, exit(), exit, salir" << std::endl;
@@ -894,7 +896,7 @@ void Transfer(string addressA, string addressB){
      
 
 //Eliminar Pacientes
-void ElimPacient(){
+void AliminarPacientes(){
     fstream file; fstream ftemp;
     string address = "Datos_Pacientes.txt";
     string address_temp = "Datos_Pacientestemp.txt";
@@ -949,9 +951,6 @@ void ElimPacient(){
         std::cout << "No se eliminaron pacientes." << '\n';
     }
 
-    
-                
-
 }
              
                    
@@ -960,9 +959,7 @@ void EditarPacientes(){
     string address = "Datos_Pacientes.txt";
     string address_temp = "Datos_Pacientestemp.txt";
     PACIENTE P1;
-    
-
-    
+     
     //Editar Instancias/
     int itemp; string stemp; double dtemp;
     std::cout << "Editar Nombre de " << VNombre[index] << '\n';
@@ -1127,11 +1124,12 @@ int main() {
                 Buscar_Por_Telefono(ibuscar);
             }
 
-            // Al encontrar el paciente se puede crear un historial
+            //Buscar un paciente -search o -select
             std::cout << "Ahora puede hacer lo siguiente:"<< '\n'; 
-            std::cout << "\t -newh (Nueva historia clinica.)" <<std::endl;
-            std::cout << "\t -verh (Ver historias clinicas de un paciente.)" <<std::endl;
-            std::cout << "\t -delete (Eliminar paciente seleccionado)" <<std::endl;                          
+            // std::cout << "\t -newh (Nueva historia clinica.)" <<std::endl;
+            // std::cout << "\t -verh (Ver historias clinicas de un paciente.)" <<std::endl;
+            std::cout << "\t -delete (Eliminar el paciente seleccionado)" << '\n';
+            std::cout << "\t -edit (Edita el paciente seleccionado)" << std::endl;                          
             MantenerBucle = true;
         }
 
@@ -1155,7 +1153,7 @@ int main() {
                 // EliminarPacientes
                 else if(UserInput=="-delete"){
                     std::cout << " - $ Eliminar Paciente" << '\n';
-                    ElimPacient();
+                    AliminarPacientes();
                     MantenerBucle = true;
                 }
                 
