@@ -1,3 +1,3 @@
 Nombre    Apellido   Identidad         Telefono    NumeroColegiado   Tarifa   Especialidad
-Npojdb	  Mpqf{	     1912.2:83.:9:8	1234567	      41048-4	      600     Endocrinologo	
-Bsuvsp	  Ejb{	     1912.2:9:.67:8	1234567	      56945-6	      1500    Gastroenterologo	
+Monica	  Lopez	     0801-1972-9897	1234567	      41048-4	      600     Endocrinologo	
+Arturo	  Diaz	     0801-1989-5697	1234567	      56945-6	      1500    Gastroenterologo	

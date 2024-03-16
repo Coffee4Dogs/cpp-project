@@ -28,7 +28,7 @@
 // system("cls"); <- (hace el comando del cmd clear screen).
     
 //Version Actual:
-std::string vrs = "4.0.3";
+std::string vrs = "5.0.0";
 
 using std::string; 
 using std::cout; 
@@ -59,7 +59,8 @@ vector<string> VGrupoSanguineo;
 vector<string> VAntecedentes;
 
 int index = -1;
-
+int SHIFT_ENCR = 8;
+int SHIFT_DECR = SHIFT_ENCR*-1;
 
 //Entrada de tipo string usada input de usuario.
 string UserInput;
@@ -109,25 +110,22 @@ class PERSONA{
     }
     
     //Metodos Set
-    //Encriptados:
     void setIdentidad(string Identidad){
-        this->Identidad = CCipher(1, Identidad);
+        this->Identidad = Identidad;
     }
 
     void setNombre(string Nombre){
-        this->Nombre = CCipher(1, Nombre);
+        this->Nombre = Nombre;
     }
 
     void setApellidoA(string ApellidoA){
-        this->ApellidoA = CCipher(1, ApellidoA);
+        this->ApellidoA = ApellidoA;
     }
 
     void setApellidoB(string ApellidoB){
-        this->ApellidoB = CCipher(1, ApellidoB);
+        this->ApellidoB = ApellidoB;
     }
-
-    
-    //No Encriptados   
+ 
     void setTelefono(int Telefono){
         this->Telefono = Telefono;
     }
@@ -356,8 +354,6 @@ class MEDICO : public PERSONA{
     string Especialidad;
     string NumeroColegiado;
     double Tarifa= 0.00;
-    string Constraseña;
-    
     
     public:
     //metodo constructor
@@ -366,8 +362,6 @@ class MEDICO : public PERSONA{
     this-> Especialidad = Especialidad;
     this-> NumeroColegiado = NumeroColegiado;
     this-> Tarifa = Tarifa;
-    
-
 
     }
     
@@ -384,10 +378,6 @@ class MEDICO : public PERSONA{
        this->Tarifa = Tarifa;
     }
 
-    void setConstraseña(string Constraseña){
-        this->Constraseña = Constraseña;
-    }
-
     // Metodos Get:
     string getEspecialidad(){
         return this-> Especialidad;
@@ -397,9 +387,6 @@ class MEDICO : public PERSONA{
     }
     double getTarifa(){
         return this->Tarifa;
-    }
-        string getConstraseña(){
-        return this->Constraseña = Constraseña;
     }
 
     bool login(const std::string& username, const std::string& password) {
@@ -508,15 +495,16 @@ void BubbleSort(int array[], int size){
 // cuand -help muestra un texto con instrucciones al usuario.
 void DisplayHelp(){
     system("cls"); std::cout << "\n";
-    
+    //-HELP
     std::cout << "VERSION \n\t -version  --version" << std::endl;
     std::cout << "CLEAR SCREEN \n\t cls, clear" << std::endl;
     std::cout << "NUEVO PACIENTE \n\t -new, -nuevo, -new patient, -nuevo paciente" << std::endl;
     std::cout << "VER TODOS LOS PACIENTES \n\t -all, -todos" << std::endl;
-    std::cout << "SELECCIONAR PACIENTE \n\t -select (Selecciona un paciente)." << std::endl;
-    std::cout << "DELETE \n\t -delete Elimina un paciente. (primero seleccione un paciente)." << '\n';
-    std::cout << "EDIT \n\t -edit Edita un paciente. (primero seleccione un paciente)." << '\n';
-    std::cout << "\t Puede buscar pacientes por: Identidad, Nombre y Apellido(s), Telefono." << std::endl;
+    std::cout << "SELECCIONAR PACIENTE \n\t -select -search" << std::endl;
+    std::cout << "\t Puede buscar/seleccionar por: Identidad, Nombre y Apellido(s) o Telefono." << std::endl;
+    std::cout << "DELETE \n\t -delete Elimina un paciente. (requiere la seleccion de un paciente*)." << '\n';
+    std::cout << "EDIT \n\t -edit Edita un paciente. (requiere la seleccion de un paciente*)." << '\n';
+    std::cout << "NUEVO HISTORIAL \n\t -newh (requiere la seleccion de un paciente*)" << std::endl;
     std::cout << "LISTA DE MEDICOS \n\t -Listmedico, -listmedico (Muestra la lista de medicos)." << std::endl;
     std::cout << "SALIR/EXIT \n\t -exit, -salir, exit(), exit, salir" << std::endl;
 }
@@ -909,7 +897,7 @@ void CrearHistoriaClinica(){
     Historia.setNumeroHistoria(NumeroHistoria);
     
 
-    
+    //flag
     file.open(address, fstream::app);
     if(file.is_open()){
         
@@ -1091,131 +1079,108 @@ void EditarPacientes(){
 
 }
 
+void AgregarMedico(){
+    std::cout << "Crear Usuario" << '\n';
+    fstream file;   string address = "credenciales.txt";
+    string user; string password;
 
+    std::cout << "Establecer usuario: " << ' '; cin >> user;
+    std::cout << "Establecer password: " << ' '; cin >> password;
+    
+    file.open(address, fstream::app);
+    if(file.is_open()){
+        file << CCipher(SHIFT_ENCR,user) << ' ' << CCipher(SHIFT_ENCR, password) << '\n';
 
-void MedicoLogin(){
-
-
-
-
-
-    fstream file;   vector<string> vUsers;   vector<string> vPasswords;   MEDICO doctor1;
-    string stemp;   string USER; string PASSWORD;   bool login = false; bool MantenerLoop = true;
-
-
-    while(MantenerLoop == true){
-        std::cout << "Nombre usuario" << '\n';
-        cin >> stemp;
-        doctor1.setNombre(stemp);
-        std::cout << "Password: " << '\n';
-        cin >> stemp;
-        doctor1.setConstraseña(stemp);
-
-
-
-            file.open("credenciales.txt", fstream::in);
-            if(file.is_open()){
-                file >> USER >> PASSWORD;
-                vUsers.push_back(USER);
-                vPasswords.push_back(PASSWORD);
-                file.close();
-            }
-
-
-
-   for(auto i = vUsers.begin(); i != vUsers.end(); ++i)
-    if((*i == doctor1.getNombre()) && (vPasswords[i - vUsers.begin()] == doctor1.getConstraseña())){
-        MantenerLoop = false;
+        file.close();
     }
-    else{
-        MantenerLoop = true;
-    }
-    }
-       MantenerLoop = false;
+
+
 }
 
+void MedicoLogin() {
+    std::cout << "Iniciar Sesion." << '\n';
+    std::fstream file;
+    std::string address = "credenciales.txt";
+    file.open(address, std::fstream::in);
 
-// void MedicoLogin(){
+    
+    std::string Nombre, password;
+    std::string usuario, contra;
+    
+    bool usuarioEncontrado = false;
+    
+    do {
+        std::cout << "Ingrese el usuario:" << std::endl;
+        std::cin >> usuario;
+        std::cout << "Ingrese la password:" << std::endl;
+        std::cin >> contra;
+        
 
-//     fstream file;   vector<string> vUsers;   vector<string> vPasswords;   MEDICO doctor1;
-//     string stemp;   string USER; string PASSWORD;    bool MantenerLoop = true;
-
-
-//     std::cout << "hola" << '\n';
-
-//     // while(MantenerLoop == true){
-//     //     std::cout << "Nombre usuario" << '\n';
-//     //     cin >> stemp;
-//     //     doctor1.setNombre(stemp);
-//     //     std::cout << "Password: " << '\n';
-//     //     cin >> stemp;
-//     //     doctor1.setConstraseña(stemp);
-
-
-//     //     //Recorrer Archivo
-//     //     file.open("credenciales.txt", fstream::in);
-//     //     if(file.is_open()){
-//     //         file >> USER >> PASSWORD;
-//     //         vUsers.push_back(USER);
-//     //         vPasswords.push_back(PASSWORD);
-//     //         file.close();
-//     //     }
-
-//     //     for(auto i = vUsers.begin(); i != vUsers.end(); ++i){
-//     //         std::cout << vUsers[i] << '\n';
-//     //         MantenerLoop = false;
-//     //     }
-//     // }
-// }
-
-           
+   
+        while (file >> Nombre >> password) {
+            if (usuario == CCipher(SHIFT_DECR,Nombre) && contra == CCipher(SHIFT_DECR,password)) {
+                usuarioEncontrado = true;
+                break;
+            }
+        } 
+        
+        if (!usuarioEncontrado) {
+            std::cout << "Usuario o password incorrectos. ingrese de nuevo" << std::endl;
+        }
+    } while (!usuarioEncontrado);
+    
+    std::cout << "Credenciales correctas, Bievenid@ " <<usuario << std::endl;
+    
+    file.close();
+}
+        
         
 
 int main() {
-    
-    MEDICO Instancia;
-    Instancia.ListaMedicos();
-    
-     
+    //Instancias y Variables 
     // Variables temporales reutilizables: itemp->var temporales de tipo int | stemp -> var temporales tipo string.
-    int itemp; string stemp;
+    MEDICO Instancia; Instancia.ListaMedicos(); int itemp; string stemp;
+
+
+    //Login Menu para crear o iniciar sesion.
+    while(1<2){
+        std::cout << "1. Crear Usuario" << '\n';
+        std::cout << "2. Iniciar sesion" << '\n';
+        cin >> itemp;
+
+        if(itemp == 1){ 
+            AgregarMedico();
+            MedicoLogin();
+            break;
+        }
+        else if(itemp == 2){
+            MedicoLogin();
+            break;
+        }
+        else{
+            std::cout << "Seleccione una opcion." << '\n';
+        }   
+    }
+  
+    
+
 
     //Despliega una pantalla de bienvenida de un medicamento y un gatito.
-    DisplayWelcome();
+    system("cls"); DisplayWelcome();
     
     //Ajustar la precision de la salida que se muestra en las variables double.
     cout << fixed << setprecision(2) << setw(10); 
    
     //El usuario puede buscar por identidad, nombre, apellido y telefono. Aqui se guarda ese valor.
     string buscar, buscarA, buscarB; int ibuscar;
-        std::string username, password;
+    std::string username, password;
 
-    bool loginExitoso = false;
-    /*
-    
-    // Solicitar al usuario que inicie sesión hasta que las credenciales sean válidas
-    while (!loginExitoso) {
-        std::cout << "Ingrese su nombre de usuario: ";
-        std::cin >> username;
-        std::cout << "Ingrese su contrasena: ";
-        std::cin >> password;
 
-        // Intentar iniciar sesión utilizando las credenciales ingresadas
-        if (Instancia.login(username, password)) {
-            loginExitoso = true;
-            system("cls");
-            std::cout << "Inicio de sesion exitoso. Bienvenida, " << username << "!" << std::endl;
-        } else {
-            std::cout << "Credenciales incorrectas. Por favor, intente nuevamente." << std::endl;
-        }
-    }
-*/
-    
 
     
 
 
-    //Menu
+    //MENU PRINCIPAL
     bool MantenerBucle = true; 
     while (MantenerBucle == true){
         std::cout << " - $ ";
@@ -1304,7 +1269,7 @@ int main() {
 
             //Buscar un paciente -search o -select
             std::cout << "Ahora puede hacer lo siguiente:"<< '\n'; 
-             std::cout << "\t -newh (Nueva historia clinica.)" <<std::endl;
+            // std::cout << "\t -newh (Nueva historia clinica.)" <<std::endl;
             // std::cout << "\t -verh (Ver historias clinicas de un paciente.)" <<std::endl;
             std::cout << "\t -delete (Eliminar el paciente seleccionado)" << '\n';
             std::cout << "\t -edit (Edita el paciente seleccionado)" << std::endl;                          
