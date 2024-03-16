@@ -1099,7 +1099,7 @@ void MedicoLogin(){
 
 
 
-    fstream file;   vector<string> users;   vector<string> passwords;   MEDICO doctor1;
+    fstream file;   vector<string> vUsers;   vector<string> vPasswords;   MEDICO doctor1;
     string stemp;   string USER; string PASSWORD;   bool login = false; bool MantenerLoop = true;
 
 
@@ -1116,15 +1116,15 @@ void MedicoLogin(){
             file.open("credenciales.txt", fstream::in);
             if(file.is_open()){
                 file >> USER >> PASSWORD;
-                users.push_back(USER);
-                passwords.push_back(PASSWORD);
+                vUsers.push_back(USER);
+                vPasswords.push_back(PASSWORD);
                 file.close();
             }
 
 
 
-   for(auto i = users.begin(); i != users.end(); ++i)
-    if((*i == doctor1.getNombre()) && (passwords[i - users.begin()] == doctor1.getConstraseña())){
+   for(auto i = vUsers.begin(); i != vUsers.end(); ++i)
+    if((*i == doctor1.getNombre()) && (vPasswords[i - vUsers.begin()] == doctor1.getConstraseña())){
         MantenerLoop = false;
     }
     else{
@@ -1135,42 +1135,38 @@ void MedicoLogin(){
 }
 
 
-void MedicoLogin(){
+// void MedicoLogin(){
 
-    fstream file;   vector<string> users;   vector<string> passwords;   MEDICO doctor1;
-    string stemp;   string USER; string PASSWORD;    bool MantenerLoop = true;
-
-
-    while(MantenerLoop == true){
-        std::cout << "Nombre usuario" << '\n';
-        cin >> stemp;
-        doctor1.setNombre(stemp);
-        std::cout << "Password: " << '\n';
-        cin >> stemp;
-        doctor1.setConstraseña(stemp);
+//     fstream file;   vector<string> vUsers;   vector<string> vPasswords;   MEDICO doctor1;
+//     string stemp;   string USER; string PASSWORD;    bool MantenerLoop = true;
 
 
-        //Recorrer Archivo
-        file.open("credenciales.txt", fstream::in);
-        if(file.is_open()){
-            file >> USER >> PASSWORD;
-            users.push_back(USER);
-            passwords.push_back(PASSWORD);
-            file.close();
-        }
+//     std::cout << "hola" << '\n';
 
-        //Comparar Vectores
-        for(auto i = users.begin(); i != users.end(); ++i)
-            if((users == doctor1.getNombre()) && (passwords == doctor1.getConstraseña())){
-                MantenerLoop = false;
-            }
-            else{
-                MantenerLoop = true;
-            }
+//     // while(MantenerLoop == true){
+//     //     std::cout << "Nombre usuario" << '\n';
+//     //     cin >> stemp;
+//     //     doctor1.setNombre(stemp);
+//     //     std::cout << "Password: " << '\n';
+//     //     cin >> stemp;
+//     //     doctor1.setConstraseña(stemp);
 
-        }
-}
 
+//     //     //Recorrer Archivo
+//     //     file.open("credenciales.txt", fstream::in);
+//     //     if(file.is_open()){
+//     //         file >> USER >> PASSWORD;
+//     //         vUsers.push_back(USER);
+//     //         vPasswords.push_back(PASSWORD);
+//     //         file.close();
+//     //     }
+
+//     //     for(auto i = vUsers.begin(); i != vUsers.end(); ++i){
+//     //         std::cout << vUsers[i] << '\n';
+//     //         MantenerLoop = false;
+//     //     }
+//     // }
+// }
 
            
         
@@ -1216,7 +1212,7 @@ int main() {
 */
     
 
-    MedicoLogin();
+    
 
 
     //Menu
