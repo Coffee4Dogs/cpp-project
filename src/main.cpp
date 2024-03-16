@@ -21,6 +21,8 @@
     #include <algorithm>
 //INVESTIGAR UNA LIBRERIA.
     #include <cstdlib> 
+
+    #include <ctime> 
 // Nos permite usar comandos de la consola de windows. 
 // En este caso la vamos a usar para limpiar pantalla cuando querramos.
 // system("cls"); <- (hace el comando del cmd clear screen).
@@ -90,26 +92,46 @@ class PERSONA{
         this->ApellidoB = ApellidoB;
     }
 
+    string CCipher(int shift, string line){
+        // ----------  Caesar Cipher Encryption  -----------
+            //-Shift: Abecedario estandar: A, B, C...  | Ejemplo: shift +1: B, C, D...
+            //-Line: El texto que se quiere encriptar.
+        string NewLine = "";
+        int size = line.size();
+        char temp;
+
+        for(int i = 0; i < size; i++){
+            temp = line.at(i);
+            temp = temp + shift;
+            NewLine = NewLine + temp;
+        }
+        return NewLine;
+    }
+    
     //Metodos Set
+    //Encriptados:
     void setIdentidad(string Identidad){
-        this->Identidad = Identidad;
+        this->Identidad = CCipher(1, Identidad);
     }
 
+    void setNombre(string Nombre){
+        this->Nombre = CCipher(1, Nombre);
+    }
+
+    void setApellidoA(string ApellidoA){
+        this->ApellidoA = CCipher(1, ApellidoA);
+    }
+
+    void setApellidoB(string ApellidoB){
+        this->ApellidoB = CCipher(1, ApellidoB);
+    }
+
+    
+    //No Encriptados   
     void setTelefono(int Telefono){
         this->Telefono = Telefono;
     }
 
-    void setNombre(string Nombre){
-        this->Nombre = Nombre;
-    }
-
-    void setApellidoA(string ApellidoA){
-        this->ApellidoA = ApellidoA;
-    }
-
-    void setApellidoB(string ApellidoB){
-        this->ApellidoB = ApellidoB;
-    }
 
     //Otros Set:
     void setPersona(string Identidad, int Telefono, string Nombre, string ApellidoA, string ApellidoB){
@@ -268,11 +290,11 @@ class EXPEDIENTE : public PACIENTE{
     protected:
     int NumeroHistoria;
     string Tratamiento;
-    string EnfermedadActual;
+    string EnfermedadActual1;
 
     public:
     //Constructor:
-    EXPEDIENTE(int NumeroHistoria, string Tratamiento, string EnfermedadActual){
+    EXPEDIENTE(int NumeroHistoria, string Tratamiento, string EnfermedadActual1){
         this->NumeroHistoria = NumeroHistoria;
         this->Tratamiento = Tratamiento;
    //     this->EnfermedadActual = EnfermedadActual;
@@ -281,7 +303,7 @@ class EXPEDIENTE : public PACIENTE{
     //Metodos Set:
     void setNumeroHistoria(int NumeroHistoria){this-> NumeroHistoria = NumeroHistoria;}
     void setTratamiento(string Tratamiento){this-> Tratamiento = Tratamiento;}
-  //  void setEnfermedadActual(string EnfermedadActual){this->EnfermedadActual = EnfermedadActual;}
+    void setEnfermedadActual1(string EnfermedadActual1){this->EnfermedadActual1 = EnfermedadActual1;}
 
     //Metodos Get:
     int getNumeroHistoria(){return this->NumeroHistoria;}
@@ -293,6 +315,10 @@ class EXPEDIENTE : public PACIENTE{
 
         std::string getTratamiento() const {
         return Tratamiento;
+    }
+
+            std::string getEnfermedadActual1() const {
+        return EnfermedadActual1;
     }
    // string getEnfermedadActual(){return this->EnfermedadActual;}
 
@@ -363,6 +389,11 @@ class MEDICO : public PERSONA{
     }
     double getTarifa(){
         return this->Tarifa;
+    }
+
+    bool login(const std::string& username, const std::string& password) {
+        // Verificar las credenciales del usuario
+        return (username == "Monica" && password == "xl23");
     }
 
     //Metodo sin nada.
@@ -830,6 +861,33 @@ void Buscar_Por_Telefono(int ibuscar){
             std::cout << "- $ No se encontro a: " << ibuscar << '\n';
     }
 }
+int ObtenerHoraActual() {
+  
+    time_t tiempoActual = time(0);
+
+ 
+    tm* tiempoLocal = localtime(&tiempoActual);
+
+   
+    int hora = tiempoLocal->tm_hour;
+
+    // Retornar la hora actual
+    return hora;
+}
+int ObtenerMinutosActuales() {
+    
+    time_t tiempoActual = time(0);
+
+   
+    tm* tiempoLocal = localtime(&tiempoActual);
+
+    
+    int minutos = tiempoLocal->tm_min;
+
+   
+    return minutos;
+}
+
 
 void CrearHistoriaClinica(){
 
@@ -844,21 +902,26 @@ void CrearHistoriaClinica(){
     file.open(address, fstream::app);
     if(file.is_open()){
         
+        //hora de la proxima cita
+        std::cout << "La cita finalizo a las "<< ObtenerHoraActual() <<":"<< ObtenerMinutosActuales() <<  '\n';
         
-       // Motivo Consulta:
-        std::cout << " - $ Cual es el motivo de la consulta? " << '\n';
-        std::getline(std::cin, stemp);
-        Historia.setTratamiento(stemp);
 
         //Enfermedad Actual:
         std::cout << " - $ Enfermedad Actual: " <<  '\n';
-        std::getline(std::cin, stemp);
-        cin >> stemp; Historia.setEnfermedadActual(stemp);
+        cin >> stemp; 
+        Historia.setEnfermedadActual1(stemp);
+        
+        //Tratamiento:
+        std::cout << " - $ Tratamiento: " <<  '\n';
+        cin >> stemp; 
+        Historia.setTratamiento(stemp);
+
+
         
 
 
         //Guardar todo en el archivo.
-        file << ' ' << Historia.getNumeroHistoria() << ' ' << VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << Historia.getTratamiento() << '\n';
+        file<< VRegistro[index] << ' '<< VNombre[index] << ' ' << VApellidoA[index] << ' ' << VApellidoB[index] << ' ' << VIdentidad[index] << ' ' << VTelefono[index] << ' ' << VDiaNacimiento[index] << ' ' << VMesNacimiento[index] << ' ' << VAñoNacimiento[index] << ' ' << VEdad[index] << ' ' << VAltura[index] << ' ' << VPeso[index] << ' ' << VIMS[index] << ' ' << VGrupoSanguineo[index] << ' ' << VAntecedentes[index] << ' ' << Historia.getEnfermedadActual1()<< ' ' <<Historia.getTratamiento()<< ' '<< ObtenerHoraActual()<<":"<<ObtenerMinutosActuales()<< '\n';
         
         //Cerrar archivo
         system("cls"); //(Limpiar pantalla)
@@ -1035,6 +1098,25 @@ int main() {
    
     //El usuario puede buscar por identidad, nombre, apellido y telefono. Aqui se guarda ese valor.
     string buscar, buscarA, buscarB; int ibuscar;
+        std::string username, password;
+
+    bool loginExitoso = false;
+
+    // Solicitar al usuario que inicie sesión hasta que las credenciales sean válidas
+    while (!loginExitoso) {
+        std::cout << "Ingrese su nombre de usuario: ";
+        std::cin >> username;
+        std::cout << "Ingrese su contrasena: ";
+        std::cin >> password;
+
+        // Intentar iniciar sesión utilizando las credenciales ingresadas
+        if (Instancia.login(username, password)) {
+            loginExitoso = true;
+            std::cout << "Inicio de sesion exitoso. Bienvenida, " << username << "!" << std::endl;
+        } else {
+            std::cout << "Credenciales incorrectas. Por favor, intente nuevamente." << std::endl;
+        }
+    }
 
     
     bool MantenerBucle = true; 
