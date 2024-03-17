@@ -1272,7 +1272,8 @@ int main() {
             // std::cout << "\t -newh (Nueva historia clinica.)" <<std::endl;
             // std::cout << "\t -verh (Ver historias clinicas de un paciente.)" <<std::endl;
             std::cout << "\t -delete (Eliminar el paciente seleccionado)" << '\n';
-            std::cout << "\t -edit (Edita el paciente seleccionado)" << std::endl;                          
+            std::cout << "\t -edit (Edita el paciente seleccionado)" << std::endl;    
+             std::cout << "\t -newh (Crear expediente)" << std::endl;                      
             MantenerBucle = true;
         }
 
